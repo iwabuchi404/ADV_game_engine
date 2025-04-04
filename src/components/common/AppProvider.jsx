@@ -2,8 +2,11 @@ import React from 'react';
 import { GameProvider } from '../../contexts/GameContext';
 import { AudioProvider } from '../../contexts/AudioContext';
 
+/**
+ * アプリケーションプロバイダー
+ * すべてのコンテキストを一元的に提供するためのプロバイダーコンポーネント
+ */
 const AppProvider = ({ children }) => {
-  console.log('AppProvider rendered'); // デバッグ用
   return (
     <AudioProvider>
       <GameProvider>
