@@ -77,11 +77,11 @@ body {
   .game-text {
     font-size: 0.9rem;
   }
-  
+
   .game-speaker {
     font-size: 1rem;
   }
-  
+
   .game-button {
     padding: 0.5rem 1rem;
     font-size: 0.9rem;
@@ -90,8 +90,12 @@ body {
 
 /* アニメーション */
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 .fade-in {
@@ -99,8 +103,14 @@ body {
 }
 
 @keyframes slideUp {
-  from { transform: translateY(20px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 .slide-up {

@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+// import styled from 'styled-components';
 
 // スタイル付きコンポーネント
 const ChoiceMenuContainer = styled.div`
@@ -27,19 +27,19 @@ const ChoiceButton = styled.button`
   transition: all 0.2s ease;
   backdrop-filter: blur(5px);
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-  
+
   &:hover {
     background-color: rgba(0, 80, 150, 0.9);
     border-color: rgba(150, 200, 255, 0.8);
     transform: translateY(-2px);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
   }
-  
+
   &:active {
     transform: translateY(0);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
   }
-  
+
   @media (max-width: 767px) {
     font-size: 0.9rem;
     padding: 10px 16px;

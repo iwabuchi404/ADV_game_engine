@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+// import styled from 'styled-components';
 
 // スタイル付きコンポーネント
 const TitleContainer = styled.div`
@@ -12,7 +12,7 @@ const TitleContainer = styled.div`
   background-color: #000;
   position: relative;
   overflow: hidden;
-  
+
   &::before {
     content: '';
     position: absolute;
@@ -21,7 +21,7 @@ const TitleContainer = styled.div`
     width: 100%;
     height: 100%;
     background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)),
-                url('/assets/images/backgrounds/title_bg.jpg');
+      url('/assets/images/backgrounds/title_bg.jpg');
     background-size: cover;
     background-position: center;
     opacity: 0.6;
@@ -42,7 +42,7 @@ const GameTitle = styled.h1`
   font-weight: 700;
   color: #fff;
   text-shadow: 0 0 10px rgba(0, 150, 255, 0.7);
-  
+
   @media (max-width: 767px) {
     font-size: 2rem;
   }
@@ -54,7 +54,7 @@ const Subtitle = styled.h2`
   font-weight: 400;
   color: #a0e0ff;
   text-shadow: 0 0 5px rgba(0, 100, 200, 0.5);
-  
+
   @media (max-width: 767px) {
     font-size: 1rem;
     margin-bottom: 2rem;
@@ -79,18 +79,18 @@ const Button = styled.button`
   font-size: 1.2rem;
   cursor: pointer;
   transition: all 0.3s ease;
-  
+
   &:hover {
     background-color: rgba(0, 150, 255, 0.9);
     transform: translateY(-2px);
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
   }
-  
+
   &:active {
     transform: translateY(0);
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
   }
-  
+
   @media (max-width: 767px) {
     padding: 0.8rem 1.5rem;
     font-size: 1rem;
@@ -99,7 +99,7 @@ const Button = styled.button`
 
 const CreditsButton = styled(Button)`
   background-color: rgba(50, 50, 70, 0.7);
-  
+
   &:hover {
     background-color: rgba(70, 70, 100, 0.9);
   }

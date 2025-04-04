@@ -1,5 +1,5 @@
-import React, { useState, useEffect ,useRef} from 'react';
-import styled from 'styled-components';
+import React, { useState, useEffect, useRef } from 'react';
+// import styled from 'styled-components';
 import processText from '../../utils/TextProcessor';
 
 // スタイル付きコンポーネント
@@ -40,9 +40,9 @@ const TextContent = styled.div`
   color: white;
   font-size: 1rem;
   line-height: 1.6;
-  margin-top: ${props => props.hasName ? '0.5rem' : '0'};
+  margin-top: ${(props) => (props.hasName ? '0.5rem' : '0')};
   min-height: 5rem;
-  
+
   @media (max-width: 767px) {
     font-size: 0.9rem;
     line-height: 1.5;
@@ -57,10 +57,15 @@ const ContinueIndicator = styled.div`
   color: rgba(255, 255, 255, 0.7);
   font-size: 1.5rem;
   animation: blink 1s infinite;
-  
+
   @keyframes blink {
-    0%, 100% { opacity: 0.3; }
-    50% { opacity: 1; }
+    0%,
+    100% {
+      opacity: 0.3;
+    }
+    50% {
+      opacity: 1;
+    }
   }
 `;
 
@@ -79,9 +84,9 @@ const useTypewriterEffect = (text, typingSpeed = 30) => {
       setIsComplete(true);
       return;
     }
-    
+
     setDisplayedText(currentText.substring(0, index + 1));
-    
+
     timeoutRef.current = setTimeout(() => {
       typeNextChar(currentText, index + 1);
     }, typingSpeed);
@@ -101,53 +106,52 @@ const useTypewriterEffect = (text, typingSpeed = 30) => {
     setDisplayedText('');
     setIsComplete(false);
     textRef.current = processedText;
-    
+
     if (!text) return;
-    
+
     // タイムアウトをクリア
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current);
     }
-    
+
     // 最初の文字から表示開始
     typeNextChar(processedText, 0);
-    
+
     return () => {
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current);
       }
     };
-  }, [text, typingSpeed , processedText]);
-  
-  return { displayedText, isComplete, completeText  };
+  }, [text, typingSpeed, processedText]);
+
+  return { displayedText, isComplete, completeText };
 };
 
-const TextBox = ({ 
-    speaker, 
-    text, 
-    typingSpeed = 30 ,
-    onAdvance, 
-    effects = {},
-    onComplete, // テキスト完了時のコールバック
-    onRequestComplete // テキスト強制完了のリクエスト関数を渡すコールバック
-  }) => {
+const TextBox = ({
+  speaker,
+  text,
+  typingSpeed = 30,
+  onAdvance,
+  effects = {},
+  onComplete, // テキスト完了時のコールバック
+  onRequestComplete, // テキスト強制完了のリクエスト関数を渡すコールバック
+}) => {
+  const { displayedText, isComplete, completeText } = useTypewriterEffect(text, typingSpeed);
 
-  const { displayedText, isComplete, completeText  } = useTypewriterEffect(text, typingSpeed);
-  
   // テキスト完了時にコールバック
   useEffect(() => {
     if (isComplete && onComplete) {
       onComplete();
     }
   }, [isComplete, onComplete]);
-  
+
   // 強制完了関数を親に提供
   useEffect(() => {
     if (onRequestComplete) {
       onRequestComplete(completeText);
     }
   }, [completeText, onRequestComplete]);
-  
+
   const handleClick = () => {
     if (!isComplete) {
       // テキストが完全に表示されていない場合は、即座に全テキストを表示
@@ -165,21 +169,19 @@ const TextBox = ({
     ...(effects?.textColor && { color: effects.textColor }),
     ...(effects?.textSize && { fontSize: `${effects.textSize}em` }),
     ...(effects?.textStyle === 'bold' && { fontWeight: 'bold' }),
-    ...(effects?.textStyle === 'italic' && { fontStyle: 'italic' })
+    ...(effects?.textStyle === 'italic' && { fontStyle: 'italic' }),
   };
 
   return (
-    <TextBoxContainer className={effects?.shake ? "shake-animation" : ""} onClick={handleClick}>
+    <TextBoxContainer className={effects?.shake ? 'shake-animation' : ''} onClick={handleClick}>
       {speaker && (
         <SpeakerNameBox>
           <SpeakerName>{speaker}</SpeakerName>
         </SpeakerNameBox>
       )}
-      
-      <TextContent hasName={!!speaker}>
-        {displayedText}
-      </TextContent>
-      
+
+      <TextContent hasName={!!speaker}>{displayedText}</TextContent>
+
       {isComplete && <ContinueIndicator>▼</ContinueIndicator>}
     </TextBoxContainer>
   );

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
+// import styled from 'styled-components';
 import { useGame } from '../../contexts/GameContext';
 
 // スタイル付きコンポーネント
@@ -25,7 +25,7 @@ const Title = styled.h2`
   font-size: 1.8rem;
   color: #a0e0ff;
   margin: 0;
-  
+
   @media (max-width: 767px) {
     font-size: 1.4rem;
   }
@@ -39,7 +39,7 @@ const CloseButton = styled.button`
   border-radius: 4px;
   font-size: 0.9rem;
   cursor: pointer;
-  
+
   &:hover {
     background-color: rgba(150, 150, 150, 0.9);
   }
@@ -49,26 +49,29 @@ const SlotsContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 1rem;
-  
+
   @media (max-width: 767px) {
     grid-template-columns: 1fr;
   }
 `;
 
 const SaveSlot = styled.div`
-  border: 1px solid ${props => props.isSelected ? '#a0e0ff' : 'rgba(100, 180, 255, 0.3)'};
+  border: 1px solid ${(props) => (props.isSelected ? '#a0e0ff' : 'rgba(100, 180, 255, 0.3)')};
   border-radius: 5px;
   padding: 1rem;
-  background-color: ${props => props.isSelected ? 'rgba(0, 50, 100, 0.6)' : 'rgba(0, 30, 60, 0.6)'};
+  background-color: ${(props) =>
+    props.isSelected ? 'rgba(0, 50, 100, 0.6)' : 'rgba(0, 30, 60, 0.6)'};
   cursor: pointer;
   transition: all 0.2s ease;
-  
+
   &:hover {
     background-color: rgba(0, 50, 100, 0.6);
     border-color: rgba(100, 180, 255, 0.6);
   }
-  
-  ${props => props.isEmpty && `
+
+  ${(props) =>
+    props.isEmpty &&
+    `
     border-style: dashed;
     background-color: rgba(30, 30, 40, 0.6);
     
@@ -87,7 +90,7 @@ const SlotHeader = styled.div`
 const SlotTitle = styled.h3`
   margin: 0;
   font-size: 1.2rem;
-  color: ${props => props.isEmpty ? '#888' : 'white'};
+  color: ${(props) => (props.isEmpty ? '#888' : 'white')};
 `;
 
 const SlotDate = styled.span`
@@ -102,7 +105,7 @@ const SlotContent = styled.div`
 `;
 
 const SlotInfo = styled.div`
-  color: ${props => props.isEmpty ? '#888' : '#ddd'};
+  color: ${(props) => (props.isEmpty ? '#888' : '#ddd')};
   font-size: 0.9rem;
 `;
 
@@ -122,11 +125,11 @@ const SlotButton = styled.button`
   font-size: 0.9rem;
   cursor: pointer;
   transition: all 0.2s ease;
-  
+
   &:hover {
     background-color: rgba(0, 120, 200, 0.9);
   }
-  
+
   &:disabled {
     background-color: rgba(70, 70, 70, 0.5);
     cursor: not-allowed;
@@ -135,7 +138,7 @@ const SlotButton = styled.button`
 
 const DeleteButton = styled(SlotButton)`
   background-color: rgba(150, 50, 50, 0.7);
-  
+
   &:hover {
     background-color: rgba(200, 70, 70, 0.9);
   }
@@ -157,7 +160,7 @@ const DEFAULT_EMPTY_SLOTS = 6;
  */
 const formatDate = (dateString) => {
   if (!dateString) return '';
-  
+
   try {
     const date = new Date(dateString);
     return new Intl.DateTimeFormat('ja-JP', {
@@ -175,30 +178,16 @@ const formatDate = (dateString) => {
 /**
  * セーブスロットコンポーネント
  */
-const SaveSlotItem = ({ 
-  slot, 
-  isSelected, 
-  onSelect, 
-  onSave, 
-  onLoad, 
-  onDelete,
-  mode
-}) => {
+const SaveSlotItem = ({ slot, isSelected, onSelect, onSave, onLoad, onDelete, mode }) => {
   const isEmpty = !slot.date;
-  
+
   return (
-    <SaveSlot 
-      isEmpty={isEmpty} 
-      isSelected={isSelected}
-      onClick={() => onSelect(slot.id)}
-    >
+    <SaveSlot isEmpty={isEmpty} isSelected={isSelected} onClick={() => onSelect(slot.id)}>
       <SlotHeader>
-        <SlotTitle isEmpty={isEmpty}>
-          {`スロット ${slot.id}`}
-        </SlotTitle>
+        <SlotTitle isEmpty={isEmpty}>{`スロット ${slot.id}`}</SlotTitle>
         {!isEmpty && <SlotDate>{formatDate(slot.date)}</SlotDate>}
       </SlotHeader>
-      
+
       <SlotContent>
         {isEmpty ? (
           <EmptySlotText>空のスロット</EmptySlotText>
@@ -207,19 +196,21 @@ const SaveSlotItem = ({
             <SlotInfo>シーン: {slot.sceneName || '不明'}</SlotInfo>
           </>
         )}
-        
+
         <SlotButtons>
           {mode === 'save' && (
-            <SlotButton onClick={(e) => {
-              e.stopPropagation();
-              onSave(slot.id);
-            }}>
+            <SlotButton
+              onClick={(e) => {
+                e.stopPropagation();
+                onSave(slot.id);
+              }}
+            >
               保存
             </SlotButton>
           )}
-          
+
           {mode === 'load' && (
-            <SlotButton 
+            <SlotButton
               onClick={(e) => {
                 e.stopPropagation();
                 onLoad(slot.id);
@@ -229,12 +220,14 @@ const SaveSlotItem = ({
               読み込み
             </SlotButton>
           )}
-          
+
           {!isEmpty && (
-            <DeleteButton onClick={(e) => {
-              e.stopPropagation();
-              onDelete(slot.id);
-            }}>
+            <DeleteButton
+              onClick={(e) => {
+                e.stopPropagation();
+                onDelete(slot.id);
+              }}
+            >
               削除
             </DeleteButton>
           )}
@@ -251,83 +244,84 @@ const SaveLoadMenu = ({ mode = 'save', onClose }) => {
   const { gameStateManager, saveGame, loadGame } = useGame();
   const [saveSlots, setSaveSlots] = useState([]);
   const [selectedSlot, setSelectedSlot] = useState(null);
-  
+
   // セーブスロットを取得
   useEffect(() => {
     const slots = gameStateManager.getSaveSlots();
-    
+
     // スロットIDを数値に変換してソート
     const sortedSlots = slots
-      .filter(slot => slot.id !== 'auto' && slot.id !== 'quick')
+      .filter((slot) => slot.id !== 'auto' && slot.id !== 'quick')
       .sort((a, b) => {
         const aNum = parseInt(a.id, 10);
         const bNum = parseInt(b.id, 10);
-        
+
         // 数値でない場合は文字列としてソート
         if (isNaN(aNum) || isNaN(bNum)) {
           return a.id.localeCompare(b.id);
         }
-        
+
         return aNum - bNum;
       });
-    
+
     // デフォルトのスロットを追加
-    const maxSlotNum = sortedSlots.length > 0 
-      ? Math.max(...sortedSlots.map(slot => parseInt(slot.id, 10) || 0))
-      : 0;
-    
+    const maxSlotNum =
+      sortedSlots.length > 0
+        ? Math.max(...sortedSlots.map((slot) => parseInt(slot.id, 10) || 0))
+        : 0;
+
     const totalSlots = Math.max(maxSlotNum, DEFAULT_EMPTY_SLOTS);
-    
+
     const allSlots = [];
     for (let i = 1; i <= totalSlots; i++) {
-      const existingSlot = sortedSlots.find(slot => parseInt(slot.id, 10) === i);
-      
+      const existingSlot = sortedSlots.find((slot) => parseInt(slot.id, 10) === i);
+
       if (existingSlot) {
         allSlots.push(existingSlot);
       } else {
         allSlots.push({ id: String(i) });
       }
     }
-    
+
     setSaveSlots(allSlots);
-    
+
     // 最初のスロットを選択
     if (allSlots.length > 0 && !selectedSlot) {
       setSelectedSlot(allSlots[0].id);
     }
   }, [gameStateManager, selectedSlot]);
-  
+
   // スロットを選択
   const handleSelectSlot = (slotId) => {
     setSelectedSlot(slotId);
   };
-  
+
   // ゲームをセーブ
   const handleSaveGame = (slotId) => {
     const success = saveGame(slotId);
-    
+
     if (success) {
       // セーブスロットを更新
       const slots = gameStateManager.getSaveSlots();
-      const updatedSlots = saveSlots.map(slot => {
+      const updatedSlots = saveSlots.map((slot) => {
         if (slot.id === slotId) {
-          const updatedSlot = slots.find(s => s.id === slotId);
+          const updatedSlot = slots.find((s) => s.id === slotId);
           return updatedSlot || slot;
         }
         return slot;
       });
-      
+
       setSaveSlots(updatedSlots);
       alert(`スロット ${slotId} にセーブしました`);
     } else {
       alert('セーブに失敗しました');
     }
   };
-  
+
   // ゲームをロード
   const handleLoadGame = async (slotId) => {
     const success = await loadGame(slotId);
-    
+
     if (success) {
       alert(`スロット ${slotId} からロードしました`);
       onClose();
@@ -335,37 +329,39 @@ const SaveLoadMenu = ({ mode = 'save', onClose }) => {
       alert('ロードに失敗しました');
     }
   };
-  
+
   // セーブデータを削除
   const handleDeleteSave = (slotId) => {
     if (window.confirm(`スロット ${slotId} のセーブデータを削除しますか？`)) {
       const success = gameStateManager.deleteSave(slotId);
-      
+
       if (success) {
         // セーブスロットを更新
-        setSaveSlots(saveSlots.map(slot => {
-          if (slot.id === slotId) {
-            return { id: slot.id };
-          }
-          return slot;
-        }));
-        
+        setSaveSlots(
+          saveSlots.map((slot) => {
+            if (slot.id === slotId) {
+              return { id: slot.id };
+            }
+            return slot;
+          })
+        );
+
         alert(`スロット ${slotId} のセーブデータを削除しました`);
       } else {
         alert('削除に失敗しました');
       }
     }
   };
-  
+
   return (
     <SaveLoadContainer>
       <HeaderContainer>
         <Title>{mode === 'save' ? 'セーブ' : 'ロード'}</Title>
         <CloseButton onClick={onClose}>閉じる</CloseButton>
       </HeaderContainer>
-      
+
       <SlotsContainer>
-        {saveSlots.map(slot => (
+        {saveSlots.map((slot) => (
           <SaveSlotItem
             key={slot.id}
             slot={slot}

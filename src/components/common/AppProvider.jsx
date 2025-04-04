@@ -9,9 +9,7 @@ import { AudioProvider } from '../../contexts/AudioContext';
 const AppProvider = ({ children }) => {
   return (
     <AudioProvider>
-      <GameProvider>
-        {children}
-      </GameProvider>
+      <GameProvider>{children}</GameProvider>
     </AudioProvider>
   );
 };

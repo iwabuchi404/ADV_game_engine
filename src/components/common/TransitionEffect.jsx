@@ -40,10 +40,10 @@ const TransitionOverlay = styled.div`
   width: 100%;
   height: 100%;
   z-index: 1000;
-  pointer-events: ${props => props.blocking ? 'auto' : 'none'};
-  
+  pointer-events: ${(props) => (props.blocking ? 'auto' : 'none')};
+
   /* トランジションタイプに応じたスタイル */
-  ${props => {
+  ${(props) => {
     switch (props.type) {
       case 'fade':
         return `
@@ -68,8 +68,8 @@ const TransitionOverlay = styled.div`
         `;
     }
   }}
-  
-  opacity: ${props => props.state === 'complete' ? '0' : props.opacity || '1'};
+
+  opacity: ${(props) => (props.state === 'complete' ? '0' : props.opacity || '1')};
 `;
 
 /**
@@ -87,41 +87,41 @@ const TransitionEffect = ({
   onComplete = () => {},
   blocking = true,
   customColor,
-  active = true
+  active = true,
 }) => {
   // トランジションの状態（'in', 'out', 'complete'）
   const [state, setState] = useState(active ? 'in' : 'complete');
-  
+
   useEffect(() => {
     if (!active) {
       setState('complete');
       return;
     }
-    
+
     // トランジション開始
     setState('in');
-    
+
     // 指定した時間後にフェードアウト
     const inTimeout = setTimeout(() => {
       setState('out');
-      
+
       // フェードアウト後に完了状態に
       const outTimeout = setTimeout(() => {
         setState('complete');
         onComplete();
       }, duration);
-      
+
       return () => clearTimeout(outTimeout);
     }, duration);
-    
+
     return () => clearTimeout(inTimeout);
   }, [active, duration, onComplete]);
-  
+
   // 完了状態ならレンダリングしない
   if (state === 'complete' && !active) {
     return null;
   }
-  
+
   return (
     <TransitionOverlay
       type={type}

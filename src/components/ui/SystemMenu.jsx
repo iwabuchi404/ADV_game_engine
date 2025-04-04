@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+// import styled from 'styled-components';
 
 // スタイル付きコンポーネント
 const MenuOverlay = styled.div`
@@ -32,7 +32,7 @@ const MenuTitle = styled.h2`
   margin-bottom: 1.5rem;
   text-align: center;
   text-shadow: 0 0 5px rgba(0, 150, 255, 0.5);
-  
+
   @media (max-width: 767px) {
     font-size: 1.4rem;
   }
@@ -53,16 +53,16 @@ const MenuButton = styled.button`
   font-size: 1.1rem;
   cursor: pointer;
   transition: all 0.2s ease;
-  
+
   &:hover {
     background-color: rgba(0, 120, 200, 0.9);
     transform: translateY(-2px);
   }
-  
+
   &:active {
     transform: translateY(0);
   }
-  
+
   @media (max-width: 767px) {
     font-size: 1rem;
     padding: 0.7rem 1.2rem;
@@ -72,7 +72,7 @@ const MenuButton = styled.button`
 const CloseButton = styled(MenuButton)`
   background-color: rgba(100, 100, 100, 0.7);
   margin-top: 1rem;
-  
+
   &:hover {
     background-color: rgba(150, 150, 150, 0.9);
   }
@@ -80,7 +80,7 @@ const CloseButton = styled(MenuButton)`
 
 const WarningButton = styled(MenuButton)`
   background-color: rgba(150, 50, 50, 0.7);
-  
+
   &:hover {
     background-color: rgba(200, 70, 70, 0.9);
   }
@@ -91,7 +91,7 @@ const SystemMenu = ({ onSave, onLoad, onConfig, onBackToTitle, onClose }) => {
     <MenuOverlay className="fade-in">
       <MenuContainer className="slide-up">
         <MenuTitle>メニュー</MenuTitle>
-        
+
         <MenuButtonsContainer>
           <MenuButton onClick={onSave}>セーブ</MenuButton>
           <MenuButton onClick={onLoad}>ロード</MenuButton>

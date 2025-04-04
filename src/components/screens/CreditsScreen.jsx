@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+// import styled from 'styled-components';
 
 // スタイル付きコンポーネント
 const CreditsContainer = styled.div`
@@ -14,7 +14,7 @@ const CreditsContainer = styled.div`
   overflow-y: auto;
   padding: 2rem;
   color: #fff;
-  
+
   &::before {
     content: '';
     position: absolute;
@@ -23,7 +23,7 @@ const CreditsContainer = styled.div`
     width: 100%;
     height: 100%;
     background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.9)),
-                url('/assets/images/backgrounds/credits_bg.jpg');
+      url('/assets/images/backgrounds/credits_bg.jpg');
     background-size: cover;
     background-position: center;
     opacity: 0.4;
@@ -44,7 +44,7 @@ const CreditsTitle = styled.h1`
   text-align: center;
   color: #a0e0ff;
   text-shadow: 0 0 10px rgba(0, 150, 255, 0.7);
-  
+
   @media (max-width: 767px) {
     font-size: 1.8rem;
   }
@@ -60,7 +60,7 @@ const SectionTitle = styled.h2`
   color: #a0e0ff;
   border-bottom: 1px solid rgba(160, 224, 255, 0.3);
   padding-bottom: 0.5rem;
-  
+
   @media (max-width: 767px) {
     font-size: 1.2rem;
   }
@@ -75,7 +75,7 @@ const CreditsItem = styled.li`
   margin-bottom: 0.5rem;
   display: flex;
   justify-content: space-between;
-  
+
   @media (max-width: 767px) {
     flex-direction: column;
     margin-bottom: 1rem;
@@ -105,7 +105,7 @@ const BackButton = styled.button`
   cursor: pointer;
   transition: all 0.3s ease;
   z-index: 10;
-  
+
   &:hover {
     background-color: rgba(0, 150, 255, 0.9);
   }
@@ -116,7 +116,7 @@ const CreditsScreen = ({ onBack }) => {
     <CreditsContainer className="fade-in">
       <CreditsContent>
         <CreditsTitle>AIの鏡像 クレジット</CreditsTitle>
-        
+
         <CreditsSection>
           <SectionTitle>制作</SectionTitle>
           <CreditsList>
@@ -142,7 +142,7 @@ const CreditsScreen = ({ onBack }) => {
             </CreditsItem>
           </CreditsList>
         </CreditsSection>
-        
+
         <CreditsSection>
           <SectionTitle>使用素材</SectionTitle>
           <CreditsList>
@@ -156,19 +156,18 @@ const CreditsScreen = ({ onBack }) => {
             </CreditsItem>
           </CreditsList>
         </CreditsSection>
-        
-        
+
         <CreditsSection>
           <SectionTitle>謝辞</SectionTitle>
           <p></p>
         </CreditsSection>
-        
+
         <CreditsSection>
           <SectionTitle>著作権</SectionTitle>
           <p>© 2025 AIの鏡像 開発チーム All Rights Reserved.</p>
         </CreditsSection>
       </CreditsContent>
-      
+
       <BackButton onClick={onBack}>戻る</BackButton>
     </CreditsContainer>
   );

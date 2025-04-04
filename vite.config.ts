@@ -9,4 +9,12 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
     },
   },
+  server: {
+    fs: {
+      allow: ['./'], // プロジェクトルートを明示的に許可
+    },
+    headers: {
+      'Accept-Encoding': 'gzip, deflate, br',
+    },
+  },
 });

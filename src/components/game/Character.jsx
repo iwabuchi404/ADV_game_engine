@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+// import styled from 'styled-components';
 
 // 位置に応じたスタイルを計算する関数
 const getPositionStyle = (position) => {
@@ -7,22 +7,22 @@ const getPositionStyle = (position) => {
     case 'left':
       return {
         left: '25%',
-        transform: 'translateX(-50%)'
+        transform: 'translateX(-50%)',
       };
     case 'center':
       return {
         left: '50%',
-        transform: 'translateX(-50%)'
+        transform: 'translateX(-50%)',
       };
     case 'right':
       return {
         right: '25%',
-        transform: 'translateX(50%)'
+        transform: 'translateX(50%)',
       };
     default:
       return {
         left: '50%',
-        transform: 'translateX(-50%)'
+        transform: 'translateX(-50%)',
       };
   }
 };
@@ -38,8 +38,8 @@ const CharacterContainer = styled.div`
   justify-content: center;
   align-items: flex-end;
   transition: all 0.5s ease-in-out;
-  
-  ${props => getPositionStyle(props.position)}
+
+  ${(props) => getPositionStyle(props.position)}
 `;
 
 const CharacterImage = styled.img`
@@ -51,19 +51,13 @@ const CharacterImage = styled.img`
 
 const Character = ({ name, image, position = 'center', expression = 'neutral' }) => {
   // 画像パスの生成
-  const imagePath = image 
-    ? `/assets/images/characters/${image}` 
+  const imagePath = image
+    ? `/assets/images/characters/${image}`
     : `/assets/images/characters/${name}_${expression}.png`;
 
   return (
-    <CharacterContainer 
-      position={position}
-      className="fade-in"
-    >
-      <CharacterImage 
-        src={imagePath} 
-        alt={name}
-      />
+    <CharacterContainer position={position} className="fade-in">
+      <CharacterImage src={imagePath} alt={name} />
     </CharacterContainer>
   );
 };

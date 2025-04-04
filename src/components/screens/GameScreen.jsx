@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import styled from 'styled-components';
+// import styled from 'styled-components';
 import Background from '../game/Background';
 import Character from '../game/Character';
 import TextBox from '../game/TextBox';
@@ -29,7 +29,7 @@ const MenuButton = styled.button`
   border-radius: 4px;
   cursor: pointer;
   z-index: 100;
-  
+
   &:hover {
     background-color: rgba(0, 0, 0, 0.7);
   }
@@ -37,13 +37,7 @@ const MenuButton = styled.button`
 
 const GameScreen = ({ onBackToTitle }) => {
   // GameContextからゲーム状態と関数を取得
-  const { 
-    gameState, 
-    advanceText, 
-    selectChoice,
-    loadScenario,
-    startNewGame
-  } = useGame();
+  const { gameState, advanceText, selectChoice, loadScenario, startNewGame } = useGame();
 
   const audio = useAudio();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -63,7 +57,7 @@ const GameScreen = ({ onBackToTitle }) => {
           if (newBgm !== currentBgmRef.current) {
             await audio.playBGM(newBgm, {
               fadeIn: true,
-              fadeInDuration: 2000
+              fadeInDuration: 2000,
             });
             currentBgmRef.current = newBgm;
           }
@@ -98,23 +92,23 @@ const GameScreen = ({ onBackToTitle }) => {
       startNewGame('prologue');
     }
   }, [gameState.hasStarted, startNewGame]);
-  
+
   // 選択肢が選ばれたときの処理
   const handleChoiceSelected = (choice, index) => {
     console.log(`選択: ${choice.text}, インデックス: ${index}`);
     selectChoice(index);
   };
-  
+
   // メニューの表示/非表示を切り替える
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
-  
+
   // テキスト完了時のコールバック
   const handleTextComplete = () => {
     setIsTextComplete(true);
   };
-  
+
   // テキスト強制完了関数を保存
   const handleRequestComplete = (completeFn) => {
     completeTextFn.current = completeFn;
@@ -159,17 +153,18 @@ const GameScreen = ({ onBackToTitle }) => {
   return (
     <GameScreenContainer onClick={handleScreenClick}>
       <Background image={gameState.background} />
-      
-      {gameState.characters && gameState.characters.map((char, index) => (
-        <Character
-          key={index}
-          name={char.name}
-          image={char.image}
-          position={char.position}
-          expression={char.expression}
-        />
-      ))}
-      
+
+      {gameState.characters &&
+        gameState.characters.map((char, index) => (
+          <Character
+            key={index}
+            name={char.name}
+            image={char.image}
+            position={char.position}
+            expression={char.expression}
+          />
+        ))}
+
       <TextBox
         speaker={gameState.speaker}
         text={gameState.text}
@@ -178,16 +173,16 @@ const GameScreen = ({ onBackToTitle }) => {
         onComplete={handleTextComplete}
         onRequestComplete={handleRequestComplete}
       />
-      
+
       {gameState.choices && gameState.choices.length > 0 && (
-        <ChoiceMenu 
-          choices={gameState.choices} 
-          onChoiceSelected={(choice, index) => handleChoiceSelected(choice, index)} 
+        <ChoiceMenu
+          choices={gameState.choices}
+          onChoiceSelected={(choice, index) => handleChoiceSelected(choice, index)}
         />
       )}
-      
+
       <MenuButton onClick={toggleMenu}>メニュー</MenuButton>
-      
+
       {isMenuOpen && (
         <SystemMenu
           onSave={() => console.log('セーブ')}

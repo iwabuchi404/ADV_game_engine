@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
+// import styled from 'styled-components';
 import { useGame } from '../../contexts/GameContext';
 import { useAudio } from '../../contexts/AudioContext';
 
@@ -26,7 +26,7 @@ const Title = styled.h2`
   font-size: 1.8rem;
   color: #a0e0ff;
   margin: 0;
-  
+
   @media (max-width: 767px) {
     font-size: 1.4rem;
   }
@@ -40,7 +40,7 @@ const CloseButton = styled.button`
   border-radius: 4px;
   font-size: 0.9rem;
   cursor: pointer;
-  
+
   &:hover {
     background-color: rgba(150, 150, 150, 0.9);
   }
@@ -50,7 +50,7 @@ const ConfigSection = styled.div`
   margin-bottom: 2rem;
   border-bottom: 1px solid rgba(100, 180, 255, 0.3);
   padding-bottom: 1.5rem;
-  
+
   &:last-child {
     border-bottom: none;
     margin-bottom: 0;
@@ -62,7 +62,7 @@ const SectionTitle = styled.h3`
   font-size: 1.3rem;
   color: #a0e0ff;
   margin: 0 0 1rem 0;
-  
+
   @media (max-width: 767px) {
     font-size: 1.1rem;
   }
@@ -73,7 +73,7 @@ const SettingRow = styled.div`
   align-items: center;
   justify-content: space-between;
   margin-bottom: 1rem;
-  
+
   @media (max-width: 767px) {
     flex-direction: column;
     align-items: flex-start;
@@ -83,7 +83,7 @@ const SettingRow = styled.div`
 
 const SettingLabel = styled.div`
   font-size: 1rem;
-  
+
   @media (max-width: 767px) {
     font-size: 0.9rem;
   }
@@ -93,7 +93,7 @@ const SettingControl = styled.div`
   display: flex;
   align-items: center;
   gap: 1rem;
-  
+
   @media (max-width: 767px) {
     width: 100%;
   }
@@ -101,14 +101,15 @@ const SettingControl = styled.div`
 
 const Slider = styled.input`
   width: 200px;
-  
+
   @media (max-width: 767px) {
     width: 100%;
   }
 `;
 
 const ToggleButton = styled.button`
-  background-color: ${props => props.active ? 'rgba(0, 150, 255, 0.7)' : 'rgba(70, 70, 70, 0.7)'};
+  background-color: ${(props) =>
+    props.active ? 'rgba(0, 150, 255, 0.7)' : 'rgba(70, 70, 70, 0.7)'};
   color: white;
   border: none;
   padding: 0.5rem 1rem;
@@ -116,24 +117,28 @@ const ToggleButton = styled.button`
   font-size: 0.9rem;
   cursor: pointer;
   min-width: 80px;
-  
+
   &:hover {
-    background-color: ${props => props.active ? 'rgba(0, 180, 255, 0.9)' : 'rgba(100, 100, 100, 0.9)'};
+    background-color: ${(props) =>
+      props.active ? 'rgba(0, 180, 255, 0.9)' : 'rgba(100, 100, 100, 0.9)'};
   }
 `;
 
 const SelectButton = styled.button`
-  background-color: ${props => props.selected ? 'rgba(0, 150, 255, 0.7)' : 'rgba(30, 30, 50, 0.7)'};
+  background-color: ${(props) =>
+    props.selected ? 'rgba(0, 150, 255, 0.7)' : 'rgba(30, 30, 50, 0.7)'};
   color: white;
-  border: 1px solid ${props => props.selected ? 'rgba(100, 180, 255, 0.8)' : 'rgba(100, 100, 100, 0.3)'};
+  border: 1px solid
+    ${(props) => (props.selected ? 'rgba(100, 180, 255, 0.8)' : 'rgba(100, 100, 100, 0.3)')};
   padding: 0.5rem 1rem;
   border-radius: 4px;
   font-size: 0.9rem;
   cursor: pointer;
   min-width: 80px;
-  
+
   &:hover {
-    background-color: ${props => props.selected ? 'rgba(0, 180, 255, 0.9)' : 'rgba(50, 50, 80, 0.9)'};
+    background-color: ${(props) =>
+      props.selected ? 'rgba(0, 180, 255, 0.9)' : 'rgba(50, 50, 80, 0.9)'};
     border-color: rgba(100, 180, 255, 0.5);
   }
 `;
@@ -141,7 +146,7 @@ const SelectButton = styled.button`
 const ButtonGroup = styled.div`
   display: flex;
   gap: 0.5rem;
-  
+
   @media (max-width: 767px) {
     width: 100%;
     justify-content: space-between;
@@ -159,21 +164,21 @@ const SliderValue = styled.span`
 const ConfigMenu = ({ onClose }) => {
   const { gameSettings, updateSettings } = useGame();
   const audio = useAudio();
-  
+
   // テキスト速度のプリセット
   const textSpeedPresets = [
     { label: '遅い', value: 50 },
     { label: '普通', value: 30 },
-    { label: '速い', value: 15 }
+    { label: '速い', value: 15 },
   ];
-  
+
   // オート速度のプリセット
   const autoSpeedPresets = [
     { label: '遅い', value: 3000 },
     { label: '普通', value: 2000 },
-    { label: '速い', value: 1000 }
+    { label: '速い', value: 1000 },
   ];
-  
+
   // ローカルステートでUI表示を管理
   const [settings, setSettings] = useState({
     textSpeed: gameSettings.textSpeed,
@@ -183,53 +188,53 @@ const ConfigMenu = ({ onClose }) => {
     showAlreadyRead: gameSettings.showAlreadyRead,
     bgmVolume: audio.bgmVolume * 100,
     sfxVolume: audio.sfxVolume * 100,
-    isMuted: audio.isMuted
+    isMuted: audio.isMuted,
   });
-  
+
   // 設定を更新
   const handleUpdateSettings = (key, value) => {
-    setSettings(prev => ({
+    setSettings((prev) => ({
       ...prev,
-      [key]: value
+      [key]: value,
     }));
-    
+
     if (['textSpeed', 'autoSpeed', 'isAutoMode', 'isSkipMode', 'showAlreadyRead'].includes(key)) {
       updateSettings({ [key]: value });
     }
-    
+
     if (key === 'bgmVolume') {
       audio.setBGMVolume(value / 100);
     }
-    
+
     if (key === 'sfxVolume') {
       audio.setSFXVolume(value / 100);
     }
-    
+
     if (key === 'isMuted') {
       audio.toggleMute();
     }
   };
-  
+
   // テキスト速度のプリセットを選択
   const selectTextSpeedPreset = (value) => {
     handleUpdateSettings('textSpeed', value);
   };
-  
+
   // オート速度のプリセットを選択
   const selectAutoSpeedPreset = (value) => {
     handleUpdateSettings('autoSpeed', value);
   };
-  
+
   return (
     <ConfigContainer>
       <HeaderContainer>
         <Title>設定</Title>
         <CloseButton onClick={onClose}>閉じる</CloseButton>
       </HeaderContainer>
-      
+
       <ConfigSection>
         <SectionTitle>テキスト設定</SectionTitle>
-        
+
         <SettingRow>
           <SettingLabel>テキスト表示速度</SettingLabel>
           <SettingControl>
@@ -243,11 +248,11 @@ const ConfigMenu = ({ onClose }) => {
             <SliderValue>{settings.textSpeed}ms</SliderValue>
           </SettingControl>
         </SettingRow>
-        
+
         <SettingRow>
           <SettingLabel>プリセット</SettingLabel>
           <ButtonGroup>
-            {textSpeedPresets.map(preset => (
+            {textSpeedPresets.map((preset) => (
               <SelectButton
                 key={preset.label}
                 selected={settings.textSpeed === preset.value}
@@ -258,7 +263,7 @@ const ConfigMenu = ({ onClose }) => {
             ))}
           </ButtonGroup>
         </SettingRow>
-        
+
         <SettingRow>
           <SettingLabel>オート時の待機時間</SettingLabel>
           <SettingControl>
@@ -273,11 +278,11 @@ const ConfigMenu = ({ onClose }) => {
             <SliderValue>{(settings.autoSpeed / 1000).toFixed(1)}秒</SliderValue>
           </SettingControl>
         </SettingRow>
-        
+
         <SettingRow>
           <SettingLabel>プリセット</SettingLabel>
           <ButtonGroup>
-            {autoSpeedPresets.map(preset => (
+            {autoSpeedPresets.map((preset) => (
               <SelectButton
                 key={preset.label}
                 selected={settings.autoSpeed === preset.value}
@@ -288,7 +293,7 @@ const ConfigMenu = ({ onClose }) => {
             ))}
           </ButtonGroup>
         </SettingRow>
-        
+
         <SettingRow>
           <SettingLabel>既読テキストの表示</SettingLabel>
           <ToggleButton
@@ -299,10 +304,10 @@ const ConfigMenu = ({ onClose }) => {
           </ToggleButton>
         </SettingRow>
       </ConfigSection>
-      
+
       <ConfigSection>
         <SectionTitle>オーディオ設定</SectionTitle>
-        
+
         <SettingRow>
           <SettingLabel>BGM音量</SettingLabel>
           <SettingControl>
@@ -317,7 +322,7 @@ const ConfigMenu = ({ onClose }) => {
             <SliderValue>{settings.bgmVolume}%</SliderValue>
           </SettingControl>
         </SettingRow>
-        
+
         <SettingRow>
           <SettingLabel>効果音音量</SettingLabel>
           <SettingControl>
@@ -332,7 +337,7 @@ const ConfigMenu = ({ onClose }) => {
             <SliderValue>{settings.sfxVolume}%</SliderValue>
           </SettingControl>
         </SettingRow>
-        
+
         <SettingRow>
           <SettingLabel>ミュート</SettingLabel>
           <ToggleButton
@@ -343,10 +348,10 @@ const ConfigMenu = ({ onClose }) => {
           </ToggleButton>
         </SettingRow>
       </ConfigSection>
-      
+
       <ConfigSection>
         <SectionTitle>プレイモード</SectionTitle>
-        
+
         <SettingRow>
           <SettingLabel>オートモード</SettingLabel>
           <ToggleButton
@@ -362,7 +367,7 @@ const ConfigMenu = ({ onClose }) => {
             {settings.isAutoMode ? 'ON' : 'OFF'}
           </ToggleButton>
         </SettingRow>
-        
+
         <SettingRow>
           <SettingLabel>スキップモード</SettingLabel>
           <ToggleButton
