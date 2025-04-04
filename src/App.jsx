@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+// import styled from 'styled-components';
 import TitleScreen from './components/screens/TitleScreen';
 import GameScreen from './components/screens/GameScreen';
 import CreditsScreen from './components/screens/CreditsScreen';
@@ -24,7 +24,7 @@ const GameContainer = styled.div`
   max-height: 720px;
   position: relative;
   aspect-ratio: 16 / 9;
-  
+
   @media (max-width: 767px) {
     max-width: 100%;
     max-height: 100%;
@@ -48,21 +48,19 @@ function App() {
 const MainContent = () => {
   // ゲームコンテキストを使用
   const { gameState, startNewGame } = useGame();
-  
+
   // 現在表示する画面を選択
   const renderScreen = () => {
     if (!gameState.hasStarted) {
       return <TitleScreen onStartGame={() => startNewGame('prologue')} />;
     }
-    
+
     return <GameScreen />;
   };
-  
+
   return (
     <AppContainer>
-      <GameContainer>
-        {renderScreen()}
-      </GameContainer>
+      <GameContainer>{renderScreen()}</GameContainer>
     </AppContainer>
   );
 };

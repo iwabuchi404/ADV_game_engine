@@ -1,0 +1,33 @@
+# EditorConfig is awesome: https://EditorConfig.org
+
+# トップレベルのEditorConfigファイル
+root = true
+
+# すべてのファイル
+[*]
+charset = utf-8
+end_of_line = lf
+indent_style = space
+indent_size = 2
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+# マークダウンファイル
+[*.md]
+trim_trailing_whitespace = false
+
+# Javaスクリプト/TypeScript関連ファイル
+[*.{js,jsx,ts,tsx,json}]
+indent_size = 2
+
+# スタイルシート関連ファイル
+[*.{css,scss,sass}]
+indent_size = 2
+
+# HTMLファイル
+[*.{html,htm}]
+indent_size = 2
+
+# ビルドやymlファイル
+[*.{yml,yaml}]
+indent_size = 2
