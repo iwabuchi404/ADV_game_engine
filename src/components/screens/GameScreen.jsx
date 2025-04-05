@@ -9,31 +9,31 @@ import { useGame } from '../../contexts/GameContext';
 import { useAudio } from '../../contexts/AudioContext';
 
 // スタイル付きコンポーネント
-const GameScreenContainer = styled.div`
-  width: 100%;
-  height: 100%;
-  position: relative;
-  overflow: hidden;
-`;
+// const GameScreenContainer = styled.div`
+//   width: 100%;
+//   height: 100%;
+//   position: relative;
+//   overflow: hidden;
+// `;
 
-const MenuButton = styled.button`
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  background-color: rgba(0, 0, 0, 0.5);
-  border-radius: 4px;
-  border: 1px solid rgb(51, 68, 87);
-  color: white;
-  border: none;
-  padding: 8px 16px;
-  border-radius: 4px;
-  cursor: pointer;
-  z-index: 100;
+// const MenuButton = styled.button`
+//   position: absolute;
+//   top: 20px;
+//   right: 20px;
+//   background-color: rgba(0, 0, 0, 0.5);
+//   border-radius: 4px;
+//   border: 1px solid rgb(51, 68, 87);
+//   color: white;
+//   border: none;
+//   padding: 8px 16px;
+//   border-radius: 4px;
+//   cursor: pointer;
+//   z-index: 100;
 
-  &:hover {
-    background-color: rgba(0, 0, 0, 0.7);
-  }
-`;
+//   &:hover {
+//     background-color: rgba(0, 0, 0, 0.7);
+//   }
+// `;
 
 const GameScreen = ({ onBackToTitle }) => {
   // GameContextからゲーム状態と関数を取得

@@ -27,27 +27,27 @@ const getPositionStyle = (position) => {
   }
 };
 
-// スタイル付きコンポーネント
-const CharacterContainer = styled.div`
-  position: absolute;
-  bottom: 0;
-  z-index: 5;
-  height: 90%;
-  max-height: 90vh;
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
-  transition: all 0.5s ease-in-out;
+// // スタイル付きコンポーネント
+// const CharacterContainer = styled.div`
+//   position: absolute;
+//   bottom: 0;
+//   z-index: 5;
+//   height: 90%;
+//   max-height: 90vh;
+//   display: flex;
+//   justify-content: center;
+//   align-items: flex-end;
+//   transition: all 0.5s ease-in-out;
 
-  ${(props) => getPositionStyle(props.position)}
-`;
+//   ${(props) => getPositionStyle(props.position)}
+// `;
 
-const CharacterImage = styled.img`
-  max-height: 100%;
-  max-width: 100%;
-  object-fit: contain;
-  filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.5));
-`;
+// const CharacterImage = styled.img`
+//   max-height: 100%;
+//   max-width: 100%;
+//   object-fit: contain;
+//   filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.5));
+// `;
 
 const Character = ({ name, image, position = 'center', expression = 'neutral' }) => {
   // 画像パスの生成

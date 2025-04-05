@@ -1,0 +1,135 @@
+.test-screen {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+  background-color: #111;
+  color: white;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.background {
+  width: 100%;
+  height: 60%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #000;
+  border-bottom: 1px solid #333;
+}
+
+.characters {
+  display: flex;
+  justify-content: space-around;
+  position: absolute;
+  width: 100%;
+  top: 20%;
+  height: 40%;
+}
+
+.character {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+}
+
+.character.left {
+  align-self: flex-start;
+}
+
+.character.center {
+  align-self: center;
+}
+
+.character.right {
+  align-self: flex-end;
+}
+
+.dialog-box {
+  position: relative;
+  bottom: 0;
+  width: 100%;
+  min-height: 150px;
+  background-color: rgba(0, 0, 0, 0.8);
+  padding: 20px;
+  border-top: 2px solid #555;
+}
+
+.speaker {
+  font-weight: bold;
+  color: #4a9df8;
+  margin-bottom: 10px;
+  font-size: 1.2em;
+}
+
+.text {
+  line-height: 1.6;
+  font-size: 1.1em;
+}
+
+.choices {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  background-color: rgba(0, 0, 0, 0.9);
+  border: 1px solid #555;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 100;
+}
+
+.choices button {
+  background-color: #333;
+  color: white;
+  border: 1px solid #555;
+  padding: 12px 20px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.choices button:hover {
+  background-color: #444;
+}
+
+.debug-info {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 10px;
+  border: 1px solid #444;
+  font-size: 0.8em;
+  color: #ccc;
+}
+
+.test-screen.loading,
+.test-screen.error,
+.test-screen.no-scene {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-size: 1.5em;
+}
+
+.test-screen.error {
+  color: #ff5555;
+  flex-direction: column;
+}
+
+.test-screen.error button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #333;
+  color: white;
+  border: 1px solid #555;
+  cursor: pointer;
+}

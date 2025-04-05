@@ -2,72 +2,72 @@ import React, { useState, useEffect, useRef } from 'react';
 // import styled from 'styled-components';
 import processText from '../../utils/TextProcessor';
 
-// スタイル付きコンポーネント
-const TextBoxContainer = styled.div`
-  position: absolute;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 90%;
-  max-width: 1000px;
-  background-color: rgba(0, 20, 40, 0.85);
-  border-radius: 8px;
-  padding: 1rem 2rem;
-  z-index: 10;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(5px);
-  border: 1px solid rgba(100, 180, 255, 0.3);
-  white-space: pre-wrap;
-`;
+// // スタイル付きコンポーネント
+// const TextBoxContainer = styled.div`
+//   position: absolute;
+//   bottom: 20px;
+//   left: 50%;
+//   transform: translateX(-50%);
+//   width: 90%;
+//   max-width: 1000px;
+//   background-color: rgba(0, 20, 40, 0.85);
+//   border-radius: 8px;
+//   padding: 1rem 2rem;
+//   z-index: 10;
+//   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+//   backdrop-filter: blur(5px);
+//   border: 1px solid rgba(100, 180, 255, 0.3);
+//   white-space: pre-wrap;
+// `;
 
-const SpeakerNameBox = styled.div`
-  position: absolute;
-  top: -20px;
-  left: 20px;
-  background-color: rgba(0, 100, 200, 0.9);
-  padding: 0.3rem 1rem;
-  border-radius: 5px;
-  font-weight: bold;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-`;
+// const SpeakerNameBox = styled.div`
+//   position: absolute;
+//   top: -20px;
+//   left: 20px;
+//   background-color: rgba(0, 100, 200, 0.9);
+//   padding: 0.3rem 1rem;
+//   border-radius: 5px;
+//   font-weight: bold;
+//   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+// `;
 
-const SpeakerName = styled.span`
-  color: white;
-  font-size: 1.1rem;
-`;
+// const SpeakerName = styled.span`
+//   color: white;
+//   font-size: 1.1rem;
+// `;
 
-const TextContent = styled.div`
-  color: white;
-  font-size: 1rem;
-  line-height: 1.6;
-  margin-top: ${(props) => (props.hasName ? '0.5rem' : '0')};
-  min-height: 5rem;
+// const TextContent = styled.div`
+//   color: white;
+//   font-size: 1rem;
+//   line-height: 1.6;
+//   margin-top: ${(props) => (props.hasName ? '0.5rem' : '0')};
+//   min-height: 5rem;
 
-  @media (max-width: 767px) {
-    font-size: 0.9rem;
-    line-height: 1.5;
-    min-height: 4rem;
-  }
-`;
+//   @media (max-width: 767px) {
+//     font-size: 0.9rem;
+//     line-height: 1.5;
+//     min-height: 4rem;
+//   }
+// `;
 
-const ContinueIndicator = styled.div`
-  position: absolute;
-  bottom: 10px;
-  right: 20px;
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 1.5rem;
-  animation: blink 1s infinite;
+// const ContinueIndicator = styled.div`
+//   position: absolute;
+//   bottom: 10px;
+//   right: 20px;
+//   color: rgba(255, 255, 255, 0.7);
+//   font-size: 1.5rem;
+//   animation: blink 1s infinite;
 
-  @keyframes blink {
-    0%,
-    100% {
-      opacity: 0.3;
-    }
-    50% {
-      opacity: 1;
-    }
-  }
-`;
+//   @keyframes blink {
+//     0%,
+//     100% {
+//       opacity: 0.3;
+//     }
+//     50% {
+//       opacity: 1;
+//     }
+//   }
+// `;
 
 // テキストを一文字ずつ表示する処理のカスタムフック
 const useTypewriterEffect = (text, typingSpeed = 30) => {
