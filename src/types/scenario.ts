@@ -13,6 +13,7 @@ export interface Scene {
   textBlocks?: TextBlock[]; // dialogの代わりにtextBlocksを使用
   choices?: Choice[];
   next?: string;
+  transition?: TransitionEffect;
 }
 
 export interface Character {
@@ -53,3 +54,9 @@ export type BgmInstruction =
   | { track: string; volume?: number; fadeIn?: number; loop?: boolean }
   | { stop: true }
   | { continue: true };
+
+export interface TransitionEffect {
+  type: 'fade' | 'crossFade' | 'fadeToBlack' | 'none';
+  duration: number; // ミリ秒単位
+  easing?: 'linear' | 'easeIn' | 'easeOut' | 'easeInOut';
+}

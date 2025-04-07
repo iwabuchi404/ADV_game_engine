@@ -1,9 +1,9 @@
 import React from 'react';
 import TitleScreen from './components/screens/TitleScreen.tsx';
 import TestScreen from './components/screens/TestScreen.jsx';
-import GameScreen from './components/screens/GameScreen';
+import GameScreen from './components/screens/GameScreen.tsx';
 import AppProvider from './components/common/AppProvider';
-import { useGame } from './contexts/GameContext';
+import { useGame } from './contexts/GameContext.tsx';
 import * as styles from './App.css';
 
 /**
@@ -29,13 +29,14 @@ const MainContent = () => {
     if (!gameState.hasStarted) {
       return (
         <TitleScreen
-          onStartGame={() => startNewGame('prologue')}
+          onStartGame={() => startNewGame('prologue_v2')}
           onShowCredits={() => console.log('Credit')}
         />
       );
     }
 
-    return <TestScreen />;
+    return <GameScreen />;
+    // return <TestScreen />;
   };
 
   return (

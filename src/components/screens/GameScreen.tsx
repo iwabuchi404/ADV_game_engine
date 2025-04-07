@@ -1,47 +1,29 @@
 import React, { useState, useEffect, useRef } from 'react';
-// import styled from 'styled-components';
-import Background from '../game/Background';
-import Character from '../game/Character';
-import TextBox from '../game/TextBox';
-import ChoiceMenu from '../game/ChoiceMenu';
-import SystemMenu from '../ui/SystemMenu';
-import { useGame } from '../../contexts/GameContext';
-import { useAudio } from '../../contexts/AudioContext';
+import Background from '../game/Background.tsx';
+import Character from '../game/Character.tsx';
+import TextBox from '../game/TextBox.tsx';
+import ChoiceMenu from '../game/ChoiceMenu.tsx';
+import SystemMenu from '../ui/SystemMenu.jsx';
+import { useGame } from '../../contexts/GameContext.tsx';
+import { useAudio } from '../../contexts/AudioContext.jsx';
+import './GameScreen.css';
 
-// スタイル付きコンポーネント
-// const GameScreenContainer = styled.div`
-//   width: 100%;
-//   height: 100%;
-//   position: relative;
-//   overflow: hidden;
-// `;
-
-// const MenuButton = styled.button`
-//   position: absolute;
-//   top: 20px;
-//   right: 20px;
-//   background-color: rgba(0, 0, 0, 0.5);
-//   border-radius: 4px;
-//   border: 1px solid rgb(51, 68, 87);
-//   color: white;
-//   border: none;
-//   padding: 8px 16px;
-//   border-radius: 4px;
-//   cursor: pointer;
-//   z-index: 100;
-
-//   &:hover {
-//     background-color: rgba(0, 0, 0, 0.7);
-//   }
-// `;
-
+/**
+ * ゲーム画面コンポーネント
+ * ビジュアルノベルの主要ゲームプレイ画面を表示する
+ */
 const GameScreen = ({ onBackToTitle }) => {
   // GameContextからゲーム状態と関数を取得
-  const { gameState, advanceText, selectChoice, loadScenario, startNewGame } = useGame();
+  const { gameState, nextScene, selectChoice, loadScenario, startNewGame } = useGame();
 
+  // オーディオコンテキスト
   const audio = useAudio();
+
+  // UIの状態
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isTextComplete, setIsTextComplete] = useState(true);
+
+  // 参照
   const completeTextFn = useRef(null);
   const currentBgmRef = useRef(null);
 
@@ -52,8 +34,8 @@ const GameScreen = ({ onBackToTitle }) => {
     const playSceneAudio = async () => {
       try {
         // BGMの処理
-        if (gameState.currentScene.bgm) {
-          const newBgm = gameState.currentScene.bgm;
+        if (gameState.bgm) {
+          const newBgm = gameState.bgm;
           if (newBgm !== currentBgmRef.current) {
             await audio.playBGM(newBgm, {
               fadeIn: true,
@@ -64,8 +46,8 @@ const GameScreen = ({ onBackToTitle }) => {
         }
 
         // SFXの処理
-        if (gameState.currentScene.sfx) {
-          await audio.playSFX(gameState.currentScene.sfx);
+        if (gameState.sfx) {
+          await audio.playSFX(gameState.sfx);
         }
       } catch (error) {
         console.error('オーディオの再生に失敗しました:', error);
@@ -73,7 +55,7 @@ const GameScreen = ({ onBackToTitle }) => {
     };
 
     playSceneAudio();
-  }, [gameState.currentScene, audio]);
+  }, [gameState.currentScene, gameState.bgm, gameState.sfx, audio]);
 
   // コンポーネントのクリーンアップ
   useEffect(() => {
@@ -89,32 +71,45 @@ const GameScreen = ({ onBackToTitle }) => {
   useEffect(() => {
     // ゲームが開始されていない場合は、シナリオを読み込む
     if (!gameState.hasStarted) {
-      startNewGame('prologue');
+      startNewGame('prologue_v2');
     }
   }, [gameState.hasStarted, startNewGame]);
 
-  // 選択肢が選ばれたときの処理
+  /**
+   * 選択肢が選ばれたときの処理
+   * @param {Object} choice - 選択された選択肢オブジェクト
+   * @param {number} index - 選択肢のインデックス
+   */
   const handleChoiceSelected = (choice, index) => {
     console.log(`選択: ${choice.text}, インデックス: ${index}`);
     selectChoice(index);
   };
 
-  // メニューの表示/非表示を切り替える
+  /**
+   * メニューの表示/非表示を切り替える
+   */
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  // テキスト完了時のコールバック
+  /**
+   * テキスト完了時のコールバック
+   */
   const handleTextComplete = () => {
     setIsTextComplete(true);
   };
 
-  // テキスト強制完了関数を保存
+  /**
+   * テキスト強制完了関数を保存
+   * @param {Function} completeFn - テキスト表示を完了させる関数
+   */
   const handleRequestComplete = (completeFn) => {
     completeTextFn.current = completeFn;
   };
 
-  // テキストの進行を管理する統合関数
+  /**
+   * テキストの進行を管理する統合関数
+   */
   const handleTextProgress = () => {
     // 選択肢表示中は何もしない
     if (gameState.choices?.length > 0) {
@@ -136,28 +131,36 @@ const GameScreen = ({ onBackToTitle }) => {
     // テキスト完了時は次のシーンへ
     if (isTextComplete) {
       setIsTextComplete(false);
-      advanceText();
+      nextScene();
     }
   };
 
-  // 画面クリック時のハンドラ
+  /**
+   * 画面クリック時のハンドラ
+   */
   const handleScreenClick = () => {
     handleTextProgress();
   };
 
-  // TextBoxコンポーネントからの進行要求
+  /**
+   * TextBoxコンポーネントからの進行要求
+   */
   const handleAdvance = () => {
     handleTextProgress();
   };
 
-  return (
-    <GameScreenContainer onClick={handleScreenClick}>
-      <Background image={gameState.background} />
+  // キャラクターが存在するかチェック
+  const hasCharacters = gameState.characters && gameState.characters.length > 0;
 
-      {gameState.characters &&
+  return (
+    <div className="game-screen" onClick={handleScreenClick}>
+      <Background image={gameState.background || ''} />
+
+      {hasCharacters &&
         gameState.characters.map((char, index) => (
           <Character
-            key={index}
+            key={`${char.id || char.name}-${index}`}
+            id={char.id}
             name={char.name}
             image={char.image}
             position={char.position}
@@ -175,13 +178,12 @@ const GameScreen = ({ onBackToTitle }) => {
       />
 
       {gameState.choices && gameState.choices.length > 0 && (
-        <ChoiceMenu
-          choices={gameState.choices}
-          onChoiceSelected={(choice, index) => handleChoiceSelected(choice, index)}
-        />
+        <ChoiceMenu choices={gameState.choices} onChoiceSelected={handleChoiceSelected} />
       )}
 
-      <MenuButton onClick={toggleMenu}>メニュー</MenuButton>
+      <button className="menu-button" onClick={toggleMenu}>
+        メニュー
+      </button>
 
       {isMenuOpen && (
         <SystemMenu
@@ -192,7 +194,7 @@ const GameScreen = ({ onBackToTitle }) => {
           onClose={toggleMenu}
         />
       )}
-    </GameScreenContainer>
+    </div>
   );
 };
 

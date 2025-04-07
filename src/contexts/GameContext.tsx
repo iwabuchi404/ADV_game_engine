@@ -1,26 +1,46 @@
 import React, { createContext, useContext, useState, useEffect, useCallback, useMemo } from 'react';
-import ScenarioEngine from '../engines/ScenarioEngine';
-import GameStateManager from '../engines/GameStateManager';
-import AssetLoader from '../engines/AssetLoader';
+import ScenarioEngine from '../core/ScenarioEngine';
+import SaveState from '../core/SaveState.ts';
+import AssetLoader from '../core/AssetLoader.ts';
+import { GameState, GameSettings } from '../types/game';
+
+// GameContextの型を定義
+interface GameContextType {
+  gameState: GameState;
+  gameSettings: GameSettings;
+  scenarioEngine: ScenarioEngine;
+  gameStateManager: SaveState;
+  assetLoader: AssetLoader;
+  loadScenario: (scenarioId: string) => Promise<boolean>;
+  nextScene: () => boolean;
+  selectChoice: (choiceIndex: number) => boolean;
+  saveGame: (slotId: number) => boolean;
+  loadGame: (slotId: number) => Promise<boolean>;
+  updateGameState: (updates: Partial<GameState>) => void;
+  updateProperty: <K extends keyof GameState>(property: K, value: any) => void;
+  updateSettings: (newSettings: GameSettings) => void;
+  setPlayerName: (name: string) => void;
+  startNewGame: (scenarioId?: string, options?: { playerName: string }) => Promise<boolean>;
+}
 
 /**
  * ゲームコンテキスト
  * ゲーム全体の状態と機能を管理
  */
-const GameContext = createContext(null);
+const GameContext = createContext<GameContextType | null>(null);
 
 /**
  * GameProviderコンポーネント
  * アプリケーション全体でゲームの状態を提供する
  */
-export const GameProvider = ({ children }) => {
+export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   // ゲームエンジンのインスタンスを作成（メモ化）
   const scenarioEngine = useMemo(() => new ScenarioEngine(), []);
-  const gameStateManager = useMemo(() => new GameStateManager(), []);
+  const gameStateManager = useMemo(() => new SaveState(), []);
   const assetLoader = useMemo(() => new AssetLoader(), []);
 
   // ゲームの状態
-  const [gameState, setGameState] = useState({
+  const [gameState, setGameState] = useState<GameState>({
     currentScene: null,
     background: null,
     bgm: null,
@@ -64,7 +84,7 @@ export const GameProvider = ({ children }) => {
   });
 
   // ゲーム設定
-  const [gameSettings, setGameSettings] = useState({
+  const [gameSettings, setGameSettings] = useState<GameSettings>({
     textSpeed: 30, // テキスト表示速度（ms/文字）
     autoSpeed: 2000, // オート時の次のテキストまでの待ち時間（ms）
     isAutoMode: false, // オートモード
@@ -73,18 +93,14 @@ export const GameProvider = ({ children }) => {
     showAlreadyRead: true, // 既読テキストの表示
   });
 
-  // エラー状態の管理
-  const [error, setError] = useState(null);
-
   /**
    * シナリオを読み込む
    * @param {string} scenarioId - シナリオID
    * @returns {Promise<boolean>} 読み込み成功したかどうか
    */
   const loadScenario = useCallback(
-    async (scenarioId) => {
+    async (scenarioId: string) => {
       setGameState((prev) => ({ ...prev, isLoading: true }));
-      setError(null);
 
       try {
         // シナリオを読み込む
@@ -93,21 +109,29 @@ export const GameProvider = ({ children }) => {
           throw new Error(`Failed to load scenario: ${scenarioId}`);
         }
 
+        // 初期状態を取得（型ガードを追加）
+        if (typeof loadResult === 'boolean') {
+          throw new Error(`Unexpected boolean result from loadScenario: ${scenarioId}`);
+        }
+
         // 初期状態を取得
-        const initialState = scenarioEngine.getInitialState();
+        const initialState = loadResult;
 
         // ゲーム状態を更新
-        setGameState((prev) => ({
-          ...prev,
-          ...initialState,
-          isLoading: false,
-          hasStarted: true,
-        }));
-
+        setGameState((prev) => {
+          const newState = {
+            ...prev,
+            ...initialState,
+            currentScene: initialState.id || scenarioId, // idがない場合はシナリオIDを使用
+            isLoading: false,
+            hasStarted: true,
+          };
+          console.log('New state being set:', newState); // デバッグ追加
+          return newState;
+        });
         return true;
       } catch (error) {
         console.error('Failed to load scenario:', error);
-        setError(`シナリオの読み込みに失敗しました: ${error.message}`);
         setGameState((prev) => ({ ...prev, isLoading: false }));
         return false;
       }
@@ -115,28 +139,40 @@ export const GameProvider = ({ children }) => {
     [scenarioEngine]
   );
 
+  useEffect(() => {
+    if (gameState.currentScene) {
+      console.log('Current scene:', gameState.currentScene);
+      const currentScene = scenarioEngine.getCurrentScene(); // シーンを取得
+      if (currentScene?.textBlocks) {
+        currentScene?.textBlocks.forEach((textBlock) => {
+          console.log('Text block:', textBlock); // デバッグ追加
+          // シーンのテキストを更新
+          setGameState((prev) => ({
+            ...prev,
+            text: currentScene?.textBlocks[0]?.text || '', // 最初のテキストブロックを表示
+            speaker: currentScene?.textBlocks[0]?.speaker || '', // スピーカーを設定
+            choices: currentScene?.choices || [], // 選択肢を設定
+          }));
+        });
+      }
+    }
+  }, [gameState.currentScene, gameState]);
+
   /**
    * テキストを次に進める
    * @returns {boolean} 進行に成功したかどうか
    */
-  const advanceText = useCallback(() => {
-    setError(null);
-
+  const nextScene = useCallback(() => {
     // 選択肢がある場合は進めない
-    if (gameState.choices && gameState.choices.length > 0) {
+    if (gameState.choices?.length > 0) {
       return false;
     }
 
     // 次のシーンを取得
-    const nextState = scenarioEngine.advance();
-
+    const nextState = scenarioEngine.nextScene();
+    console.log('Next state:', nextState); // デバッグ追加
     if (!nextState) {
-      return false;
-    }
-
-    // エラーチェック
-    if (nextState.error) {
-      setError(nextState.error);
+      console.error('No next scene found');
       return false;
     }
 
@@ -145,14 +181,9 @@ export const GameProvider = ({ children }) => {
       ...prev,
       ...nextState,
     }));
-
+    console.log('Next scene:', nextState);
     // 自動セーブ
-    gameStateManager.autoSave({
-      ...nextState,
-      scenarioId: scenarioEngine.scenario?.id,
-      variables: scenarioEngine.state.variables,
-      flags: scenarioEngine.state.flags,
-    });
+    gameStateManager.autoSave(gameState);
 
     return true;
   }, [gameState.choices, scenarioEngine, gameStateManager]);
@@ -163,24 +194,22 @@ export const GameProvider = ({ children }) => {
    * @returns {boolean} 選択に成功したかどうか
    */
   const selectChoice = useCallback(
-    (choiceIndex) => {
-      setError(null);
-
+    (choiceIndex: number) => {
       const nextState = scenarioEngine.selectChoice(choiceIndex);
 
       if (!nextState) {
-        return false;
-      }
-
-      // エラーチェック
-      if (nextState.error) {
-        setError(nextState.error);
+        console.error('No next state found after choice selection');
         return false;
       }
 
       // プレイヤーの選択を記録
       const choiceText = gameState.choices?.[choiceIndex]?.text;
       const sceneId = gameState.currentScene;
+
+      if (!sceneId) {
+        console.error('No scene ID found for choice selection');
+        return false;
+      }
 
       // ゲーム状態を更新
       setGameState((prev) => ({
@@ -193,16 +222,7 @@ export const GameProvider = ({ children }) => {
       }));
 
       // 自動セーブ
-      gameStateManager.autoSave({
-        ...nextState,
-        scenarioId: scenarioEngine.scenario?.id,
-        variables: scenarioEngine.state.variables,
-        flags: scenarioEngine.state.flags,
-        playerChoices: {
-          ...gameState.playerChoices,
-          [sceneId]: { index: choiceIndex, text: choiceText },
-        },
-      });
+      gameStateManager.autoSave(gameState);
 
       return true;
     },
@@ -215,19 +235,15 @@ export const GameProvider = ({ children }) => {
    * @returns {boolean} セーブに成功したかどうか
    */
   const saveGame = useCallback(
-    (slotId) => {
-      setError(null);
-
+    (slotId: number) => {
       try {
         return gameStateManager.saveGame(slotId, {
           ...gameState,
-          scenarioId: scenarioEngine.scenario?.id,
-          variables: scenarioEngine.state.variables,
-          flags: scenarioEngine.state.flags,
+          variables: gameState.variables,
+          flags: gameState.flags,
         });
       } catch (error) {
         console.error('Failed to save game:', error);
-        setError(`ゲームの保存に失敗しました: ${error.message}`);
         return false;
       }
     },
@@ -240,12 +256,11 @@ export const GameProvider = ({ children }) => {
    * @returns {Promise<boolean>} ロードに成功したかどうか
    */
   const loadGame = useCallback(
-    async (slotId) => {
-      setError(null);
+    async (slotId: number) => {
       const savedState = gameStateManager.loadGame(slotId);
 
       if (!savedState) {
-        setError('セーブデータが見つかりませんでした');
+        console.error('No saved state found for the given slot ID');
         return false;
       }
 
@@ -260,11 +275,7 @@ export const GameProvider = ({ children }) => {
         }
 
         // シーンの位置とゲーム状態を復元
-        scenarioEngine.setState({
-          currentScene: savedState.currentScene,
-          variables: savedState.variables || {},
-          flags: savedState.flags || {},
-        });
+        scenarioEngine.setCurrentScene(savedState.scenarioId);
 
         // ゲーム状態を更新
         setGameState((prev) => ({
@@ -277,7 +288,6 @@ export const GameProvider = ({ children }) => {
         return true;
       } catch (error) {
         console.error('Failed to load game:', error);
-        setError(`ゲームの読み込みに失敗しました: ${error.message}`);
         setGameState((prev) => ({ ...prev, isLoading: false }));
         return false;
       }
@@ -289,7 +299,7 @@ export const GameProvider = ({ children }) => {
    * ゲーム状態を更新
    * @param {Object} updates - 更新するプロパティと値
    */
-  const updateGameState = useCallback((updates) => {
+  const updateGameState = useCallback((updates: Partial<GameState>) => {
     setGameState((prev) => ({
       ...prev,
       ...updates,
@@ -301,21 +311,33 @@ export const GameProvider = ({ children }) => {
    * @param {string} property - 更新するプロパティ名
    * @param {Object} value - 更新する値
    */
-  const updateProperty = useCallback((property, value) => {
-    setGameState((prev) => ({
-      ...prev,
-      [property]: {
-        ...prev[property],
-        ...value,
-      },
-    }));
+  const updateProperty = useCallback(<K extends keyof GameState>(property: K, value: any) => {
+    setGameState((prev) => {
+      // プロパティの型をチェック
+      if (typeof prev[property] === 'object' && prev[property] !== null) {
+        // オブジェクト型の場合はスプレッド演算子を使用
+        return {
+          ...prev,
+          [property]: {
+            ...prev[property],
+            ...value,
+          },
+        };
+      } else {
+        // プリミティブ型の場合は直接値を設定
+        return {
+          ...prev,
+          [property]: value,
+        };
+      }
+    });
   }, []);
 
   /**
    * ゲーム設定を更新
    * @param {Object} newSettings - 新しい設定
    */
-  const updateSettings = useCallback((newSettings) => {
+  const updateSettings = useCallback((newSettings: GameSettings) => {
     setGameSettings((prev) => ({
       ...prev,
       ...newSettings,
@@ -327,7 +349,7 @@ export const GameProvider = ({ children }) => {
    * @param {string} name - プレイヤー名
    */
   const setPlayerName = useCallback(
-    (name) => {
+    (name: string) => {
       updateGameState({ playerName: name });
     },
     [updateGameState]
@@ -340,7 +362,7 @@ export const GameProvider = ({ children }) => {
    * @returns {Promise<boolean>} 開始に成功したかどうか
    */
   const startNewGame = useCallback(
-    async (scenarioId = 'prologue', options = {}) => {
+    async (scenarioId: string, options = { playerName: '' }) => {
       const { playerName = '' } = options;
 
       // デフォルト設定に戻す
@@ -384,13 +406,6 @@ export const GameProvider = ({ children }) => {
     [updateSettings, updateGameState, loadScenario]
   );
 
-  /**
-   * エラー状態をクリア
-   */
-  const clearError = useCallback(() => {
-    setError(null);
-  }, []);
-
   // GameContextの値
   const value = useMemo(
     () => ({
@@ -399,9 +414,8 @@ export const GameProvider = ({ children }) => {
       scenarioEngine,
       gameStateManager,
       assetLoader,
-      error,
       loadScenario,
-      advanceText,
+      nextScene,
       selectChoice,
       saveGame,
       loadGame,
@@ -410,7 +424,6 @@ export const GameProvider = ({ children }) => {
       updateSettings,
       setPlayerName,
       startNewGame,
-      clearError,
     }),
     [
       gameState,
@@ -418,9 +431,8 @@ export const GameProvider = ({ children }) => {
       scenarioEngine,
       gameStateManager,
       assetLoader,
-      error,
       loadScenario,
-      advanceText,
+      nextScene,
       selectChoice,
       saveGame,
       loadGame,
@@ -429,7 +441,6 @@ export const GameProvider = ({ children }) => {
       updateSettings,
       setPlayerName,
       startNewGame,
-      clearError,
     ]
   );
 

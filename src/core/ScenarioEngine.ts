@@ -19,13 +19,14 @@ class ScenarioEngine {
    * @param scenarioId - シナリオID
    * @returns 読み込み成功したかどうか
    */
-  async loadScenario(scenarioId: string): Promise<boolean> {
+  async loadScenario(scenarioId: string): Promise<boolean | Scene | null> {
     try {
       const response = await fetch(`/assets/scenarios/${scenarioId}.json`);
       this.scenario = await response.json();
       this.currentSceneIndex = 0;
-      this.currentScene = this.scenario.scenes[0];
-      return true;
+      this.currentTextBlockIndex = 0;
+      this.currentScene = this.scenario.scenes[this.currentSceneIndex];
+      return this.scenario.scenes[0];
     } catch (error) {
       console.error('Failed to load scenario:', error);
       return false;
@@ -72,7 +73,6 @@ class ScenarioEngine {
 
     // 履歴に現在のシーンを追加
     this.history.push(this.currentScene.id);
-
     // 次のシーンに進む
     return this.setCurrentScene(this.currentScene.next);
   }

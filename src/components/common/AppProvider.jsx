@@ -1,5 +1,5 @@
 import React from 'react';
-import { GameProvider } from '../../contexts/GameContext';
+import { GameProvider } from '../../contexts/GameContext.tsx';
 import { AudioProvider } from '../../contexts/AudioContext';
 
 /**
