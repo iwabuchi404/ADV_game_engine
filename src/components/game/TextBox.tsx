@@ -1,6 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 // import styled from 'styled-components';
 import processText from '../../utils/TextProcessor';
+import { useGame } from '../../contexts/GameContext.tsx';
 import {
   TextBoxContainer,
   SpeakerNameBox,
@@ -17,7 +18,6 @@ const useTypewriterEffect = (text: string, typingSpeed = 30) => {
   const textRef = useRef('');
 
   const processedText = processText(text || '');
-  console.log('processedText:', processedText); // デバッグ用
   // 文字を一つずつ表示する関数
   const typeNextChar = (currentText: string, index: number) => {
     if (index >= currentText.length) {
@@ -69,14 +69,31 @@ const useTypewriterEffect = (text: string, typingSpeed = 30) => {
 
 const TextBox = ({
   speaker,
-  text,
-  typingSpeed = 30,
   onAdvance,
   effects = {},
   onComplete, // テキスト完了時のコールバック
   onRequestComplete, // テキスト強制完了のリクエスト関数を渡すコールバック
 }) => {
-  const { displayedText, isComplete, completeText } = useTypewriterEffect(text, typingSpeed);
+  const { gameState, gameSettings } = useGame();
+
+  // gameState から現在のテキストブロックを取得
+  const currentBlock = useMemo(() => {
+    if (
+      gameState.currentTextBlocks &&
+      gameState.currentTextBlocks.length > gameState.currentTextBlockIndex
+    ) {
+      return gameState.currentTextBlocks[gameState.currentTextBlockIndex];
+    }
+    return null; // 対応するブロックがない場合は null
+  }, [gameState.currentTextBlocks, gameState.currentTextBlockIndex]);
+
+  // 現在のテキストとスピーカーを抽出 (存在しない場合のフォールバック)
+  const currentText = currentBlock?.text || '';
+  const currentSpeaker = currentBlock?.speaker || null;
+  // typingSpeed を gameSettings から取得 (プロップより優先する場合は調整)
+  const typingSpeed = gameSettings.textSpeed || 30;
+
+  const { displayedText, isComplete, completeText } = useTypewriterEffect(currentText, typingSpeed);
 
   // テキスト完了時にコールバック
   useEffect(() => {
@@ -92,7 +109,8 @@ const TextBox = ({
     }
   }, [completeText, onRequestComplete]);
 
-  const handleClick = () => {
+  const handleClick = (e) => {
+    e.stopPropagation();
     if (!isComplete) {
       // テキストが完全に表示されていない場合は、即座に全テキストを表示
       completeText();
@@ -119,7 +137,7 @@ const TextBox = ({
     >
       {speaker && (
         <div className={SpeakerNameBox}>
-          <div className={SpeakerName}>{speaker}</div>
+          <div className={SpeakerName}>{currentSpeaker}</div>
         </div>
       )}
 

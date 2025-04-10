@@ -1,17 +1,15 @@
-import { Character, Choice, BgmInstruction, TextBlock } from './scenario';
+import { TransitionEffect, Scene, Character, Choice, BgmInstruction, TextBlock } from './scenario';
 
 export interface GameState {
-  currentScene: string | null;
-  background: string | null;
-  bgm: BgmInstruction | null;
-  characters: Character[];
-  text: string;
-  speaker: string;
-  choices: Choice[];
+  currentScene: Scene | null;
+  currentSceneId: string | null;
   isLoading: boolean;
   hasStarted: boolean;
-  textBlocks: TextBlock[];
+  currentTextBlocks: TextBlock[];
   currentTextBlockIndex: number;
+  transition?: TransitionEffect | null;
+  isTransition: boolean;
+
   // プレイヤー情報
   playerName: string;
   playerChoices: Record<string, { index: number; text: string }>;

@@ -14,7 +14,8 @@ import './GameScreen.css';
  */
 const GameScreen = ({ onBackToTitle }) => {
   // GameContextからゲーム状態と関数を取得
-  const { gameState, nextScene, selectChoice, loadScenario, startNewGame } = useGame();
+  const { gameState, nextScene, selectChoice, loadScenario, nextTextBlock, startNewGame } =
+    useGame();
 
   // オーディオコンテキスト
   const audio = useAudio();
@@ -23,9 +24,8 @@ const GameScreen = ({ onBackToTitle }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isTextComplete, setIsTextComplete] = useState(true);
 
-  // 参照
-  const completeTextFn = useRef(null);
-  const currentBgmRef = useRef(null);
+  const completeTextFn = useRef(null); // テキスト完了関数の参照
+  const currentBgmRef = useRef(null); // 現在のBGMを保持する参照
 
   // シーンの変更を監視してBGMとSFXを再生
   useEffect(() => {
@@ -34,8 +34,8 @@ const GameScreen = ({ onBackToTitle }) => {
     const playSceneAudio = async () => {
       try {
         // BGMの処理
-        if (gameState.bgm) {
-          const newBgm = gameState.bgm;
+        if (gameState.currentScene && gameState.currentScene.bgm) {
+          const newBgm = gameState.currentScene.bgm;
           if (newBgm !== currentBgmRef.current) {
             await audio.playBGM(newBgm, {
               fadeIn: true,
@@ -46,8 +46,8 @@ const GameScreen = ({ onBackToTitle }) => {
         }
 
         // SFXの処理
-        if (gameState.sfx) {
-          await audio.playSFX(gameState.sfx);
+        if (gameState.currentScene && gameState.currentScene.sfx) {
+          await audio.playSFX(gameState.currentScene.sfx);
         }
       } catch (error) {
         console.error('オーディオの再生に失敗しました:', error);
@@ -55,7 +55,14 @@ const GameScreen = ({ onBackToTitle }) => {
     };
 
     playSceneAudio();
-  }, [gameState.currentScene, gameState.bgm, gameState.sfx, audio]);
+  }, [gameState.currentScene, audio]);
+
+  //トランジション効果の適用
+  useEffect(() => {
+    if (!gameState.transition) return;
+    //  トランジション効果がある場合、現在の背景を保存
+    const previousBackground = gameState.background;
+  }, [gameState.transition, gameState.isTransition]);
 
   // コンポーネントのクリーンアップ
   useEffect(() => {
@@ -71,7 +78,7 @@ const GameScreen = ({ onBackToTitle }) => {
   useEffect(() => {
     // ゲームが開始されていない場合は、シナリオを読み込む
     if (!gameState.hasStarted) {
-      startNewGame('prologue_v2');
+      startNewGame('prologue_v3');
     }
   }, [gameState.hasStarted, startNewGame]);
 
@@ -128,10 +135,19 @@ const GameScreen = ({ onBackToTitle }) => {
       return;
     }
 
-    // テキスト完了時は次のシーンへ
+    // テキスト完了時は次のテキストブロックを試し、なければ次のシーンへ
     if (isTextComplete) {
       setIsTextComplete(false);
-      nextScene();
+      // シーンが終了している場合は次のシーンへ
+      if (!gameState.currentScene || !gameState.currentScene.textBlocks) {
+        return;
+      }
+      if (gameState.currentTextBlockIndex >= gameState.currentScene.textBlocks.length - 1) {
+        nextScene();
+        return;
+      }
+      // そうでなければ次のテキストブロックへ
+      nextTextBlock();
     }
   };
 
@@ -150,14 +166,20 @@ const GameScreen = ({ onBackToTitle }) => {
   };
 
   // キャラクターが存在するかチェック
-  const hasCharacters = gameState.characters && gameState.characters.length > 0;
+  const hasCharacters =
+    gameState.currentScene &&
+    gameState.currentScene.characters &&
+    gameState.currentScene.characters.length > 0;
 
   return (
-    <div className="game-screen" onClick={handleScreenClick}>
-      <Background image={gameState.background || ''} />
+    <div className="game-screen" onClick={handleScreenClick} data-img={gameState.background}>
+      <Background
+        image={gameState.currentScene.background || ''}
+        transition={gameState.currentScene.transition || null}
+      />
 
       {hasCharacters &&
-        gameState.characters.map((char, index) => (
+        gameState.currentScene.characters.map((char, index) => (
           <Character
             key={`${char.id || char.name}-${index}`}
             id={char.id}
@@ -177,9 +199,14 @@ const GameScreen = ({ onBackToTitle }) => {
         onRequestComplete={handleRequestComplete}
       />
 
-      {gameState.choices && gameState.choices.length > 0 && (
-        <ChoiceMenu choices={gameState.choices} onChoiceSelected={handleChoiceSelected} />
-      )}
+      {gameState.currentScene &&
+        gameState.currentScene.choices &&
+        gameState.currentScene.choices.length > 0 && (
+          <ChoiceMenu
+            choices={gameState.currentScene.choices}
+            onChoiceSelected={handleChoiceSelected}
+          />
+        )}
 
       <button className="menu-button" onClick={toggleMenu}>
         メニュー

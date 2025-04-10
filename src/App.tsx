@@ -29,7 +29,7 @@ const MainContent = () => {
     if (!gameState.hasStarted) {
       return (
         <TitleScreen
-          onStartGame={() => startNewGame('prologue_v2')}
+          onStartGame={() => startNewGame('prologue_v3')}
           onShowCredits={() => console.log('Credit')}
         />
       );

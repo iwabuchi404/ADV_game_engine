@@ -3,6 +3,7 @@ import ScenarioEngine from '../core/ScenarioEngine';
 import SaveState from '../core/SaveState.ts';
 import AssetLoader from '../core/AssetLoader.ts';
 import { GameState, GameSettings } from '../types/game';
+import { TextBlock } from '../types/scenario.ts';
 
 // GameContextの型を定義
 interface GameContextType {
@@ -13,6 +14,7 @@ interface GameContextType {
   assetLoader: AssetLoader;
   loadScenario: (scenarioId: string) => Promise<boolean>;
   nextScene: () => boolean;
+  nextTextBlock: () => TextBlock;
   selectChoice: (choiceIndex: number) => boolean;
   saveGame: (slotId: number) => boolean;
   loadGame: (slotId: number) => Promise<boolean>;
@@ -41,15 +43,14 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   // ゲームの状態
   const [gameState, setGameState] = useState<GameState>({
+    currentSceneId: null,
     currentScene: null,
-    background: null,
-    bgm: null,
-    characters: [],
-    text: '',
-    speaker: '',
-    choices: [],
     isLoading: true,
     hasStarted: false,
+    currentTextBlocks: [], // 追加
+    currentTextBlockIndex: 0, // 追加
+    transition: null, // トランジション効果を追加
+    isTransition: false, // トランジション中かどうかを追加
 
     // プレイヤー情報
     playerName: '',
@@ -122,11 +123,13 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
           const newState = {
             ...prev,
             ...initialState,
-            currentScene: initialState.id || scenarioId, // idがない場合はシナリオIDを使用
+            currentScene: initialState,
+            currentSceneId: initialState.id || scenarioId,
+            currentTextBlockIndex: 0,
+            currentTextBlocks: initialState.textBlocks || [],
             isLoading: false,
             hasStarted: true,
           };
-          console.log('New state being set:', newState); // デバッグ追加
           return newState;
         });
         return true;
@@ -139,54 +142,152 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
     [scenarioEngine]
   );
 
-  useEffect(() => {
-    if (gameState.currentScene) {
-      console.log('Current scene:', gameState.currentScene);
-      const currentScene = scenarioEngine.getCurrentScene(); // シーンを取得
-      if (currentScene?.textBlocks) {
-        currentScene?.textBlocks.forEach((textBlock) => {
-          console.log('Text block:', textBlock); // デバッグ追加
-          // シーンのテキストを更新
-          setGameState((prev) => ({
-            ...prev,
-            text: currentScene?.textBlocks[0]?.text || '', // 最初のテキストブロックを表示
-            speaker: currentScene?.textBlocks[0]?.speaker || '', // スピーカーを設定
-            choices: currentScene?.choices || [], // 選択肢を設定
-          }));
-        });
-      }
-    }
-  }, [gameState.currentScene, gameState]);
-
   /**
-   * テキストを次に進める
+   * シーンを次に進める
    * @returns {boolean} 進行に成功したかどうか
    */
   const nextScene = useCallback(() => {
     // 選択肢がある場合は進めない
-    if (gameState.choices?.length > 0) {
+    if (
+      gameState.currentScene &&
+      gameState.currentScene.choices &&
+      gameState.currentScene.choices?.length > 0
+    ) {
+      return false;
+    }
+
+    // トランジション中は操作を受け付けない
+    if (gameState.isTransition) {
+      console.log('トランジション中は操作を受け付けません');
       return false;
     }
 
     // 次のシーンを取得
-    const nextState = scenarioEngine.nextScene();
-    console.log('Next state:', nextState); // デバッグ追加
+    const nextState = scenarioEngine.getScene(gameState.currentScene?.next || '');
     if (!nextState) {
       console.error('No next scene found');
       return false;
     }
 
-    // ゲーム状態を更新
-    setGameState((prev) => ({
-      ...prev,
-      ...nextState,
-    }));
     console.log('Next scene:', nextState);
-    // 自動セーブ
-    gameStateManager.autoSave(gameState);
 
-    return true;
-  }, [gameState.choices, scenarioEngine, gameStateManager]);
+    // 背景が変わる場合はトランジションを適用
+    let background;
+    if (gameState.currentScene?.transition) {
+      background = gameState.currentScene.background;
+    }
+
+    // シーンに設定されたトランジションまたはデフォルト設定を使用
+    const transition = nextState.transition || {
+      type: 'fade',
+      duration: 800,
+      easing: 'ease-in-out',
+    };
+
+    if (background) {
+      console.log('Background changed, applying transition:', transition);
+
+      // トランジション中フラグを設定
+      setGameState((prev) => ({
+        ...prev,
+        isTransition: true,
+        transition: transition,
+      }));
+
+      // トランジションの所要時間後に完了処理
+      setTimeout(() => {
+        setGameState((prev) => ({
+          ...prev,
+          currentScene: nextState,
+          currentSceneId: nextState.id,
+          currentTextBlockIndex: 0,
+          currentTextBlocks: nextState.textBlocks || [],
+          isTransition: false,
+        }));
+
+        // 自動セーブはトランジション完了後に実行
+        gameStateManager.autoSave({
+          ...gameState,
+          ...nextState,
+          isTransition: false,
+        });
+      }, transition.duration || 800);
+    } else {
+      // 背景が変わらない場合は即時状態更新
+      setGameState((prev) => ({
+        ...prev,
+        currentScene: nextState,
+        currentSceneId: nextState.id,
+        currentTextBlockIndex: 0,
+        currentTextBlocks: nextState.textBlocks || [],
+      }));
+      console.log('No background change, updating state directly:', nextState, gameState);
+      // 自動セーブ
+      gameStateManager.autoSave({
+        ...gameState,
+        currentScene: nextState,
+        currentSceneId: nextState.id,
+        currentTextBlockIndex: 0,
+        currentTextBlocks: nextState.textBlocks || [],
+      });
+      console.log('gameState', gameState);
+
+      return true;
+    }
+  }, [
+    gameState.currentScene,
+    gameState.isTransition,
+    gameState.currentTextBlockIndex,
+    scenarioEngine,
+    gameStateManager,
+  ]);
+
+  /**
+   * 次のテキストブロックに進む
+   * @returns {boolean} 進行に成功したかどうか
+   */
+  const nextTextBlock = useCallback(() => {
+    // 現在のシーンのテキストブロックがある場合
+    console.log('Next text block:', gameState.currentTextBlockIndex);
+    if (
+      !gameState.currentScene || // 現在のシーンが存在しない
+      !gameState.currentScene.textBlocks || // シーンにテキストブロック配列がない
+      gameState.currentScene.textBlocks.length === 0 || // テキストブロック配列が空
+      typeof gameState.currentTextBlockIndex !== 'number' || // インデックスが数値でない
+      gameState.currentTextBlockIndex < 0
+    ) {
+      console.error('No current text block index found');
+      return false;
+    }
+
+    // 現在のテキストブロックインデックス
+    const currentIndex = gameState.currentTextBlockIndex;
+    const totalBlocksInScene = gameState.currentScene.textBlocks.length;
+    // 次のテキストブロックがある場合
+    console.log('Current text block index:', currentIndex, gameState.currentTextBlocks.length);
+    console.log('Current text block index:', gameState.currentScene);
+
+    if (currentIndex < totalBlocksInScene - 1) {
+      // インデックスを進める
+      const nextIndex = currentIndex + 1;
+
+      // テキストとスピーカーを更新
+      setGameState((prev) => ({
+        ...prev,
+        currentTextBlockIndex: nextIndex,
+        currentTextBlocks: gameState.currentScene.textBlocks || [],
+      }));
+
+      return true;
+    }
+    console.log('Reached end of text blocks for this scene, proceeding to next scene.');
+    // 次のテキストブロックがない場合は次のシーンに進む
+    // return nextScene();
+  }, [
+    gameState.currentTextBlockIndex,
+    gameState.currentScene, // currentScene オブジェクトの textBlocks を参照するため必要
+    nextScene, // nextScene 関数自体に依存
+  ]);
 
   /**
    * 選択肢を選択
@@ -195,32 +296,34 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
    */
   const selectChoice = useCallback(
     (choiceIndex: number) => {
-      const nextState = scenarioEngine.selectChoice(choiceIndex);
+      const nextSceneId = gameState.currentScene?.choices?.[choiceIndex]?.next;
+      const nextScene = scenarioEngine.getScene(nextSceneId || '');
 
-      if (!nextState) {
+      if (!nextScene || !gameState.currentScene) {
         console.error('No next state found after choice selection');
         return false;
       }
 
       // プレイヤーの選択を記録
-      const choiceText = gameState.choices?.[choiceIndex]?.text;
-      const sceneId = gameState.currentScene;
+      const choiceText = gameState.currentScene.choices?.[choiceIndex]?.text;
+      const sceneId = gameState.currentSceneId;
 
       if (!sceneId) {
         console.error('No scene ID found for choice selection');
         return false;
       }
 
-      // ゲーム状態を更新
       setGameState((prev) => ({
         ...prev,
-        ...nextState,
-        playerChoices: {
-          ...prev.playerChoices,
-          [sceneId]: { index: choiceIndex, text: choiceText },
-        },
+        // playerChoices: {
+        //   ...prev.playerChoices,
+        //   [sceneId]: choiceText || null,
+        // },
+        currentScene: nextScene,
+        currentSceneId: nextScene.id,
+        currentTextBlockIndex: 0,
+        currentTextBlocks: nextScene.textBlocks || [],
       }));
-
       // 自動セーブ
       gameStateManager.autoSave(gameState);
 
@@ -273,9 +376,6 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
         } else {
           throw new Error('セーブデータにシナリオIDがありません');
         }
-
-        // シーンの位置とゲーム状態を復元
-        scenarioEngine.setCurrentScene(savedState.scenarioId);
 
         // ゲーム状態を更新
         setGameState((prev) => ({
@@ -406,6 +506,19 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
     [updateSettings, updateGameState, loadScenario]
   );
 
+  // デバッグ用のuseEffectフック
+  useEffect(() => {
+    // このログは gameState が更新され、コンポーネントが再レンダリングされた *後* に出力される
+    console.log('--- GameState Updated ---');
+    console.log('Current Scene ID:', gameState.currentSceneId);
+    console.log('Current Scene Object:', gameState.currentScene); // オブジェクト全体も確認
+    console.log('Current Text Block Index:', gameState.currentTextBlockIndex);
+    console.log('Current Text Blocks:', gameState.currentTextBlocks);
+    console.log('Is Transitioning:', gameState.isTransition);
+    console.log('Transition Info:', gameState.transition);
+    console.log('Player Name:', gameState.playerName); // 他に確認したい状態があれば追加
+    console.log('-------------------------');
+  }, [gameState]); // gameState オブジェクト全体を依存関係として指定
   // GameContextの値
   const value = useMemo(
     () => ({
@@ -416,6 +529,7 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
       assetLoader,
       loadScenario,
       nextScene,
+      nextTextBlock,
       selectChoice,
       saveGame,
       loadGame,
@@ -433,6 +547,7 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
       assetLoader,
       loadScenario,
       nextScene,
+      nextTextBlock,
       selectChoice,
       saveGame,
       loadGame,

@@ -2,9 +2,9 @@ import { Scene, Scenario, Effect, Choice, Character, TextBlock } from '../types/
 
 class ScenarioEngine {
   private scenario: Scenario | null = null;
-  private currentSceneIndex: number = 0;
-  private currentScene: Scene | null = null;
-  private history: string[] = [];
+  // private currentSceneIndex: number = 0;
+  // private currentScene: Scene | null = null;
+  // private history: string[] = [];
   private currentTextBlockIndex: number = 0;
   private state: {
     variables: Record<string, number>;
@@ -34,133 +34,147 @@ class ScenarioEngine {
   }
 
   /// シーンを取得する
-  getCurrentScene(): Scene | null {
-    return this.currentScene;
-  }
+  // getCurrentScene(): Scene | null {
+  //   return this.currentScene;
+  // }
 
   /// シーンを設定する
-  setCurrentScene(sceneId: string): Scene | null {
+  // setCurrentScene(sceneId: string): Scene | null {
+  //   if (!this.scenario) {
+  //     console.error('No scenario loaded.');
+  //     return null;
+  //   }
+
+  //   // シーンIDからシーンを検索
+  //   const sceneIndex = this.scenario.scenes.findIndex((scene) => scene.id === sceneId);
+  //   if (sceneIndex === -1) {
+  //     console.error(`Scene with ID ${sceneId} not found.`);
+  //     return null;
+  //   }
+
+  //   // 現在のシーンを設定
+  //   this.currentSceneIndex = sceneIndex;
+  //   this.currentScene = this.scenario.scenes[sceneIndex];
+
+  //   return this.currentScene;
+  // }
+
+  /// シーンを進める
+  // nextScene(): Scene | null {
+  //   if (!this.currentScene) {
+  //     console.error('No current scene to advance from.');
+  //     return null;
+  //   }
+
+  //   if (!this.currentScene.next) {
+  //     console.error('Current scene has no next scene defined.');
+  //     return null;
+  //   }
+
+  //   // 履歴に現在のシーンを追加
+  //   this.history.push(this.currentScene.id);
+  //   // 次のシーンに進む
+  //   return this.setCurrentScene(this.currentScene.next);
+  // }
+
+  // 履歴から前のシーンに戻る
+  // backScene(): Scene | null {
+  //   if (this.currentScene) {
+  //     //履歴に現在のシーンを追加
+  //     this.history.push(this.currentScene.id);
+  //     // 履歴から前のシーンを取得
+  //     const previousSceneId = this.history.pop();
+  //     if (!previousSceneId) {
+  //       console.error('No previous scene found in history.');
+  //       return null;
+  //     }
+  //     // シーンを設定
+  //     return this.setCurrentScene(previousSceneId);
+  //   } else {
+  //     console.error('No history to go back to.');
+  //     return null;
+  //   }
+  // }
+
+  // getState() {
+  //   return {
+  //     currentScene: this.currentScene?.id || null,
+  //     variables: this.state.variables,
+  //     flags: this.state.flags,
+  //     history: this.history,
+  //   };
+  // }
+
+  getScene(id: string): Scene | null {
     if (!this.scenario) {
       console.error('No scenario loaded.');
       return null;
     }
-
-    // シーンIDからシーンを検索
-    const sceneIndex = this.scenario.scenes.findIndex((scene) => scene.id === sceneId);
-    if (sceneIndex === -1) {
-      console.error(`Scene with ID ${sceneId} not found.`);
+    const scene = this.scenario.scenes.find((scene) => scene.id === id);
+    if (!scene) {
+      console.error(`Scene with ID ${id} not found.`);
       return null;
     }
-
-    // 現在のシーンを設定
-    this.currentSceneIndex = sceneIndex;
-    this.currentScene = this.scenario.scenes[sceneIndex];
-
-    return this.currentScene;
+    return scene;
   }
 
-  /// シーンを進める
-  nextScene(): Scene | null {
-    if (!this.currentScene) {
-      console.error('No current scene to advance from.');
-      return null;
-    }
+  // selectChoice(choiceIndex: number): Scene | null {
+  //   if (!this.currentScene || !this.currentScene.choices) {
+  //     console.error('No current scene to select choice from.');
+  //     return null;
+  //   }
+  //   // 選択肢のインデックスが範囲内か確認
+  //   const choice = this.currentScene.choices[choiceIndex];
+  //   if (!choice) {
+  //     console.error(`Choice with index ${choiceIndex} not found`);
+  //     return null;
+  //   }
+  //   // 選択肢の効果を適用
+  //   if (choice.effects) {
+  //     choice.effects.forEach((effect) => {
+  //       switch (effect.type) {
+  //         case 'setVariable':
+  //           this.state.variables[effect.name] = effect.value;
+  //           break;
+  //         case 'setFlag':
+  //           this.state.flags[effect.name] = effect.value;
+  //           break;
+  //         default:
+  //           console.error(`Unknown effect type: ${effect.type}`);
+  //       }
+  //     });
+  //   }
 
-    if (!this.currentScene.next) {
-      console.error('Current scene has no next scene defined.');
-      return null;
-    }
-
-    // 履歴に現在のシーンを追加
-    this.history.push(this.currentScene.id);
-    // 次のシーンに進む
-    return this.setCurrentScene(this.currentScene.next);
-  }
-
-  // 履歴から前のシーンに戻る
-  backScene(): Scene | null {
-    if (this.currentScene) {
-      //履歴に現在のシーンを追加
-      this.history.push(this.currentScene.id);
-      // 履歴から前のシーンを取得
-      const previousSceneId = this.history.pop();
-      if (!previousSceneId) {
-        console.error('No previous scene found in history.');
-        return null;
-      }
-      // シーンを設定
-      return this.setCurrentScene(previousSceneId);
-    } else {
-      console.error('No history to go back to.');
-      return null;
-    }
-  }
-
-  getState() {
-    return {
-      currentScene: this.currentScene?.id || null,
-      variables: this.state.variables,
-      flags: this.state.flags,
-      history: this.history,
-    };
-  }
-
-  selectChoice(choiceIndex: number): Scene | null {
-    if (!this.currentScene || !this.currentScene.choices) {
-      console.error('No current scene to select choice from.');
-      return null;
-    }
-    // 選択肢のインデックスが範囲内か確認
-    const choice = this.currentScene.choices[choiceIndex];
-    if (!choice) {
-      console.error(`Choice with index ${choiceIndex} not found`);
-      return null;
-    }
-    // 選択肢の効果を適用
-    if (choice.effects) {
-      choice.effects.forEach((effect) => {
-        switch (effect.type) {
-          case 'setVariable':
-            this.state.variables[effect.name] = effect.value;
-            break;
-          case 'setFlag':
-            this.state.flags[effect.name] = effect.value;
-            break;
-          default:
-            console.error(`Unknown effect type: ${effect.type}`);
-        }
-      });
-    }
-
-    this.history.push(this.currentScene.id);
-    return this.setCurrentScene(choice.next);
-  }
+  //   this.history.push(this.currentScene.id);
+  //   console.log('選択肢:', choice.text, '次のシーン:', choice.next);
+  //   return this.setCurrentScene(choice.next);
+  // }
 
   // 現在のテキストブロックを取得
-  getCurrentTextBlock(): TextBlock | null {
-    if (
-      !this.currentScene ||
-      !this.currentScene.textBlocks ||
-      this.currentScene.textBlocks.length === 0
-    ) {
-      return null;
-    }
-    return this.currentScene.textBlocks[this.currentTextBlockIndex];
-  }
+  // getCurrentTextBlock(): TextBlock | null {
+  //   if (
+  //     !this.currentScene ||
+  //     !this.currentScene.textBlocks ||
+  //     this.currentScene.textBlocks.length === 0
+  //   ) {
+  //     return null;
+  //   }
+  //   return this.currentScene.textBlocks[this.currentTextBlockIndex];
+  // }
 
   // 次のテキストブロックに進む
-  nextTextBlock(): TextBlock | null {
-    if (!this.currentScene || !this.currentScene.textBlocks) {
-      return null;
-    }
+  //   nextTextBlock(): TextBlock | null {
+  //     if (!this.currentScene || !this.currentScene.textBlocks) {
+  //       return null;
+  //     }
 
-    if (this.currentTextBlockIndex < this.currentScene.textBlocks.length - 1) {
-      this.currentTextBlockIndex++;
-      return this.currentScene.textBlocks[this.currentTextBlockIndex];
-    } else {
-      // 最後のテキストブロックの場合、次のシーンに進むべきかどうかの判断が必要
-      return null;
-    }
-  }
+  //     if (this.currentTextBlockIndex < this.currentScene.textBlocks.length - 1) {
+  //       this.currentTextBlockIndex++;
+  //       return this.currentScene.textBlocks[this.currentTextBlockIndex];
+  //     } else {
+  //       // 最後のテキストブロックの場合、次のシーンに進むべきかどうかの判断が必要
+  //       return null;
+  //     }
+  //   }
 }
 export default ScenarioEngine;
