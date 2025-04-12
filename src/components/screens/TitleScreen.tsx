@@ -1,7 +1,7 @@
 import React from 'react';
 import * as styles from './TitleScreen.css';
 
-const TitleScreen = ({ onStartGame, onShowCredits }) => {
+const TitleScreen = ({ onStartGame, onShowConfigMenu }) => {
   return (
     <div className={styles.titleContainer}>
       <div className={styles.titleContent}>
@@ -16,8 +16,8 @@ const TitleScreen = ({ onStartGame, onShowCredits }) => {
           <button className="game-button" onClick={onStartGame}>
             続きから
           </button>
-          <button className="game-button" onClick={onShowCredits}>
-            クレジット
+          <button className="game-button" onClick={onShowConfigMenu}>
+            設定
           </button>
         </div>
       </div>

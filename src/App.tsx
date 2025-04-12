@@ -30,7 +30,7 @@ const MainContent = () => {
       return (
         <TitleScreen
           onStartGame={() => startNewGame('prologue_v3')}
-          onShowCredits={() => console.log('Credit')}
+          onShowConfigMenu={() => console.log('ConfigMenu')}
         />
       );
     }
