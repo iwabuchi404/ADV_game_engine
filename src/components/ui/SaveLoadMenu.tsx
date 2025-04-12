@@ -1,164 +1,39 @@
 import React, { useState, useEffect } from 'react';
-// import styled from 'styled-components';
 import { useGame } from '../../contexts/GameContext';
-
-// スタイル付きコンポーネント
-const SaveLoadContainer = styled.div`
-  width: 100%;
-  height: 100%;
-  padding: 2rem;
-  display: flex;
-  flex-direction: column;
-  background-color: rgba(0, 20, 40, 0.9);
-  color: white;
-  overflow-y: auto;
-`;
-
-const HeaderContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1.5rem;
-`;
-
-const Title = styled.h2`
-  font-size: 1.8rem;
-  color: #a0e0ff;
-  margin: 0;
-
-  @media (max-width: 767px) {
-    font-size: 1.4rem;
-  }
-`;
-
-const CloseButton = styled.button`
-  background-color: rgba(100, 100, 100, 0.7);
-  color: white;
-  border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
-  font-size: 0.9rem;
-  cursor: pointer;
-
-  &:hover {
-    background-color: rgba(150, 150, 150, 0.9);
-  }
-`;
-
-const SlotsContainer = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 1rem;
-
-  @media (max-width: 767px) {
-    grid-template-columns: 1fr;
-  }
-`;
-
-const SaveSlot = styled.div`
-  border: 1px solid ${(props) => (props.isSelected ? '#a0e0ff' : 'rgba(100, 180, 255, 0.3)')};
-  border-radius: 5px;
-  padding: 1rem;
-  background-color: ${(props) =>
-    props.isSelected ? 'rgba(0, 50, 100, 0.6)' : 'rgba(0, 30, 60, 0.6)'};
-  cursor: pointer;
-  transition: all 0.2s ease;
-
-  &:hover {
-    background-color: rgba(0, 50, 100, 0.6);
-    border-color: rgba(100, 180, 255, 0.6);
-  }
-
-  ${(props) =>
-    props.isEmpty &&
-    `
-    border-style: dashed;
-    background-color: rgba(30, 30, 40, 0.6);
-    
-    &:hover {
-      background-color: rgba(40, 40, 60, 0.6);
-    }
-  `}
-`;
-
-const SlotHeader = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 0.5rem;
-`;
-
-const SlotTitle = styled.h3`
-  margin: 0;
-  font-size: 1.2rem;
-  color: ${(props) => (props.isEmpty ? '#888' : 'white')};
-`;
-
-const SlotDate = styled.span`
-  color: #a0e0ff;
-  font-size: 0.8rem;
-`;
-
-const SlotContent = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-`;
-
-const SlotInfo = styled.div`
-  color: ${(props) => (props.isEmpty ? '#888' : '#ddd')};
-  font-size: 0.9rem;
-`;
-
-const SlotButtons = styled.div`
-  display: flex;
-  gap: 0.5rem;
-  margin-top: 0.5rem;
-`;
-
-const SlotButton = styled.button`
-  flex: 1;
-  background-color: rgba(0, 80, 150, 0.7);
-  color: white;
-  border: none;
-  padding: 0.5rem;
-  border-radius: 4px;
-  font-size: 0.9rem;
-  cursor: pointer;
-  transition: all 0.2s ease;
-
-  &:hover {
-    background-color: rgba(0, 120, 200, 0.9);
-  }
-
-  &:disabled {
-    background-color: rgba(70, 70, 70, 0.5);
-    cursor: not-allowed;
-  }
-`;
-
-const DeleteButton = styled(SlotButton)`
-  background-color: rgba(150, 50, 50, 0.7);
-
-  &:hover {
-    background-color: rgba(200, 70, 70, 0.9);
-  }
-`;
-
-const EmptySlotText = styled.div`
-  text-align: center;
-  padding: 2rem 0;
-  color: #888;
-`;
+import * as styles from './SaveLoadMenu.css';
 
 // セーブデータがない場合のデフォルトスロット数
 const DEFAULT_EMPTY_SLOTS = 6;
+
+// 型定義
+interface SaveSlot {
+  id: string;
+  date?: string;
+  sceneName?: string;
+  screenshot?: string;
+}
+
+interface SaveSlotItemProps {
+  slot: SaveSlot;
+  isSelected: boolean;
+  onSelect: (slotId: string) => void;
+  onSave: (slotId: string) => void;
+  onLoad: (slotId: string) => void;
+  onDelete: (slotId: string) => void;
+  mode: 'save' | 'load';
+}
+
+interface SaveLoadMenuProps {
+  mode?: 'save' | 'load';
+  onClose: () => void;
+}
 
 /**
  * 日付をフォーマット
  * @param {string} dateString - 日付文字列
  * @returns {string} フォーマットされた日付
  */
-const formatDate = (dateString) => {
+const formatDate = (dateString?: string): string => {
   if (!dateString) return '';
 
   try {
@@ -178,39 +53,53 @@ const formatDate = (dateString) => {
 /**
  * セーブスロットコンポーネント
  */
-const SaveSlotItem = ({ slot, isSelected, onSelect, onSave, onLoad, onDelete, mode }) => {
+const SaveSlotItem: React.FC<SaveSlotItemProps> = ({
+  slot,
+  isSelected,
+  onSelect,
+  onSave,
+  onLoad,
+  onDelete,
+  mode,
+}) => {
   const isEmpty = !slot.date;
 
   return (
-    <SaveSlot isEmpty={isEmpty} isSelected={isSelected} onClick={() => onSelect(slot.id)}>
-      <SlotHeader>
-        <SlotTitle isEmpty={isEmpty}>{`スロット ${slot.id}`}</SlotTitle>
-        {!isEmpty && <SlotDate>{formatDate(slot.date)}</SlotDate>}
-      </SlotHeader>
+    <div
+      className={styles.saveSlot({
+        isEmpty,
+        isSelected,
+      })}
+      onClick={() => onSelect(slot.id)}
+    >
+      <div className={styles.slotHeader}>
+        <h3 className={styles.slotTitle({ isEmpty })}>{`スロット ${slot.id}`}</h3>
+        {!isEmpty && <span className={styles.slotDate}>{formatDate(slot.date)}</span>}
+      </div>
 
-      <SlotContent>
+      <div className={styles.slotContent}>
         {isEmpty ? (
-          <EmptySlotText>空のスロット</EmptySlotText>
+          <div className={styles.emptySlotText}>空のスロット</div>
         ) : (
-          <>
-            <SlotInfo>シーン: {slot.sceneName || '不明'}</SlotInfo>
-          </>
+          <div className={styles.slotInfo({ isEmpty })}>シーン: {slot.sceneName || '不明'}</div>
         )}
 
-        <SlotButtons>
+        <div className={styles.slotButtons}>
           {mode === 'save' && (
-            <SlotButton
+            <button
+              className={styles.slotButton({})}
               onClick={(e) => {
                 e.stopPropagation();
                 onSave(slot.id);
               }}
             >
               保存
-            </SlotButton>
+            </button>
           )}
 
           {mode === 'load' && (
-            <SlotButton
+            <button
+              className={styles.slotButton({ isDisabled: isEmpty })}
               onClick={(e) => {
                 e.stopPropagation();
                 onLoad(slot.id);
@@ -218,32 +107,33 @@ const SaveSlotItem = ({ slot, isSelected, onSelect, onSave, onLoad, onDelete, mo
               disabled={isEmpty}
             >
               読み込み
-            </SlotButton>
+            </button>
           )}
 
           {!isEmpty && (
-            <DeleteButton
+            <button
+              className={styles.slotButton({ isDelete: true })}
               onClick={(e) => {
                 e.stopPropagation();
                 onDelete(slot.id);
               }}
             >
               削除
-            </DeleteButton>
+            </button>
           )}
-        </SlotButtons>
-      </SlotContent>
-    </SaveSlot>
+        </div>
+      </div>
+    </div>
   );
 };
 
 /**
  * セーブ/ロード画面コンポーネント
  */
-const SaveLoadMenu = ({ mode = 'save', onClose }) => {
+const SaveLoadMenu: React.FC<SaveLoadMenuProps> = ({ mode = 'save', onClose }) => {
   const { gameStateManager, saveGame, loadGame } = useGame();
-  const [saveSlots, setSaveSlots] = useState([]);
-  const [selectedSlot, setSelectedSlot] = useState(null);
+  const [saveSlots, setSaveSlots] = useState<SaveSlot[]>([]);
+  const [selectedSlot, setSelectedSlot] = useState<string | null>(null);
 
   // セーブスロットを取得
   useEffect(() => {
@@ -272,7 +162,7 @@ const SaveLoadMenu = ({ mode = 'save', onClose }) => {
 
     const totalSlots = Math.max(maxSlotNum, DEFAULT_EMPTY_SLOTS);
 
-    const allSlots = [];
+    const allSlots: SaveSlot[] = [];
     for (let i = 1; i <= totalSlots; i++) {
       const existingSlot = sortedSlots.find((slot) => parseInt(slot.id, 10) === i);
 
@@ -292,12 +182,12 @@ const SaveLoadMenu = ({ mode = 'save', onClose }) => {
   }, [gameStateManager, selectedSlot]);
 
   // スロットを選択
-  const handleSelectSlot = (slotId) => {
+  const handleSelectSlot = (slotId: string): void => {
     setSelectedSlot(slotId);
   };
 
   // ゲームをセーブ
-  const handleSaveGame = (slotId) => {
+  const handleSaveGame = (slotId: string): void => {
     const success = saveGame(slotId);
 
     if (success) {
@@ -319,7 +209,7 @@ const SaveLoadMenu = ({ mode = 'save', onClose }) => {
   };
 
   // ゲームをロード
-  const handleLoadGame = async (slotId) => {
+  const handleLoadGame = async (slotId: string): Promise<void> => {
     const success = await loadGame(slotId);
 
     if (success) {
@@ -331,7 +221,7 @@ const SaveLoadMenu = ({ mode = 'save', onClose }) => {
   };
 
   // セーブデータを削除
-  const handleDeleteSave = (slotId) => {
+  const handleDeleteSave = (slotId: string): void => {
     if (window.confirm(`スロット ${slotId} のセーブデータを削除しますか？`)) {
       const success = gameStateManager.deleteSave(slotId);
 
@@ -354,13 +244,15 @@ const SaveLoadMenu = ({ mode = 'save', onClose }) => {
   };
 
   return (
-    <SaveLoadContainer>
-      <HeaderContainer>
-        <Title>{mode === 'save' ? 'セーブ' : 'ロード'}</Title>
-        <CloseButton onClick={onClose}>閉じる</CloseButton>
-      </HeaderContainer>
+    <div className={styles.saveLoadContainer}>
+      <div className={styles.headerContainer}>
+        <h2 className={styles.title}>{mode === 'save' ? 'セーブ' : 'ロード'}</h2>
+        <button className={styles.closeButton} onClick={onClose}>
+          閉じる
+        </button>
+      </div>
 
-      <SlotsContainer>
+      <div className={styles.slotsContainer}>
         {saveSlots.map((slot) => (
           <SaveSlotItem
             key={slot.id}
@@ -373,8 +265,8 @@ const SaveLoadMenu = ({ mode = 'save', onClose }) => {
             mode={mode}
           />
         ))}
-      </SlotsContainer>
-    </SaveLoadContainer>
+      </div>
+    </div>
   );
 };
 
