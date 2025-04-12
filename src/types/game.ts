@@ -75,12 +75,3 @@ export interface Memory {
   tags: string[];
   emotionalImpact: number;
 }
-
-export interface GameSettings {
-  textSpeed: number;
-  autoSpeed: number;
-  isAutoMode: boolean;
-  isSkipMode: boolean;
-  isFastForward: boolean;
-  showAlreadyRead: boolean;
-}
