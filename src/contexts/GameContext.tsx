@@ -301,7 +301,7 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const selectChoice = useCallback(
     (choiceIndex: number) => {
       const nextSceneId = gameState.currentScene?.choices?.[choiceIndex]?.next;
-      const nextScene = scenarioEngine.getScene(nextSceneId || '');
+      const nextScene = scenarioEngine.getScene(gameState.scenario, nextSceneId || '');
 
       if (!nextScene || !gameState.currentScene) {
         console.error('No next state found after choice selection');
