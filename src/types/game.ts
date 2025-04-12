@@ -1,6 +1,16 @@
-import { TransitionEffect, Scene, Character, Choice, BgmInstruction, TextBlock } from './scenario';
+import {
+  TransitionEffect,
+  Scene,
+  Character,
+  Choice,
+  BgmInstruction,
+  Scenario,
+  TextBlock,
+} from './scenario';
 
 export interface GameState {
+  scenarioId: string | null;
+  scenario: Scenario | null;
   currentScene: Scene | null;
   currentSceneId: string | null;
   isLoading: boolean;

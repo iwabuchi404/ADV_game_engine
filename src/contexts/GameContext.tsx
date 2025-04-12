@@ -43,6 +43,9 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   // ゲームの状態
   const [gameState, setGameState] = useState<GameState>({
+    // シナリオ情報
+    scenarioId: null,
+    scenario: null,
     currentSceneId: null,
     currentScene: null,
     isLoading: true,
@@ -105,28 +108,26 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
       try {
         // シナリオを読み込む
-        const loadResult = await scenarioEngine.loadScenario(scenarioId);
-        if (!loadResult) {
+        const scenario = await scenarioEngine.loadScenario(scenarioId);
+        if (!scenario) {
           throw new Error(`Failed to load scenario: ${scenarioId}`);
         }
 
-        // 初期状態を取得（型ガードを追加）
-        if (typeof loadResult === 'boolean') {
-          throw new Error(`Unexpected boolean result from loadScenario: ${scenarioId}`);
+        // 最初のシーンを取得
+        const initialScene = scenarioEngine.getFirstScene(scenario);
+        if (!initialScene) {
+          throw new Error(`Scenario has no scenes: ${scenarioId}`);
         }
-
-        // 初期状態を取得
-        const initialState = loadResult;
 
         // ゲーム状態を更新
         setGameState((prev) => {
           const newState = {
             ...prev,
-            ...initialState,
-            currentScene: initialState,
-            currentSceneId: initialState.id || scenarioId,
+            scenario, // シナリオ全体を保持
+            currentScene: initialScene,
+            currentSceneId: initialScene.id,
             currentTextBlockIndex: 0,
-            currentTextBlocks: initialState.textBlocks || [],
+            currentTextBlocks: initialScene.textBlocks || [],
             isLoading: false,
             hasStarted: true,
           };
@@ -163,7 +164,10 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
 
     // 次のシーンを取得
-    const nextState = scenarioEngine.getScene(gameState.currentScene?.next || '');
+    const nextState = scenarioEngine.getScene(
+      gameState.scenario,
+      gameState.currentScene?.next || ''
+    );
     if (!nextState) {
       console.error('No next scene found');
       return false;
