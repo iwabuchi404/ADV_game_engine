@@ -3,10 +3,11 @@ import Background from '../game/Background.tsx';
 import Character from '../game/Character.tsx';
 import TextBox from '../game/TextBox.tsx';
 import ChoiceMenu from '../game/ChoiceMenu.tsx';
-import SystemMenu from '../ui/SystemMenu.jsx';
+import SystemMenu from '../ui/SystemMenu.js';
 import { useGame } from '../../contexts/GameContext.tsx';
-import { useAudio } from '../../contexts/AudioContext.jsx';
-import './GameScreen.css';
+import { useAudio } from '../../contexts/AudioContext.js';
+import BGMPlayer from '../game/BGMPlayer.tsx';
+import * as styles from './GameScreen.css.ts';
 
 /**
  * ゲーム画面コンポーネント
@@ -23,39 +24,17 @@ const GameScreen = ({ onBackToTitle }) => {
   // UIの状態
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isTextComplete, setIsTextComplete] = useState(true);
-
   const completeTextFn = useRef(null); // テキスト完了関数の参照
   const currentBgmRef = useRef(null); // 現在のBGMを保持する参照
 
-  // シーンの変更を監視してBGMとSFXを再生
-  useEffect(() => {
-    if (!gameState.currentScene) return;
+  // // シーンの変更を監視してBGMとSFXを再生
+  // useEffect(() => {
+  //   if (!gameState.currentScene) return;
+  //   if (gameState.currentScene.bgm) {
+  //     // BGMが指定されている場合、BGMを再生
+  //   }
 
-    const playSceneAudio = async () => {
-      try {
-        // BGMの処理
-        if (gameState.currentScene && gameState.currentScene.bgm) {
-          const newBgm = gameState.currentScene.bgm;
-          if (newBgm !== currentBgmRef.current) {
-            await audio.playBGM(newBgm, {
-              fadeIn: true,
-              fadeInDuration: 2000,
-            });
-            currentBgmRef.current = newBgm;
-          }
-        }
-
-        // SFXの処理
-        if (gameState.currentScene && gameState.currentScene.sfx) {
-          await audio.playSFX(gameState.currentScene.sfx);
-        }
-      } catch (error) {
-        console.error('オーディオの再生に失敗しました:', error);
-      }
-    };
-
-    playSceneAudio();
-  }, [gameState.currentScene, audio]);
+  // }, [gameState.currentScene, audio]);
 
   //トランジション効果の適用
   useEffect(() => {
@@ -172,7 +151,12 @@ const GameScreen = ({ onBackToTitle }) => {
     gameState.currentScene.characters.length > 0;
 
   return (
-    <div className="game-screen" onClick={handleScreenClick} data-img={gameState.background}>
+    <div className={styles.gameScreen} onClick={handleScreenClick} data-img={gameState.background}>
+      {/* オーディオプレイヤーコンポーネント */}
+      <BGMPlayer
+        bgm={gameState.currentScene?.bgm}
+        isActive={gameState.hasStarted && !gameState.isLoading}
+      />
       <Background
         image={gameState.currentScene.background || ''}
         transition={gameState.currentScene.transition || null}
@@ -208,7 +192,7 @@ const GameScreen = ({ onBackToTitle }) => {
           />
         )}
 
-      <button className="menu-button" onClick={toggleMenu}>
+      <button className={styles.menuButton.default} onClick={toggleMenu}>
         メニュー
       </button>
 
