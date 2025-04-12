@@ -1,45 +1,146 @@
 import React, { createContext, useContext, useState, useEffect, useRef, useCallback } from 'react';
 
-/**
- * オーディオコンテキスト
- * 音声再生と設定の管理を担当
- */
-const AudioContext = createContext();
+// 音量設定の型定義
+interface VolumeSettings {
+  master: number;
+  bgm: number;
+  sfx: number;
+  voice: number;
+}
+
+// BGM再生オプションの型定義
+interface BGMOptions {
+  loop?: boolean;
+  fadeIn?: boolean;
+  fadeInDuration?: number;
+  volume?: number;
+}
+
+// 効果音再生オプションの型定義
+interface SFXOptions {
+  loop?: boolean;
+  volume?: number;
+}
+
+// ボイス再生オプションの型定義
+interface VoiceOptions {
+  volume?: number;
+}
+
+// BGM停止オプションの型定義
+interface StopBGMOptions {
+  fadeOut?: boolean;
+  fadeOutDuration?: number;
+}
+
+// オーディオコンテキストの型定義
+interface AudioContextType {
+  playBGM: (trackName: string, options?: BGMOptions) => Promise<HTMLAudioElement | undefined>;
+  stopBGM: (options?: StopBGMOptions) => void;
+  playSFX: (sfxName: string, options?: SFXOptions) => Promise<string>;
+  stopSFX: (id: string) => void;
+  playVoice: (character: string, voiceId: string, options?: VoiceOptions) => Promise<string>;
+  setAudioVolume: (type: keyof VolumeSettings, value: number) => void;
+  toggleMute: () => void;
+  stopAll: () => void;
+  volume: VolumeSettings;
+  isMuted: boolean;
+  currentBgm: string | null;
+}
+
+// AudioContext の作成
+const AudioContext = createContext<AudioContextType | undefined>(undefined);
+
+interface AudioProviderProps {
+  children: React.ReactNode;
+}
 
 /**
  * オーディオプロバイダーコンポーネント
  * オーディオ機能へのアクセスを提供する
  */
-export const AudioProvider = ({ children }) => {
+export const AudioProvider: React.FC<AudioProviderProps> = ({ children }) => {
   // BGM用のオーディオ要素
-  const bgmRef = useRef(null);
-  // 効果音用のオーディオ要素（複数同時再生のため配列で管理）
-  const sfxRefs = useRef({});
+  const bgmRef = useRef<HTMLAudioElement | null>(null);
+  // 効果音用のオーディオ要素（複数同時再生のため辞書で管理）
+  const sfxRefs = useRef<Record<string, HTMLAudioElement>>({});
 
   // 状態管理
-  const [volume, setVolume] = useState({
+  const [volume, setVolume] = useState<VolumeSettings>({
     master: 0.7,
     bgm: 0.5,
     sfx: 0.8,
     voice: 0.9,
   });
-  const [isMuted, setIsMuted] = useState(false);
-  const [currentBgm, setCurrentBgm] = useState(null);
+  const [isMuted, setIsMuted] = useState<boolean>(false);
+  const [currentBgm, setCurrentBgm] = useState<string | null>(null);
+
+  /**
+   * オーディオのフェードイン
+   * @param audio - オーディオ要素
+   * @param duration - フェード時間（ミリ秒）
+   * @param targetVolume - 目標音量
+   */
+  const fadeInAudio = (audio: HTMLAudioElement, duration: number, targetVolume: number): void => {
+    const startTime = performance.now();
+    const startVolume = 0;
+
+    const updateVolume = (): void => {
+      const currentTime = performance.now();
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+
+      audio.volume = startVolume + (targetVolume - startVolume) * progress;
+
+      if (progress < 1) {
+        requestAnimationFrame(updateVolume);
+      }
+    };
+
+    requestAnimationFrame(updateVolume);
+  };
+
+  /**
+   * オーディオのフェードアウト
+   * @param audio - オーディオ要素
+   * @param duration - フェード時間（ミリ秒）
+   * @param callback - フェード完了時のコールバック
+   */
+  const fadeOutAudio = (audio: HTMLAudioElement, duration: number, callback?: () => void): void => {
+    const startTime = performance.now();
+    const startVolume = audio.volume;
+
+    const updateVolume = (): void => {
+      const currentTime = performance.now();
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+
+      audio.volume = startVolume * (1 - progress);
+
+      if (progress < 1) {
+        requestAnimationFrame(updateVolume);
+      } else if (callback) {
+        callback();
+      }
+    };
+
+    requestAnimationFrame(updateVolume);
+  };
 
   /**
    * BGMを再生
-   * @param {string} trackName - BGMの名前
-   * @param {Object} options - 再生オプション
-   * @returns {Promise<void>}
+   * @param trackName - BGMの名前
+   * @param options - 再生オプション
+   * @returns 生成されたオーディオ要素
    */
   const playBGM = useCallback(
-    async (trackName, options = {}) => {
+    async (trackName: string, options: BGMOptions = {}): Promise<HTMLAudioElement | undefined> => {
       const { loop = true, fadeIn = false, fadeInDuration = 2000, volume: customVolume } = options;
 
       try {
         // 既に同じBGMが再生中の場合は何もしない
         if (currentBgm === trackName && bgmRef.current && !bgmRef.current.paused) {
-          return;
+          return bgmRef.current;
         }
 
         // 新しいオーディオ要素を作成
@@ -76,7 +177,7 @@ export const AudioProvider = ({ children }) => {
         return audio;
       } catch (error) {
         console.error('Error playing BGM:', error);
-        throw error;
+        return undefined;
       }
     },
     [volume, isMuted, currentBgm]
@@ -84,19 +185,21 @@ export const AudioProvider = ({ children }) => {
 
   /**
    * BGMを停止
-   * @param {Object} options - 停止オプション
+   * @param options - 停止オプション
    */
-  const stopBGM = useCallback((options = {}) => {
+  const stopBGM = useCallback((options: StopBGMOptions = {}): void => {
     const { fadeOut = false, fadeOutDuration = 1000 } = options;
 
     if (!bgmRef.current) return;
 
     if (fadeOut) {
       fadeOutAudio(bgmRef.current, fadeOutDuration, () => {
-        bgmRef.current.pause();
-        bgmRef.current.src = '';
-        bgmRef.current = null;
-        setCurrentBgm(null);
+        if (bgmRef.current) {
+          bgmRef.current.pause();
+          bgmRef.current.src = '';
+          bgmRef.current = null;
+          setCurrentBgm(null);
+        }
       });
     } else {
       bgmRef.current.pause();
@@ -108,12 +211,12 @@ export const AudioProvider = ({ children }) => {
 
   /**
    * 効果音を再生
-   * @param {string} sfxName - 効果音の名前
-   * @param {Object} options - 再生オプション
-   * @returns {Promise<string>} 効果音のID（停止時に使用）
+   * @param sfxName - 効果音の名前
+   * @param options - 再生オプション
+   * @returns 効果音のID（停止時に使用）
    */
   const playSFX = useCallback(
-    async (sfxName, options = {}) => {
+    async (sfxName: string, options: SFXOptions = {}): Promise<string> => {
       const { loop = false, volume: customVolume } = options;
 
       try {
@@ -126,6 +229,11 @@ export const AudioProvider = ({ children }) => {
         // 一意のIDを生成
         const id = Date.now().toString();
         sfxRefs.current[id] = audio;
+
+        // データ属性の代わりにTypeScript用のメタデータ
+        Object.defineProperty(audio, 'dataset', {
+          value: { type: 'sfx' },
+        });
 
         // 再生完了時に削除するイベントリスナーを設定
         audio.addEventListener('ended', () => {
@@ -151,9 +259,9 @@ export const AudioProvider = ({ children }) => {
 
   /**
    * 効果音を停止
-   * @param {string} id - 効果音のID
+   * @param id - 効果音のID
    */
-  const stopSFX = useCallback((id) => {
+  const stopSFX = useCallback((id: string): void => {
     if (sfxRefs.current[id]) {
       const audio = sfxRefs.current[id];
       audio.pause();
@@ -164,13 +272,13 @@ export const AudioProvider = ({ children }) => {
 
   /**
    * キャラクターボイスを再生
-   * @param {string} character - キャラクター名
-   * @param {string} voiceId - ボイスID
-   * @param {Object} options - 再生オプション
-   * @returns {Promise<string>} ボイスのID
+   * @param character - キャラクター名
+   * @param voiceId - ボイスID
+   * @param options - 再生オプション
+   * @returns ボイスのID
    */
   const playVoice = useCallback(
-    async (character, voiceId, options = {}) => {
+    async (character: string, voiceId: string, options: VoiceOptions = {}): Promise<string> => {
       const { volume: customVolume } = options;
 
       try {
@@ -178,6 +286,11 @@ export const AudioProvider = ({ children }) => {
         const audio = new Audio(`/assets/audio/voice/${character}/${voiceId}.mp3`);
         const calculatedVolume = customVolume || volume.master * volume.voice;
         audio.volume = isMuted ? 0 : calculatedVolume;
+
+        // データ属性の代わりにTypeScript用のメタデータ
+        Object.defineProperty(audio, 'dataset', {
+          value: { type: 'voice' },
+        });
 
         // 一意のIDを生成
         const id = `voice_${Date.now()}`;
@@ -206,11 +319,11 @@ export const AudioProvider = ({ children }) => {
 
   /**
    * 音量を設定
-   * @param {string} type - 音量タイプ（master, bgm, sfx, voice）
-   * @param {number} value - 音量（0〜1）
+   * @param type - 音量タイプ（master, bgm, sfx, voice）
+   * @param value - 音量（0〜1）
    */
   const setAudioVolume = useCallback(
-    (type, value) => {
+    (type: keyof VolumeSettings, value: number): void => {
       setVolume((prev) => {
         const newVolume = { ...prev, [type]: value };
 
@@ -224,18 +337,21 @@ export const AudioProvider = ({ children }) => {
         // 効果音の音量を更新
         Object.values(sfxRefs.current).forEach((audio) => {
           if (!isMuted) {
+            const dataset = (audio.dataset as { type?: string }) || { type: 'sfx' };
+            const audioType = dataset.type || 'sfx';
+
             if (type === 'master') {
               // マスター音量変更時は全てのオーディオに適用
               audio.volume =
                 newVolume.master *
-                (audio.dataset.type === 'sfx'
+                (audioType === 'sfx'
                   ? newVolume.sfx
-                  : audio.dataset.type === 'voice'
+                  : audioType === 'voice'
                   ? newVolume.voice
                   : newVolume.sfx);
             } else if (
-              (type === 'sfx' && audio.dataset.type === 'sfx') ||
-              (type === 'voice' && audio.dataset.type === 'voice')
+              (type === 'sfx' && audioType === 'sfx') ||
+              (type === 'voice' && audioType === 'voice')
             ) {
               audio.volume = newVolume.master * newVolume[type];
             }
@@ -251,7 +367,7 @@ export const AudioProvider = ({ children }) => {
   /**
    * ミュート切り替え
    */
-  const toggleMute = useCallback(() => {
+  const toggleMute = useCallback((): void => {
     setIsMuted((prev) => {
       const newMuted = !prev;
 
@@ -262,8 +378,9 @@ export const AudioProvider = ({ children }) => {
 
       // 効果音の音量を調整
       Object.values(sfxRefs.current).forEach((audio) => {
-        const type = audio.dataset.type || 'sfx';
-        audio.volume = newMuted ? 0 : volume.master * volume[type];
+        const dataset = (audio.dataset as { type?: string }) || { type: 'sfx' };
+        const type = dataset.type || 'sfx';
+        audio.volume = newMuted ? 0 : volume.master * volume[type as keyof VolumeSettings];
       });
 
       return newMuted;
@@ -273,7 +390,7 @@ export const AudioProvider = ({ children }) => {
   /**
    * 全てのオーディオを停止
    */
-  const stopAll = useCallback(() => {
+  const stopAll = useCallback((): void => {
     // BGMを停止
     if (bgmRef.current) {
       bgmRef.current.pause();
@@ -292,58 +409,6 @@ export const AudioProvider = ({ children }) => {
     sfxRefs.current = {};
   }, []);
 
-  /**
-   * オーディオのフェードイン
-   * @param {HTMLAudioElement} audio - オーディオ要素
-   * @param {number} duration - フェード時間（ミリ秒）
-   * @param {number} targetVolume - 目標音量
-   */
-  const fadeInAudio = (audio, duration, targetVolume) => {
-    const startTime = performance.now();
-    const startVolume = 0;
-
-    const updateVolume = () => {
-      const currentTime = performance.now();
-      const elapsed = currentTime - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-
-      audio.volume = startVolume + (targetVolume - startVolume) * progress;
-
-      if (progress < 1) {
-        requestAnimationFrame(updateVolume);
-      }
-    };
-
-    requestAnimationFrame(updateVolume);
-  };
-
-  /**
-   * オーディオのフェードアウト
-   * @param {HTMLAudioElement} audio - オーディオ要素
-   * @param {number} duration - フェード時間（ミリ秒）
-   * @param {Function} callback - フェード完了時のコールバック
-   */
-  const fadeOutAudio = (audio, duration, callback) => {
-    const startTime = performance.now();
-    const startVolume = audio.volume;
-
-    const updateVolume = () => {
-      const currentTime = performance.now();
-      const elapsed = currentTime - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-
-      audio.volume = startVolume * (1 - progress);
-
-      if (progress < 1) {
-        requestAnimationFrame(updateVolume);
-      } else if (callback) {
-        callback();
-      }
-    };
-
-    requestAnimationFrame(updateVolume);
-  };
-
   // コンポーネントのアンマウント時に全てのオーディオを停止
   useEffect(() => {
     return () => {
@@ -352,7 +417,7 @@ export const AudioProvider = ({ children }) => {
   }, [stopAll]);
 
   // AudioContext の値
-  const value = {
+  const value: AudioContextType = {
     playBGM,
     stopBGM,
     playSFX,
@@ -373,7 +438,7 @@ export const AudioProvider = ({ children }) => {
  * useAudioフック
  * コンポーネント内でオーディオ機能を使用するためのカスタムフック
  */
-export const useAudio = () => {
+export const useAudio = (): AudioContextType => {
   const context = useContext(AudioContext);
 
   if (context === undefined) {

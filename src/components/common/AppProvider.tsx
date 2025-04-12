@@ -1,6 +1,6 @@
 import React from 'react';
 import { GameProvider } from '../../contexts/GameContext.tsx';
-import { AudioProvider } from '../../contexts/AudioContext';
+import { AudioProvider } from '../../contexts/AudioContext.tsx';
 
 /**
  * アプリケーションプロバイダー

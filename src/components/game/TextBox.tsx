@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 // import styled from 'styled-components';
-import processText from '../../utils/TextProcessor';
+import processText from '../../utils/TextProcessor.ts';
 import { useGame } from '../../contexts/GameContext.tsx';
 import {
   TextBoxContainer,
@@ -68,11 +68,11 @@ const useTypewriterEffect = (text: string, typingSpeed = 30) => {
 };
 
 const TextBox = ({
-  speaker,
-  onAdvance,
+  speaker = '',
+  onAdvance = () => {},
   effects = {},
-  onComplete, // テキスト完了時のコールバック
-  onRequestComplete, // テキスト強制完了のリクエスト関数を渡すコールバック
+  onComplete = () => {}, // テキスト完了時のコールバック
+  onRequestComplete = () => {}, // テキスト強制完了のリクエスト関数を渡すコールバック
 }) => {
   const { gameState, gameSettings } = useGame();
 
