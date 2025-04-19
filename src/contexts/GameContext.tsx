@@ -163,6 +163,10 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
       return false;
     }
 
+    if (gameState.currentScene?.next && gameState.currentScene?.next.includes('.json')) {
+      // シーンがJSONファイルを指している場合は、シナリオを読み込みする
+      return loadScenario(gameState.currentScene.next.split('.json')[0]);
+    }
     // 次のシーンを取得
     const nextState = scenarioEngine.getScene(
       gameState.scenario,

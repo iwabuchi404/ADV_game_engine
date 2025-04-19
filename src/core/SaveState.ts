@@ -1,5 +1,3 @@
-import { i } from 'node_modules/vite/dist/node/types.d-aGj9QkWt';
-
 /**
  * ゲーム状態マネージャー
  * セーブデータの管理を行うクラス

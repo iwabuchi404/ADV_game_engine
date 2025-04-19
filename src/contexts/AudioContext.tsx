@@ -67,7 +67,7 @@ export const AudioProvider: React.FC<AudioProviderProps> = ({ children }) => {
 
   // 状態管理
   const [volume, setVolume] = useState<VolumeSettings>({
-    master: 0.7,
+    master: 0.5,
     bgm: 0.5,
     sfx: 0.8,
     voice: 0.9,

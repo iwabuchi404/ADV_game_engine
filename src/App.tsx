@@ -22,20 +22,29 @@ function App() {
  */
 const MainContent = () => {
   // ゲームコンテキストを使用
-  const { gameState, startNewGame } = useGame();
+  const { gameState, updateGameState, startNewGame } = useGame();
+
+  const handleBackToTitle = () => {
+    // GameContextの状態を更新して画面を切り替える
+    updateGameState({
+      hasStarted: false,
+      isLoading: false,
+    });
+    console.log('Back to Title Screen');
+  };
 
   // 現在表示する画面を選択
   const renderScreen = () => {
     if (!gameState.hasStarted) {
       return (
         <TitleScreen
-          onStartGame={() => startNewGame('prologue_v3')}
+          onStartGame={() => startNewGame('prologue_v5')}
           onShowConfigMenu={() => console.log('ConfigMenu')}
         />
       );
     }
 
-    return <GameScreen />;
+    return <GameScreen onBackToTitle={handleBackToTitle} />;
     // return <TestScreen />;
   };
 
