@@ -4,7 +4,7 @@
  */
 import { GameState } from '../types/game';
 
-class SaveManager {
+export default class SaveManager {
   private storageKey: string; // ローカルストレージのキー
 
   constructor() {
@@ -20,8 +20,8 @@ class SaveManager {
    */
   saveGame(slotId: number | string, gameState: GameState) {
     try {
-      // 既存のセーブデータを取得
-      const saves = JSON.parse(localStorage.getItem(this.storageKey)) || {};
+      // セーブデータを取得
+      const saves = JSON.parse(localStorage.getItem(this.storageKey) || '') || {};
 
       // 現在時刻を取得
       const saveDate = new Date().toISOString();
@@ -49,7 +49,7 @@ class SaveManager {
   loadGame(slotId: number | string) {
     try {
       // セーブデータを取得
-      const saves = JSON.parse(localStorage.getItem(this.storageKey)) || {};
+      const saves = JSON.parse(localStorage.getItem(this.storageKey) || '') || {};
 
       // 指定されたスロットのデータを返す
       return saves[slotId] || null;
@@ -76,5 +76,3 @@ class SaveManager {
     return this.loadGame('auto');
   }
 }
-
-export default SaveManager;

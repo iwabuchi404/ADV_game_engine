@@ -15,8 +15,17 @@ import * as styles from './GameScreen.css.ts';
  */
 const GameScreen = ({ onBackToTitle }) => {
   // GameContextからゲーム状態と関数を取得
-  const { gameState, nextScene, selectChoice, loadScenario, nextTextBlock, startNewGame } =
-    useGame();
+  const {
+    gameState,
+    nextScene,
+    selectChoice,
+    loadScenario,
+    nextTextBlock,
+    startNewGame,
+    saveGame,
+    loadGame,
+    updateGameState,
+  } = useGame();
 
   // オーディオコンテキスト
   const audio = useAudio();
@@ -74,7 +83,8 @@ const GameScreen = ({ onBackToTitle }) => {
   /**
    * メニューの表示/非表示を切り替える
    */
-  const toggleMenu = () => {
+  const toggleMenu = (e) => {
+    e.stopPropagation();
     setIsMenuOpen(!isMenuOpen);
   };
 
@@ -144,6 +154,16 @@ const GameScreen = ({ onBackToTitle }) => {
     handleTextProgress();
   };
 
+  const onSeve = () => {
+    updateGameState({ scrennState: 'save' }); // ゲーム状態を更新
+  };
+
+  const onLoad = () => {
+    console.log('ロード');
+    updateGameState({ scrennState: 'load' }); // ゲーム状態を更新
+    loadGame('01');
+  };
+
   // キャラクターが存在するかチェック
   const hasCharacters =
     gameState.currentScene &&
@@ -192,14 +212,14 @@ const GameScreen = ({ onBackToTitle }) => {
           />
         )}
 
-      <button className={styles.menuButton.default} onClick={toggleMenu}>
+      <button className={styles.menuButton.default} onClick={(e) => toggleMenu(e)}>
         メニュー
       </button>
 
       {isMenuOpen && (
         <SystemMenu
-          onSave={() => console.log('セーブ')}
-          onLoad={() => console.log('ロード')}
+          onSave={onSeve}
+          onLoad={onLoad}
           onConfig={() => console.log('設定')}
           onBackToTitle={onBackToTitle}
           onClose={toggleMenu}

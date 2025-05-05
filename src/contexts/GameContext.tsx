@@ -1,16 +1,16 @@
 import React, { createContext, useContext, useState, useEffect, useCallback, useMemo } from 'react';
 import ScenarioEngine from '../core/ScenarioEngine';
-import SaveState from '../core/SaveState.ts';
 import AssetLoader from '../core/AssetLoader.ts';
 import { GameState, GameSettings } from '../types/game';
 import { TextBlock } from '../types/scenario.ts';
+import SaveManager from '../core/SaveState.ts';
 
 // GameContextの型を定義
 interface GameContextType {
   gameState: GameState;
   gameSettings: GameSettings;
   scenarioEngine: ScenarioEngine;
-  gameStateManager: SaveState;
+  gameStateManager: any;
   assetLoader: AssetLoader;
   loadScenario: (scenarioId: string) => Promise<boolean>;
   nextScene: () => boolean;
@@ -38,11 +38,12 @@ const GameContext = createContext<GameContextType | null>(null);
 export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   // ゲームエンジンのインスタンスを作成（メモ化）
   const scenarioEngine = useMemo(() => new ScenarioEngine(), []);
-  const gameStateManager = useMemo(() => new SaveState(), []);
+  const gameStateManager = useMemo(() => new SaveManager(), []);
   const assetLoader = useMemo(() => new AssetLoader(), []);
 
   // ゲームの状態
   const [gameState, setGameState] = useState<GameState>({
+    scrennState: 'title', // ゲームの状態（タイトル、ゲームプレイなど）
     // シナリオ情報
     scenarioId: null,
     scenario: null,
@@ -112,7 +113,6 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
         if (!scenario) {
           throw new Error(`Failed to load scenario: ${scenarioId}`);
         }
-
         // 最初のシーンを取得
         const initialScene = scenarioEngine.getFirstScene(scenario);
         if (!initialScene) {
@@ -124,6 +124,7 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
           const newState = {
             ...prev,
             scenario, // シナリオ全体を保持
+            scenarioId: scenarioId,
             currentScene: initialScene,
             currentSceneId: initialScene.id,
             currentTextBlockIndex: 0,
@@ -346,7 +347,7 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
    * @returns {boolean} セーブに成功したかどうか
    */
   const saveGame = useCallback(
-    (slotId: number) => {
+    (slotId: string) => {
       try {
         return gameStateManager.saveGame(slotId, {
           ...gameState,
@@ -367,7 +368,7 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
    * @returns {Promise<boolean>} ロードに成功したかどうか
    */
   const loadGame = useCallback(
-    async (slotId: number) => {
+    async (slotId: string) => {
       const savedState = gameStateManager.loadGame(slotId);
 
       if (!savedState) {

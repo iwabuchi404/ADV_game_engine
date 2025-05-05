@@ -9,6 +9,7 @@ import {
 } from './scenario';
 
 export interface GameState {
+  scrennState: 'title' | 'game' | 'save' | 'load' | 'config';
   scenarioId: string | null;
   scenario: Scenario | null;
   currentScene: Scene | null;
