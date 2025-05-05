@@ -32,10 +32,34 @@ const QuickMenu = ({}) => {
     loadGame('auto'); // スロット0からロード
   };
 
+  const SkipMouseDown = (e) => {
+    e.stopPropagation();
+    updateSettings({
+      ...gameSettings,
+      isSkipMode: true,
+    });
+  };
+
+  const SkipMouseUp = (e) => {
+    e.stopPropagation();
+    updateSettings({
+      ...gameSettings,
+      isSkipMode: false,
+    });
+  };
+
   return (
     <div className={QuickMenuContainer}>
       <button className={ChoiceMenuButton} onClick={(e) => toggleAuto(e)}>
         Auto:{gameSettings.isAutoMode ? 'ON' : 'OFF'}
+      </button>
+      <button
+        className={ChoiceMenuButton}
+        onMouseDown={(e) => SkipMouseDown(e)}
+        onMouseUp={(e) => SkipMouseUp(e)}
+        onMouseLeave={(e) => SkipMouseUp(e)}
+      >
+        Skip
       </button>
       <button className={ChoiceMenuButton} onClick={(e) => quickSave(e)}>
         Qsave

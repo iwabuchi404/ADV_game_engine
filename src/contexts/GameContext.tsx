@@ -16,8 +16,8 @@ interface GameContextType {
   nextScene: () => boolean;
   nextTextBlock: () => TextBlock;
   selectChoice: (choiceIndex: number) => boolean;
-  saveGame: (slotId: number) => boolean;
-  loadGame: (slotId: number) => Promise<boolean>;
+  saveGame: (slotId: number | string) => boolean;
+  loadGame: (slotId: number | string) => Promise<boolean>;
   updateGameState: (updates: Partial<GameState>) => void;
   updateProperty: <K extends keyof GameState>(property: K, value: any) => void;
   updateSettings: (newSettings: GameSettings) => void;
@@ -49,8 +49,8 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
     scenario: null,
     currentSceneId: null,
     currentScene: null,
-    isLoading: true,
-    hasStarted: false,
+    isLoading: true, // シナリオの読み込み中かどうか
+    hasStarted: false, // ゲームが開始されたかどうか
     currentTextBlocks: [], // 追加
     currentTextBlockIndex: 0, // 追加
     transition: null, // トランジション効果を追加
@@ -567,6 +567,103 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
       startNewGame,
     ]
   );
+
+  // オートモード用の useEffect
+  useEffect(() => {
+    let autoAdvanceTimer: NodeJS.Timeout | null = null;
+
+    // オートモードで進行する条件を確認
+    const canAutoAdvance =
+      gameSettings.isAutoMode && // オートモードが ON
+      gameState.hasStarted && // ゲームが開始されている
+      !gameState.isLoading && // ロード中でない
+      !gameState.isTransition && // トランジション中でない
+      gameState.currentScene && // 現在のシーンが存在する
+      (!gameState.currentScene.choices || gameState.currentScene.choices.length === 0); // 選択肢が表示されていない
+
+    if (canAutoAdvance) {
+      // 設定された速度でタイマーを開始
+      autoAdvanceTimer = setTimeout(() => {
+        // 現在のシーンのテキストブロック数を取得 (存在しない場合は 0)
+        const totalBlocksInScene = gameState.currentScene?.textBlocks?.length ?? 0;
+        // 現在のインデックスが最後のテキストブロックか確認
+        const isLastTextBlock = gameState.currentTextBlockIndex >= totalBlocksInScene - 1;
+
+        if (isLastTextBlock) {
+          // 最後のテキストブロックなら次のシーンへ
+          nextScene();
+        } else {
+          // それ以外なら次のテキストブロックへ
+          nextTextBlock();
+        }
+      }, gameSettings.autoSpeed); // gameSettings から autoSpeed を使用
+    }
+
+    // クリーンアップ関数: コンポーネントのアンマウント時や依存配列の値が変わった時にタイマーをクリア
+    return () => {
+      if (autoAdvanceTimer) {
+        clearTimeout(autoAdvanceTimer);
+      }
+    };
+  }, [
+    // 依存配列: これらの値が変わると effect が再実行される
+    gameSettings.isAutoMode,
+    gameSettings.autoSpeed,
+    gameState.hasStarted,
+    gameState.isLoading,
+    gameState.isTransition,
+    gameState.currentScene, // シーンが変わった時
+    gameState.currentTextBlockIndex, // テキストブロックが変わった時
+    nextTextBlock, // effect内で使用する関数
+    nextScene, // effect内で使用する関数
+  ]);
+
+  // skipモード用の useEffect
+  useEffect(() => {
+    let skipAdvanceTimer: NodeJS.Timeout | null = null;
+
+    const canAutoAdvance =
+      gameSettings.isSkipMode && // オートモードが ON
+      gameState.hasStarted && // ゲームが開始されている
+      !gameState.isLoading && // ロード中でない
+      gameState.currentScene && // 現在のシーンが存在する
+      (!gameState.currentScene.choices || gameState.currentScene.choices.length === 0); // 選択肢が表示されていない
+
+    if (canAutoAdvance) {
+      // 設定された速度でタイマーを開始
+      skipAdvanceTimer = setTimeout(() => {
+        // 現在のシーンのテキストブロック数を取得 (存在しない場合は 0)
+        const totalBlocksInScene = gameState.currentScene?.textBlocks?.length ?? 0;
+        // 現在のインデックスが最後のテキストブロックか確認
+        const isLastTextBlock = gameState.currentTextBlockIndex >= totalBlocksInScene - 1;
+
+        if (isLastTextBlock) {
+          // 最後のテキストブロックなら次のシーンへ
+          nextScene();
+        } else {
+          // それ以外なら次のテキストブロックへ
+          nextTextBlock();
+        }
+      }, 200); // gameSettings から autoSpeed を使用
+    }
+
+    // クリーンアップ関数: コンポーネントのアンマウント時や依存配列の値が変わった時にタイマーをクリア
+    return () => {
+      if (skipAdvanceTimer) {
+        clearTimeout(skipAdvanceTimer);
+      }
+    };
+  }, [
+    // 依存配列: これらの値が変わると effect が再実行される
+    gameSettings.isSkipMode,
+    gameState.hasStarted,
+    gameState.isLoading,
+    gameState.isTransition,
+    gameState.currentScene, // シーンが変わった時
+    gameState.currentTextBlockIndex, // テキストブロックが変わった時
+    nextTextBlock, // effect内で使用する関数
+    nextScene, // effect内で使用する関数
+  ]);
 
   return <GameContext.Provider value={value}>{children}</GameContext.Provider>;
 };
