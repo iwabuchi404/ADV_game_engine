@@ -4,6 +4,7 @@ import Character from '../game/Character.tsx';
 import TextBox from '../game/TextBox.tsx';
 import ChoiceMenu from '../game/ChoiceMenu.tsx';
 import SystemMenu from '../ui/SystemMenu.js';
+import QuickMenu from '../game/quickMenu.tsx';
 import { useGame } from '../../contexts/GameContext.tsx';
 import { useAudio } from '../../contexts/AudioContext.js';
 import BGMPlayer from '../game/BGMPlayer.tsx';
@@ -193,6 +194,8 @@ const GameScreen = ({ onBackToTitle }) => {
             expression={char.expression}
           />
         ))}
+
+      <QuickMenu></QuickMenu>
 
       <TextBox
         speaker={gameState.speaker}
