@@ -135,7 +135,7 @@ const TextBox = ({
       className={`${TextBoxContainer} ${effects?.shake ? 'shake-animation' : ''}`}
       onClick={handleClick}
     >
-      {speaker && (
+      {currentSpeaker && (
         <div className={SpeakerNameBox}>
           <div className={SpeakerName}>{currentSpeaker}</div>
         </div>

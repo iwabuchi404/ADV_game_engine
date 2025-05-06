@@ -7,8 +7,8 @@ export const QuickMenuContainer = style({
   justifyContent: 'center',
   alignItems: 'flex-end',
   transition: 'all 0.5s ease-in-out',
-  bottom: '130px',
-  right: '30px',
+  bottom: '176px',
+  left: 'calc(50% + 200px)',
   gap: '4px',
 });
 

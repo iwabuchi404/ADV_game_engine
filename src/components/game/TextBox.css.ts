@@ -2,14 +2,14 @@ import { style, styleVariants, keyframes } from '@vanilla-extract/css';
 
 export const TextBoxContainer = style({
   position: 'absolute',
-  bottom: '20px',
+  bottom: '40px',
   left: '50%',
   transform: 'translateX(-50%)',
   width: '90%',
-  maxWidth: '1000px',
+  maxWidth: '1200px',
   backgroundColor: 'rgba(0, 20, 40, 0.85)',
   borderRadius: '8px',
-  padding: '1rem 2rem',
+  padding: '1.2rem 2.4rem',
   zIndex: '10',
   boxShadow: '0 5px 15px rgba(0, 0, 0, 0.5)',
   backdropFilter: 'blur(5px)',
@@ -21,7 +21,7 @@ export const SpeakerNameBox = style({
   position: 'absolute',
   top: '-20px',
   left: '20px',
-  backgroundColor: 'rgba(0, 100, 200, 0.9)',
+  backgroundColor: 'rgba(12, 104, 196, 0.77)',
   padding: '0.3rem 1rem',
   borderRadius: '5px',
   fontWeight: 'bold',
@@ -35,10 +35,10 @@ export const SpeakerName = style({
 
 export const TextContent = style({
   color: 'white',
-  fontSize: '1rem',
-  lineHeight: '1.6',
+  fontSize: '1.2rem',
+  lineHeight: '1.7',
   marginTop: '0.5rem',
-  minHeight: '5rem',
+  minHeight: '6rem',
 
   '@media': {
     'screen and (max-width: 767px)': {

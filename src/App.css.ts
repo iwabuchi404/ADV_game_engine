@@ -14,8 +14,8 @@ export const appContainer = style({
 export const gameContainer = style({
   width: '100%',
   height: '100%',
-  maxWidth: '1280px',
-  maxHeight: '720px',
+  maxWidth: '1920px',
+  maxHeight: '1080px',
   position: 'relative',
   aspectRatio: '16 / 9',
 
