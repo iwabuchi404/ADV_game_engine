@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Background from '../game/Background.tsx';
 import Character from '../game/Character.tsx';
 import TextBox from '../game/TextBox.tsx';
@@ -8,22 +8,25 @@ import QuickMenu from '../game/quickMenu.tsx';
 import { useGame } from '../../contexts/GameContext.tsx';
 import { useAudio } from '../../contexts/AudioContext.js';
 import BGMPlayer from '../game/BGMPlayer.tsx';
+import { Choice } from '../../types/scenario';
 import * as styles from './GameScreen.css.ts';
+
+interface GameScreenProps {
+  onBackToTitle: () => void;
+}
 
 /**
  * ゲーム画面コンポーネント
  * ビジュアルノベルの主要ゲームプレイ画面を表示する
  */
-const GameScreen = ({ onBackToTitle }) => {
+const GameScreen = ({ onBackToTitle }: GameScreenProps) => {
   // GameContextからゲーム状態と関数を取得
   const {
     gameState,
     nextScene,
     selectChoice,
-    loadScenario,
     nextTextBlock,
     startNewGame,
-    saveGame,
     loadGame,
     updateGameState,
   } = useGame();
@@ -49,8 +52,8 @@ const GameScreen = ({ onBackToTitle }) => {
   //トランジション効果の適用
   useEffect(() => {
     if (!gameState.transition) return;
-    //  トランジション効果がある場合、現在の背景を保存
-    const previousBackground = gameState.background;
+    //  トランジション効果がある場合の処理
+    console.log('Transition effect:', gameState.transition);
   }, [gameState.transition, gameState.isTransition]);
 
   // コンポーネントのクリーンアップ
@@ -76,7 +79,7 @@ const GameScreen = ({ onBackToTitle }) => {
    * @param {Object} choice - 選択された選択肢オブジェクト
    * @param {number} index - 選択肢のインデックス
    */
-  const handleChoiceSelected = (choice, index) => {
+  const handleChoiceSelected = (choice: Choice, index: number) => {
     console.log(`選択: ${choice.text}, インデックス: ${index}`);
     selectChoice(index);
   };
@@ -84,7 +87,7 @@ const GameScreen = ({ onBackToTitle }) => {
   /**
    * メニューの表示/非表示を切り替える
    */
-  const toggleMenu = (e) => {
+  const toggleMenu = (e: React.MouseEvent) => {
     e.stopPropagation();
     setIsMenuOpen(!isMenuOpen);
   };
@@ -100,7 +103,7 @@ const GameScreen = ({ onBackToTitle }) => {
    * テキスト強制完了関数を保存
    * @param {Function} completeFn - テキスト表示を完了させる関数
    */
-  const handleRequestComplete = (completeFn) => {
+  const handleRequestComplete = (completeFn: () => void) => {
     completeTextFn.current = completeFn;
   };
 
@@ -198,9 +201,6 @@ const GameScreen = ({ onBackToTitle }) => {
       <QuickMenu></QuickMenu>
 
       <TextBox
-        speaker={gameState.speaker}
-        text={gameState.text}
-        typingSpeed={30}
         onAdvance={handleAdvance}
         onComplete={handleTextComplete}
         onRequestComplete={handleRequestComplete}
