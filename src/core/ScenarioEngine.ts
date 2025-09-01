@@ -1,4 +1,5 @@
 import { Scene, Scenario } from '../types/scenario';
+import { SCENARIO_CONFIG } from '../data/config';
 
 class ScenarioEngine {
   /**
@@ -8,7 +9,7 @@ class ScenarioEngine {
    */
   async loadScenario(scenarioId: string): Promise<Scenario | null> {
     try {
-      const response = await fetch(`/assets/scenarios/${scenarioId}.json`);
+      const response = await fetch(`${SCENARIO_CONFIG.SCENARIO_PATH}${scenarioId}.json`);
       const scenario = await response.json();
       return scenario;
     } catch (error) {

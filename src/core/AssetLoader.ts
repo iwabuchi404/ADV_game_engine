@@ -1,3 +1,5 @@
+import { SCENARIO_CONFIG } from '../data/config';
+
 /**
  * アセットローダー
  * ゲーム内のアセット（画像、音声など）の読み込みを管理するクラス
@@ -22,7 +24,7 @@ class AssetLoader {
     };
 
     // アセットの基本パス
-    this.basePath = '/assets';
+    this.basePath = SCENARIO_CONFIG.BACKGROUNDS_PATH.replace('/images/backgrounds/', '');
 
     // 読み込み中のアセットのプロミス
     this.loadingPromises = {};
