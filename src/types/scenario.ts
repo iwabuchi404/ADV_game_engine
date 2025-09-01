@@ -51,7 +51,7 @@ export interface SetFlagEffect {
 
 export type BgmInstruction =
   | string
-  | { track: string; volume?: number; fadeIn?: number; loop?: boolean }
+  | { track: string; volume?: number; fadeIn?: boolean | number; loop?: boolean }
   | { stop: true }
   | { continue: true };
 

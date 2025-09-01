@@ -50,7 +50,7 @@ const BGMPlayer: React.FC<BGMPlayerProps> = ({ bgm, isActive }) => {
             const track = bgm.track;
             if (track !== currentBgmRef.current) {
               await audio.playBGM(track, {
-                fadeIn: bgm.fadeIn !== undefined ? bgm.fadeIn : true,
+                fadeIn: bgm.fadeIn !== undefined ? (typeof bgm.fadeIn === 'boolean' ? bgm.fadeIn : true) : true,
                 fadeInDuration: typeof bgm.fadeIn === 'number' ? bgm.fadeIn : 2000,
                 loop: bgm.loop !== undefined ? bgm.loop : true,
                 volume: bgm.volume,

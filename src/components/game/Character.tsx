@@ -1,8 +1,15 @@
-import React from 'react';
 import { CharacterContainer, CharacterImage } from './Character.css';
 
+interface CharacterProps {
+  id: string;
+  name: string;
+  image?: string;
+  position?: 'left' | 'center' | 'right';
+  expression?: string;
+}
+
 // 位置に応じたスタイルを計算する関数
-const getPositionStyle = (position: string) => {
+const getPositionStyle = (position: 'left' | 'center' | 'right') => {
   switch (position) {
     case 'left':
       return {
@@ -27,7 +34,7 @@ const getPositionStyle = (position: string) => {
   }
 };
 
-const Character = ({ id, name, image, position = 'center', expression = 'neutral' }) => {
+const Character = ({ id, name, image, position = 'center', expression = 'neutral' }: CharacterProps) => {
   // 画像パスの生成
   const imagePath = image
     ? `/assets/images/characters/${image}`

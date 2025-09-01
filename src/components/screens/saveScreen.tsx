@@ -3,7 +3,11 @@ import * as styles from './saveScreen.css';
 import { useGame } from '../../contexts/GameContext.tsx';
 import { GameState } from '../../types/game.ts';
 
-const TitleScreen = ({ onStartGame, onShowConfigMenu }) => {
+interface SaveScreenProps {
+  onBackToTitle: () => void;
+}
+
+const SaveScreen = ({ onBackToTitle }: SaveScreenProps) => {
   const { gameState, saveGame, loadGame, updateGameState } = useGame();
   const [saveData, setSaveData] = useState<(GameState | null)[]>(Array(10).fill(null)); // セーブデータの状態を管理するためのuseStateフック
 
@@ -46,7 +50,7 @@ const TitleScreen = ({ onStartGame, onShowConfigMenu }) => {
     updateGameState({ scrennState: 'game' }); // ゲーム画面に戻る
   };
 
-  const onClose = (e) => {
+  const onClose = (e: React.MouseEvent) => {
     e.stopPropagation();
     updateGameState({ scrennState: 'game' }); // ゲーム画面に戻る
   };
@@ -100,4 +104,4 @@ const TitleScreen = ({ onStartGame, onShowConfigMenu }) => {
   );
 };
 
-export default TitleScreen;
+export default SaveScreen;
