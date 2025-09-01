@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.1.0",
   "type": "module",
-  "homepage": "https://[YOUR_USERNAME].github.io/ADV_game_engine",
+  "homepage": "https://iwabuchi404.github.io/ADV_game_engine",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",

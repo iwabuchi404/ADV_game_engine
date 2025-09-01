@@ -14,14 +14,28 @@ export const GAME_CONFIG = {
   SCREEN_RATIO: 16 / 9
 };
 
+// ベースパスを動的に設定
+const getBasePath = () => {
+  if (typeof window !== 'undefined') {
+    // ブラウザ環境では現在のURLからベースパスを取得
+    const pathname = window.location.pathname;
+    if (pathname.includes('/ADV_game_engine')) {
+      return '/ADV_game_engine';
+    }
+  }
+  return '';
+};
+
+const BASE_PATH = getBasePath();
+
 // シナリオ関連の設定
 export const SCENARIO_CONFIG = {
   DEFAULT_SCENARIO: 'prologue',
-  SCENARIO_PATH: '/assets/scenarios/',
-  BACKGROUNDS_PATH: '/assets/images/backgrounds/',
-  CHARACTERS_PATH: '/assets/images/characters/',
-  AUDIO_BGM_PATH: '/assets/audio/bgm/',
-  AUDIO_SFX_PATH: '/assets/audio/sfx/'
+  SCENARIO_PATH: `${BASE_PATH}/assets/scenarios/`,
+  BACKGROUNDS_PATH: `${BASE_PATH}/assets/images/backgrounds/`,
+  CHARACTERS_PATH: `${BASE_PATH}/assets/images/characters/`,
+  AUDIO_BGM_PATH: `${BASE_PATH}/assets/audio/bgm/`,
+  AUDIO_SFX_PATH: `${BASE_PATH}/assets/audio/sfx/`
 };
 
 // 画面サイズのブレイクポイント
