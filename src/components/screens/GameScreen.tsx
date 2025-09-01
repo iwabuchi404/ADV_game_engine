@@ -37,8 +37,8 @@ const GameScreen = ({ onBackToTitle }: GameScreenProps) => {
   // UIの状態
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isTextComplete, setIsTextComplete] = useState(true);
-  const completeTextFn = useRef(null); // テキスト完了関数の参照
-  const currentBgmRef = useRef(null); // 現在のBGMを保持する参照
+  const completeTextFn = useRef<(() => void) | null>(null); // テキスト完了関数の参照
+  const currentBgmRef = useRef<string | null>(null); // 現在のBGMを保持する参照
 
   // // シーンの変更を監視してBGMとSFXを再生
   // useEffect(() => {
@@ -112,7 +112,7 @@ const GameScreen = ({ onBackToTitle }: GameScreenProps) => {
    */
   const handleTextProgress = () => {
     // 選択肢表示中は何もしない
-    if (gameState.choices?.length > 0) {
+    if (gameState.currentScene?.choices?.length > 0) {
       return;
     }
 
@@ -170,27 +170,26 @@ const GameScreen = ({ onBackToTitle }: GameScreenProps) => {
 
   // キャラクターが存在するかチェック
   const hasCharacters =
-    gameState.currentScene &&
-    gameState.currentScene.characters &&
+    gameState.currentScene?.characters &&
     gameState.currentScene.characters.length > 0;
 
   return (
-    <div className={styles.gameScreen} onClick={handleScreenClick} data-img={gameState.background}>
+    <div className={styles.gameScreen} onClick={handleScreenClick} data-img={gameState.currentScene?.background || ''}>
       {/* オーディオプレイヤーコンポーネント */}
       <BGMPlayer
         bgm={gameState.currentScene?.bgm}
         isActive={gameState.hasStarted && !gameState.isLoading}
       />
       <Background
-        image={gameState.currentScene.background || ''}
-        transition={gameState.currentScene.transition || null}
+        image={gameState.currentScene?.background || ''}
+        transition={gameState.currentScene?.transition}
       />
 
       {hasCharacters &&
-        gameState.currentScene.characters.map((char, index) => (
+        gameState.currentScene?.characters?.map((char, index) => (
           <Character
-            key={`${char.id || char.name}-${index}`}
-            id={char.id}
+            key={`${char.name}-${index}`}
+            id={char.name}
             name={char.name}
             image={char.image}
             position={char.position}
