@@ -1,12 +1,10 @@
-import React from 'react';
 import { QuickMenuContainer, ChoiceMenuButton } from './quickMenu.css';
 import { useGame } from '../../contexts/GameContext.tsx';
-import SaveManager from '../../core/SaveState.tsx';
 
-const QuickMenu = ({}) => {
-  const { gameState, gameSettings, updateSettings, saveGame, loadGame } = useGame();
+const QuickMenu = () => {
+  const { gameSettings, updateSettings, saveGame, loadGame } = useGame();
 
-  const toggleAuto = (e) => {
+  const toggleAuto = (e: React.MouseEvent) => {
     e.stopPropagation();
     updateSettings({
       ...gameSettings, // 既存のゲーム設定をすべてコピー
@@ -19,20 +17,20 @@ const QuickMenu = ({}) => {
     }
   };
 
-  const quickSave = (e) => {
+  const quickSave = (e: React.MouseEvent) => {
     e.stopPropagation();
     // クイックセーブの処理を実装
     console.log('クイックセーブが実行されました。');
     saveGame('auto'); // スロット0にセーブ
   };
-  const quickLord = (e) => {
+  const quickLord = (e: React.MouseEvent) => {
     e.stopPropagation();
     /// クイックロードの処理を実装
     console.log('クイックロードが実行されました。');
     loadGame('auto'); // スロット0からロード
   };
 
-  const SkipMouseDown = (e) => {
+  const SkipMouseDown = (e: React.MouseEvent) => {
     e.stopPropagation();
     updateSettings({
       ...gameSettings,
@@ -40,7 +38,7 @@ const QuickMenu = ({}) => {
     });
   };
 
-  const SkipMouseUp = (e) => {
+  const SkipMouseUp = (e: React.MouseEvent) => {
     e.stopPropagation();
     updateSettings({
       ...gameSettings,

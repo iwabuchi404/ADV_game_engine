@@ -68,7 +68,6 @@ const useTypewriterEffect = (text: string, typingSpeed = 30) => {
 };
 
 interface TextBoxProps {
-  speaker?: string;
   onAdvance?: () => void;
   effects?: {
     textColor?: string;
@@ -81,7 +80,6 @@ interface TextBoxProps {
 }
 
 const TextBox = ({
-  speaker = '',
   onAdvance = () => {},
   effects = {},
   onComplete = () => {}, // テキスト完了時のコールバック
@@ -133,14 +131,6 @@ const TextBox = ({
         onAdvance();
       }
     }
-  };
-
-  // テキストのスタイルを適用
-  const textStyle = {
-    ...(effects?.textColor && { color: effects.textColor }),
-    ...(effects?.textSize && { fontSize: `${effects.textSize}em` }),
-    ...(effects?.textStyle === 'bold' && { fontWeight: 'bold' }),
-    ...(effects?.textStyle === 'italic' && { fontStyle: 'italic' }),
   };
 
   return (
