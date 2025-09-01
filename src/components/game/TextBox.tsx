@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useMemo } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 // import styled from 'styled-components';
 import processText from '../../utils/TextProcessor.ts';
 import { useGame } from '../../contexts/GameContext.tsx';
@@ -14,7 +14,7 @@ import {
 const useTypewriterEffect = (text: string, typingSpeed = 30) => {
   const [displayedText, setDisplayedText] = useState('');
   const [isComplete, setIsComplete] = useState(false);
-  const timeoutRef = useRef(null);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   const textRef = useRef('');
 
   const processedText = processText(text || '');
@@ -67,13 +67,26 @@ const useTypewriterEffect = (text: string, typingSpeed = 30) => {
   return { displayedText, isComplete, completeText };
 };
 
+interface TextBoxProps {
+  speaker?: string;
+  onAdvance?: () => void;
+  effects?: {
+    textColor?: string;
+    textSize?: number;
+    textStyle?: 'bold' | 'italic';
+    shake?: boolean;
+  };
+  onComplete?: () => void;
+  onRequestComplete?: (completeText: () => void) => void;
+}
+
 const TextBox = ({
   speaker = '',
   onAdvance = () => {},
   effects = {},
   onComplete = () => {}, // テキスト完了時のコールバック
   onRequestComplete = () => {}, // テキスト強制完了のリクエスト関数を渡すコールバック
-}) => {
+}: TextBoxProps) => {
   const { gameState, gameSettings } = useGame();
 
   // gameState から現在のテキストブロックを取得
@@ -109,7 +122,7 @@ const TextBox = ({
     }
   }, [completeText, onRequestComplete]);
 
-  const handleClick = (e) => {
+  const handleClick = (e: React.MouseEvent) => {
     e.stopPropagation();
     if (!isComplete) {
       // テキストが完全に表示されていない場合は、即座に全テキストを表示

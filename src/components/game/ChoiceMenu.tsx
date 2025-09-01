@@ -1,7 +1,12 @@
-import React from 'react';
 import { ChoiceMenuContainer, ChoiceButton } from './ChoiceMenu.css';
+import { Choice } from '../../types/scenario';
 
-const ChoiceMenu = ({ choices, onChoiceSelected }) => {
+interface ChoiceMenuProps {
+  choices: Choice[];
+  onChoiceSelected: (choice: Choice, index: number) => void;
+}
+
+const ChoiceMenu = ({ choices, onChoiceSelected }: ChoiceMenuProps) => {
   return (
     <div className={ChoiceMenuContainer}>
       {choices.map((choice, index) => (

@@ -1,4 +1,4 @@
-import { style, styleVariants, keyframes } from '@vanilla-extract/css';
+import { style, keyframes } from '@vanilla-extract/css';
 
 export const TextBoxContainer = style({
   position: 'absolute',
