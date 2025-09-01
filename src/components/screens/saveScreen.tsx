@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import * as styles from './saveScreen.css';
 import { useGame } from '../../contexts/GameContext.tsx';
 import { GameState } from '../../types/game.ts';
@@ -8,7 +8,7 @@ interface SaveScreenProps {
 }
 
 const SaveScreen = ({ onBackToTitle }: SaveScreenProps) => {
-  const { gameState, saveGame, loadGame, updateGameState } = useGame();
+  const { saveGame, loadGame, updateGameState } = useGame();
   const [saveData, setSaveData] = useState<(GameState | null)[]>(Array(10).fill(null)); // セーブデータの状態を管理するためのuseStateフック
 
   useEffect(() => {

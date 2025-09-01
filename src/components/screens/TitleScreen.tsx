@@ -1,7 +1,11 @@
-import React from 'react';
 import * as styles from './TitleScreen.css';
 
-const TitleScreen = ({ onStartGame, onShowConfigMenu }) => {
+interface TitleScreenProps {
+  onStartGame: () => void;
+  onShowConfigMenu: () => void;
+}
+
+const TitleScreen = ({ onStartGame, onShowConfigMenu }: TitleScreenProps) => {
   return (
     <div className={styles.titleContainer}>
       <div className={styles.titleContent}>

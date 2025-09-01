@@ -112,7 +112,7 @@ const GameScreen = ({ onBackToTitle }: GameScreenProps) => {
    */
   const handleTextProgress = () => {
     // 選択肢表示中は何もしない
-    if (gameState.currentScene?.choices?.length > 0) {
+    if (gameState.currentScene?.choices && gameState.currentScene.choices.length > 0) {
       return;
     }
 
@@ -188,8 +188,8 @@ const GameScreen = ({ onBackToTitle }: GameScreenProps) => {
       {hasCharacters &&
         gameState.currentScene?.characters?.map((char, index) => (
           <Character
-            key={`${char.name}-${index}`}
-            id={char.name}
+            key={`${char.id || char.name}-${index}`}
+            id={char.id || char.name}
             name={char.name}
             image={char.image}
             position={char.position}

@@ -17,9 +17,11 @@ export interface Scene {
 }
 
 export interface Character {
+  id?: string;
   name: string;
   position: 'left' | 'center' | 'right';
   expression?: string;
+  image?: string;
 }
 
 export interface TextBlock {

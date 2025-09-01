@@ -1,4 +1,4 @@
-import { style, styleVariants } from '@vanilla-extract/css';
+import { style } from '@vanilla-extract/css';
 
 export const titleContainer = style({
   width: '100%',
@@ -105,10 +105,30 @@ export const buttonBase = style({
 });
 
 export const creditsButton = style({
-  ...buttonBase,
   backgroundColor: 'rgba(50, 50, 70, 0.7)',
+  color: 'white',
+  border: 'none',
+  padding: '1rem 2rem',
+  borderRadius: '5px',
+  fontSize: '1.2rem',
+  cursor: 'pointer',
+  transition: 'all 0.3s ease',
 
   ':hover': {
     backgroundColor: 'rgba(70, 70, 100, 0.9)',
+    transform: 'translateY(-2px)',
+    boxShadow: '0 5px 15px rgba(0, 0, 0, 0.3)',
+  },
+
+  ':active': {
+    transform: 'translateY(0)',
+    boxShadow: '0 2px 5px rgba(0, 0, 0, 0.3)',
+  },
+
+  '@media': {
+    'screen and (max-width: 767px)': {
+      padding: '0.8rem 1.5rem',
+      fontSize: '1rem',
+    },
   },
 });
