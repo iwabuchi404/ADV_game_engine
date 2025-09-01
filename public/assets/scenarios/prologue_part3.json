@@ -1,0 +1,137 @@
+{
+  "id": "prologue_part3",
+  "title": "プロローグ: 鏡の共振 (続き2)",
+  "scenes": [
+    {
+      "id": "intro_010",
+      "background": "office_director.jpg",
+      "characters": [
+        {
+          "name": "月島",
+          "image": "tsukishima_neutral.png",
+          "position": "left",
+          "expression": "neutral"
+        }
+      ],
+      "dialog": {
+        "speaker": "月島",
+        "text": "これは試験運用中の最新モデル。パーソナルAIインターフェーサー・プロトタイプ「ミラー」よ。"
+      },
+      "next": "intro_011"
+    },
+    {
+      "id": "intro_011",
+      "background": "office_director.jpg",
+      "characters": [
+        {
+          "name": "月島",
+          "image": "tsukishima_neutral.png",
+          "position": "left",
+          "expression": "neutral"
+        },
+        {
+          "name": "ミラー",
+          "image": "mirror_neutral.png",
+          "position": "right",
+          "expression": "neutral"
+        }
+      ],
+      "dialog": {
+        "speaker": "月島",
+        "text": "ミラー、起動して。新しいパートナーよ。"
+      },
+      "next": "intro_012"
+    },
+    {
+      "id": "intro_012",
+      "background": "office_director.jpg",
+      "characters": [
+        {
+          "name": "月島",
+          "image": "tsukishima_neutral.png",
+          "position": "left",
+          "expression": "neutral"
+        },
+        {
+          "name": "ミラー",
+          "image": "mirror_neutral.png",
+          "position": "right",
+          "expression": "neutral"
+        }
+      ],
+      "dialog": {
+        "speaker": "ミラー",
+        "text": "起動しました。私はパーソナルAIインターフェーサー・プロトタイプ「ミラー」です。あなたのパートナーとして、お手伝いさせていただきます。"
+      },
+      "next": "intro_013"
+    },
+    {
+      "id": "intro_013",
+      "background": "office_director.jpg",
+      "characters": [
+        {
+          "name": "月島",
+          "image": "tsukishima_neutral.png",
+          "position": "left",
+          "expression": "neutral"
+        },
+        {
+          "name": "ミラー",
+          "image": "mirror_curious.png",
+          "position": "right",
+          "expression": "curious"
+        }
+      ],
+      "dialog": {
+        "speaker": "ミラー",
+        "text": "初回起動時に、簡単な性格診断を行わせていただきます。これにより、あなたに最適なサポートが可能になります。"
+      },
+      "next": "intro_014"
+    },
+    {
+      "id": "intro_014",
+      "background": "office_director.jpg",
+      "characters": [
+        {
+          "name": "月島",
+          "image": "tsukishima_neutral.png",
+          "position": "left",
+          "expression": "neutral"
+        },
+        {
+          "name": "ミラー",
+          "image": "mirror_neutral.png",
+          "position": "right",
+          "expression": "neutral"
+        }
+      ],
+      "dialog": {
+        "speaker": "ミラー",
+        "text": "質問1: あなたにとって、テクノロジーとはどのような存在ですか？"
+      },
+      "choices": [
+        {
+          "text": "便利な道具。私の指示に従うもの。",
+          "effects": [
+            { "type": "setVariable", "name": "technology_view", "value": "tool" }
+          ],
+          "next": "intro_015"
+        },
+        {
+          "text": "協力するパートナー。互いに補い合うもの。",
+          "effects": [
+            { "type": "setVariable", "name": "technology_view", "value": "partner" }
+          ],
+          "next": "intro_015"
+        },
+        {
+          "text": "自分の拡張。一体となって機能するもの。",
+          "effects": [
+            { "type": "setVariable", "name": "technology_view", "value": "extension" }
+          ],
+          "next": "intro_015"
+        }
+      ]
+    }
+  ]
+}

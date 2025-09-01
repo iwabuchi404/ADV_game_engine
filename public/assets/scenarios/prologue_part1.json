@@ -1,0 +1,68 @@
+{
+  "id": "prologue",
+  "title": "プロローグ: 鏡の共振",
+  "scenes": [
+    {
+      "id": "intro_001",
+      "background": "office_morning.jpg",
+      "bgm": "calm_theme.mp3",
+      "dialog": {
+        "speaker": "主人公",
+        "text": "今日から、デジタル心理士として働くことになった。"
+      },
+      "next": "intro_002"
+    },
+    {
+      "id": "intro_002",
+      "background": "office_morning.jpg",
+      "dialog": {
+        "speaker": "主人公",
+        "text": "5年前、あの事故から。あれから、AIと人間の関係性について考え続けてきた。"
+      },
+      "next": "intro_003"
+    },
+    {
+      "id": "intro_003",
+      "background": "office_morning.jpg",
+      "dialog": {
+        "speaker": "主人公",
+        "text": "そして今、この道を選んだ。"
+      },
+      "next": "intro_004"
+    },
+    {
+      "id": "intro_004",
+      "background": "office_lobby.jpg",
+      "characters": [
+        {
+          "name": "月島",
+          "image": "tsukishima_neutral.png",
+          "position": "center",
+          "expression": "neutral"
+        }
+      ],
+      "dialog": {
+        "speaker": "受付",
+        "text": "おはようございます。月島部長はお待ちです。どうぞこちらへ。"
+      },
+      "next": "intro_005"
+    },
+    {
+      "id": "intro_005",
+      "background": "office_director.jpg",
+      "characters": [
+        {
+          "name": "月島",
+          "image": "tsukishima_neutral.png",
+          "position": "center",
+          "expression": "neutral"
+        }
+      ],
+      "dialog": {
+        "speaker": "月島",
+        "text": "やっと来たわね。あなたが新しく配属された心理士ね。"
+      },
+      "next": "intro_006"
+    }
+  ]
+}

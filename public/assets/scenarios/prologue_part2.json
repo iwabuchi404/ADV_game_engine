@@ -1,0 +1,104 @@
+{
+  "id": "prologue_part2",
+  "title": "プロローグ: 鏡の共振 (続き)",
+  "scenes": [
+    {
+      "id": "intro_006",
+      "background": "office_director.jpg",
+      "characters": [
+        {
+          "name": "月島",
+          "image": "tsukishima_smiling.png",
+          "position": "center",
+          "expression": "smile"
+        }
+      ],
+      "dialog": {
+        "speaker": "月島",
+        "text": "私は月島凛子。この東京第三支部の責任者よ。よろしく。"
+      },
+      "next": "intro_007"
+    },
+    {
+      "id": "intro_007",
+      "background": "office_director.jpg",
+      "characters": [
+        {
+          "name": "月島",
+          "image": "tsukishima_neutral.png",
+          "position": "center",
+          "expression": "neutral"
+        }
+      ],
+      "choices": [
+        {
+          "text": "よろしくお願いします。緊張していますが、頑張ります。",
+          "effects": [
+            { "type": "setVariable", "name": "respect", "value": 5 },
+            { "type": "setVariable", "name": "nervousness", "value": 5 }
+          ],
+          "next": "intro_008a"
+        },
+        {
+          "text": "こちらこそ、よろしくお願いします。ようやく現場に立てて嬉しいです。",
+          "effects": [
+            { "type": "setVariable", "name": "enthusiasm", "value": 5 },
+            { "type": "setVariable", "name": "confidence", "value": 3 }
+          ],
+          "next": "intro_008b"
+        }
+      ]
+    },
+    {
+      "id": "intro_008a",
+      "background": "office_director.jpg",
+      "characters": [
+        {
+          "name": "月島",
+          "image": "tsukishima_smiling.png",
+          "position": "center",
+          "expression": "smile"
+        }
+      ],
+      "dialog": {
+        "speaker": "月島",
+        "text": "緊張は大事よ。でも、あまり肩に力を入れすぎないように。この仕事、案外と冷静さが必要なの。"
+      },
+      "next": "intro_009"
+    },
+    {
+      "id": "intro_008b",
+      "background": "office_director.jpg",
+      "characters": [
+        {
+          "name": "月島",
+          "image": "tsukishima_neutral.png",
+          "position": "center",
+          "expression": "neutral"
+        }
+      ],
+      "dialog": {
+        "speaker": "月島",
+        "text": "やる気があるのはいいことね。でも、現場はあなたが思っているより複雑かもしれないわよ。"
+      },
+      "next": "intro_009"
+    },
+    {
+      "id": "intro_009",
+      "background": "office_director.jpg",
+      "characters": [
+        {
+          "name": "月島",
+          "image": "tsukishima_serious.png",
+          "position": "center",
+          "expression": "serious"
+        }
+      ],
+      "dialog": {
+        "speaker": "月島",
+        "text": "今日はまず、あなたに支給するものがあるわ。特別なAIインターフェーサー。"
+      },
+      "next": "intro_010"
+    }
+  ]
+}

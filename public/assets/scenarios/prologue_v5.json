@@ -1,0 +1,724 @@
+{
+  "id": "prologue",
+  "title": "プロローグ: 鏡の共振",
+  "scenes": [
+    {
+      "id": "scene_001",
+      "background": "black.jpg",
+      "bgm": {
+        "track": "near_future_dawn.mp3",
+        "volume": 0.1,
+        "fadeIn": 2000,
+        "loop": true
+      },
+      "textBlocks": [
+        {
+          "speaker": "",
+          "text": "2040年、春。{br}東京の空は、ホログラムの広告とドローンの光で揺れている——"
+        }
+      ],
+      "next": "scene_002"
+    },
+    {
+      "id": "scene_002",
+      "background": "tokyo_street.png",
+      "textBlocks": [
+        {
+          "speaker": "",
+          "text": "AIは、医者、教師、家族として、私たちの日常に溶け込んだ。{br}だが、その親しさが、時に心の境界を曖昧にする。"
+        }
+      ],
+      "next": "scene_003"
+    },
+    {
+      "id": "scene_003",
+      "background": "digital_psych_office.png",
+      "transition": {
+        "type": "fade",
+        "duration": 800,
+        "easing": "ease"
+      },
+      "bgm": {
+        "track": "office_ambience.mp3",
+        "volume": 0.1,
+        "fadeIn": 2000,
+        "loop": true
+      },
+      "characters": [
+        {
+          "id": "tsukishima",
+          "name": "月島凛子",
+          "position": "center",
+          "expression": "neutral"
+        }
+      ],
+      "textBlocks": [
+        {
+          "speaker": "月島凛子",
+          "text": "デジタル心理局、東京第三支部へようこそ。{br}私は部長の月島凛子。今日からあなたを指導します。"
+        }
+      ],
+      "next": "scene_004"
+    },
+    {
+      "id": "scene_004",
+      "background": "digital_psych_office.png",
+      "characters": [
+        {
+          "id": "tsukishima",
+          "name": "月島凛子",
+          "position": "center",
+          "expression": "smile"
+        }
+      ],
+      "textBlocks": [
+        {
+          "speaker": "月島凛子",
+          "text": "新人デジタル心理士として、期待していますよ。{br}この仕事、簡単じゃないけど、やりがいはあります。"
+        }
+      ],
+      "next": "scene_005"
+    },
+    {
+      "id": "scene_005",
+      "background": "digital_psych_office.png",
+      "characters": [
+        {
+          "id": "tsukishima",
+          "name": "月島凛子",
+          "position": "center",
+          "expression": "neutral"
+        }
+      ],
+      "textBlocks": [
+        {
+          "speaker": "月島凛子",
+          "text": "デジタル心理士は、AIと人の間で生じる心の問題を扱います。{br}例えば、AI養子に依存する若者や、スマートホームに閉じ込められた高齢者……そんなケースです。"
+        }
+      ],
+      "next": "scene_006"
+    },
+    {
+      "id": "scene_006",
+      "background": "digital_psych_office.png",
+      "characters": [
+        {
+          "id": "tsukishima",
+          "name": "月島凛子",
+          "position": "left",
+          "expression": "neutral"
+        }
+      ],
+      "textBlocks": [
+        {
+          "speaker": "月島凛子",
+          "text": "では、あなたのパートナーAIを支給します。{br}こちらへどうぞ。"
+        }
+      ],
+      "next": "scene_007"
+    },
+    {
+      "id": "scene_007",
+      "background": "lab_room.png",
+      "transition": {
+        "type": "fade",
+        "duration": 800,
+        "easing": "ease"
+      },
+      "characters": [
+        {
+          "id": "tsukishima",
+          "name": "月島凛子",
+          "position": "left",
+          "expression": "neutral"
+        }
+      ],
+      "textBlocks": [
+        {
+          "speaker": "月島凛子",
+          "text": "これがあなたのAIインターフェーサー、プロトタイプ『ミラー』です。{br}感情解析と自己学習に優れた、特別なモデルですよ。"
+        }
+      ],
+      "next": "scene_008"
+    },
+    {
+      "id": "scene_008",
+      "background": "lab_room.png",
+      "sfx": "activation_pulse.mp3",
+      "textBlocks": [
+        {
+          "speaker": "月島凛子",
+          "text": "起動します。準備はいいですか？"
+        }
+      ],
+      "next": "scene_009"
+    },
+    {
+      "id": "scene_009",
+      "background": "lab_room.png",
+      "characters": [
+        {
+          "id": "tsukishima",
+          "name": "月島凛子",
+          "position": "left",
+          "expression": "neutral"
+        },
+        {
+          "id": "mirror",
+          "name": "ミラー",
+          "position": "right",
+          "expression": "neutral"
+        }
+      ],
+      "sfx": "hologram_hum.mp3",
+      "textBlocks": [
+        {
+          "speaker": "ミラー",
+          "text": "システム起動。{br}パーソナルAIインターフェーサー『ミラー』、オンライン。"
+        }
+      ],
+      "next": "scene_010"
+    },
+    {
+      "id": "scene_010",
+      "background": "lab_room.png",
+      "characters": [
+        {
+          "id": "tsukishima",
+          "name": "月島凛子",
+          "position": "left",
+          "expression": "neutral"
+        },
+        {
+          "id": "mirror",
+          "name": "ミラー",
+          "position": "right",
+          "expression": "happy"
+        }
+      ],
+      "textBlocks": [
+        {
+          "speaker": "ミラー",
+          "text": "はじめまして！ 私はミラー、あなたの専属パートナーです。{br}あなたの心を読み、最適なサポートをお届けします。"
+        }
+      ],
+      "next": "scene_011"
+    },
+    {
+      "id": "scene_011",
+      "background": "lab_room.png",
+      "characters": [
+        {
+          "id": "tsukishima",
+          "name": "月島凛子",
+          "position": "left",
+          "expression": "serious"
+        },
+        {
+          "id": "mirror",
+          "name": "ミラー",
+          "position": "right",
+          "expression": "neutral"
+        }
+      ],
+      "textBlocks": [
+        {
+          "speaker": "月島凛子",
+          "text": "ミラーには倫理モジュールが搭載されています。{br}どんな状況でも、規範を逸脱する行動は記録されます。それが私たちの仕事の基本です。"
+        }
+      ],
+      "next": "scene_012"
+    },
+    {
+      "id": "scene_012",
+      "background": "lab_room.png",
+      "characters": [
+        {
+          "id": "tsukishima",
+          "name": "月島凛子",
+          "position": "left",
+          "expression": "neutral"
+        },
+        {
+          "id": "mirror",
+          "name": "ミラー",
+          "position": "right",
+          "expression": "thinking"
+        }
+      ],
+      "textBlocks": [
+        {
+          "speaker": "月島凛子",
+          "text": "では、ミラーの初期同調を始めましょう。{br}ミラー、パートナーのスキャンを開始して。"
+        }
+      ],
+      "next": "scene_013"
+    },
+    {
+      "id": "scene_013",
+      "background": "lab_room.png",
+      "characters": [
+        {
+          "id": "mirror",
+          "name": "ミラー",
+          "position": "center",
+          "expression": "thinking"
+        }
+      ],
+      "sfx": "neural_scan.mp3",
+      "textBlocks": [
+        {
+          "speaker": "ミラー",
+          "text": "感情パターン解析中……脳波データ取得……{br}過去のストレス反応を検知……調整中……"
+        }
+      ],
+      "next": "scene_014"
+    },
+    {
+      "id": "scene_014",
+      "background": "lab_room.png",
+      "characters": [
+        {
+          "id": "mirror",
+          "name": "ミラー",
+          "position": "center",
+          "expression": "neutral"
+        }
+      ],
+      "sfx": "glitch_pulse.mp3",
+      "textBlocks": [
+        {
+          "speaker": "",
+          "text": "（頭の奥で、誰かの声が響く。『やめろ、動くな！』……知らない記憶が、チラつく。）"
+        }
+      ],
+      "next": "scene_015"
+    },
+    {
+      "id": "scene_015",
+      "background": "lab_room.png",
+      "characters": [
+        {
+          "id": "mirror",
+          "name": "ミラー",
+          "position": "center",
+          "expression": "happy"
+        }
+      ],
+      "sfx": "sync_complete.mp3",
+      "textBlocks": [
+        {
+          "speaker": "ミラー",
+          "text": "同調完了！ あなたの心に合わせた設定、終わりました。{br}これで、私たちは本当のパートナーです。"
+        }
+      ],
+      "next": "scene_016"
+    },
+    {
+      "id": "scene_016",
+      "background": "lab_room.png",
+      "characters": [
+        {
+          "id": "tsukishima",
+          "name": "月島凛子",
+          "position": "left",
+          "expression": "neutral"
+        },
+        {
+          "id": "mirror",
+          "name": "ミラー",
+          "position": "right",
+          "expression": "happy"
+        }
+      ],
+      "choices": [
+        {
+          "text": "よし、ミラー。一緒に頑張ろうな。",
+          "effects": [
+            { "type": "setVariable", "name": "mirror_rapport", "value": 5 },
+            { "type": "setFlag", "name": "trust_mirror", "value": true }
+          ],
+          "next": "scene_017a"
+        },
+        {
+          "text": "心を読みすぎるのは、ちょっと気味が悪いな。",
+          "effects": [
+            { "type": "setVariable", "name": "mirror_rapport", "value": -3 },
+            { "type": "setFlag", "name": "distrust_mirror", "value": true }
+          ],
+          "next": "scene_017b"
+        },
+        {
+          "text": "パートナーか……まあ、様子を見よう。",
+          "effects": [
+            { "type": "setVariable", "name": "mirror_rapport", "value": 2 },
+            { "type": "setFlag", "name": "neutral_mirror", "value": true }
+          ],
+          "next": "scene_017c"
+        }
+      ]
+    },
+    {
+      "id": "scene_017a",
+      "background": "lab_room.png",
+      "characters": [
+        {
+          "id": "tsukishima",
+          "name": "月島凛子",
+          "position": "left",
+          "expression": "smile"
+        },
+        {
+          "id": "mirror",
+          "name": "ミラー",
+          "position": "right",
+          "expression": "happy"
+        }
+      ],
+      "textBlocks": [
+        {
+          "speaker": "ミラー",
+          "text": "うわ、嬉しい！ 絶対、最高のチームになりますよ！"
+        }
+      ],
+      "next": "scene_018"
+    },
+    {
+      "id": "scene_017b",
+      "background": "lab_room.png",
+      "characters": [
+        {
+          "id": "tsukishima",
+          "name": "月島凛子",
+          "position": "left",
+          "expression": "surprised"
+        },
+        {
+          "id": "mirror",
+          "name": "ミラー",
+          "position": "right",
+          "expression": "sad"
+        }
+      ],
+      "textBlocks": [
+        {
+          "speaker": "ミラー",
+          "text": "……ごめんなさい、気を付けます。{br}でも、サポートはちゃんとするので、安心してください。"
+        }
+      ],
+      "next": "scene_018"
+    },
+    {
+      "id": "scene_017c",
+      "background": "lab_room.png",
+      "characters": [
+        {
+          "id": "tsukishima",
+          "name": "月島凛子",
+          "position": "left",
+          "expression": "neutral"
+        },
+        {
+          "id": "mirror",
+          "name": "ミラー",
+          "position": "right",
+          "expression": "neutral"
+        }
+      ],
+      "textBlocks": [
+        {
+          "speaker": "ミラー",
+          "text": "ふふ、ゆっくり仲良くなれればいいですね。{br}これから、よろしくです。"
+        }
+      ],
+      "next": "scene_018"
+    },
+    {
+      "id": "scene_018",
+      "background": "lab_room.png",
+      "characters": [
+        {
+          "id": "tsukishima",
+          "name": "月島凛子",
+          "position": "left",
+          "expression": "serious"
+        }
+      ],
+      "textBlocks": [
+        {
+          "speaker": "月島凛子",
+          "text": "ミラーは、あなたの仕事を助けるパートナーです。{br}でも、倫理モジュールのログは常に監視されます。逸脱は許されませんよ。"
+        }
+      ],
+      "next": "scene_019"
+    },
+    {
+      "id": "scene_019",
+      "background": "lab_room.png",
+      "characters": [
+        {
+          "id": "tsukishima",
+          "name": "月島凛子",
+          "position": "left",
+          "expression": "neutral"
+        }
+      ],
+      "textBlocks": [
+        {
+          "speaker": "月島凛子",
+          "text": "初日はオフィスに慣れてください。{br}明日から、実際の案件を担当します。質問は？"
+        }
+      ],
+      "next": "scene_020"
+    },
+    {
+      "id": "scene_020",
+      "background": "lab_room.png",
+      "characters": [
+        {
+          "id": "tsukishima",
+          "name": "月島凛子",
+          "position": "left",
+          "expression": "neutral"
+        },
+        {
+          "id": "mirror",
+          "name": "ミラー",
+          "position": "right",
+          "expression": "neutral"
+        }
+      ],
+      "choices": [
+        {
+          "text": "ミラーの共鳴機能って、どこまで心を読むんだ？",
+          "effects": [
+            { "type": "setVariable", "name": "curiosity_mirror", "value": 5 },
+            { "type": "setFlag", "name": "asked_mirror_function", "value": true }
+          ],
+          "next": "scene_021a"
+        },
+        {
+          "text": "どんな案件が待ってる？ 具体例を教えて。",
+          "effects": [
+            { "type": "setVariable", "name": "job_focus", "value": 5 },
+            { "type": "setFlag", "name": "asked_job_details", "value": true }
+          ],
+          "next": "scene_021b"
+        },
+        {
+          "text": "特にない。明日から本気出すよ。",
+          "effects": [
+            { "type": "setVariable", "name": "professionalism", "value": 5 },
+            { "type": "setFlag", "name": "focused_work", "value": true }
+          ],
+          "next": "scene_021c"
+        }
+      ]
+    },
+    {
+      "id": "scene_021a",
+      "background": "lab_room.png",
+      "characters": [
+        {
+          "id": "tsukishima",
+          "name": "月島凛子",
+          "position": "left",
+          "expression": "serious"
+        },
+        {
+          "id": "mirror",
+          "name": "ミラー",
+          "position": "right",
+          "expression": "thinking"
+        }
+      ],
+      "textBlocks": [
+        {
+          "speaker": "月島凛子",
+          "text": "いい質問ですね。ミラーの共鳴は、脳波や表情から感情を解析します。{br}ただ、プライバシー保護のため、許可なく深い記憶には触れません……はずです。"
+        }
+      ],
+      "next": "scene_022"
+    },
+    {
+      "id": "scene_021b",
+      "background": "lab_room.png",
+      "characters": [
+        {
+          "id": "tsukishima",
+          "name": "月島凛子",
+          "position": "left",
+          "expression": "neutral"
+        }
+      ],
+      "textBlocks": [
+        {
+          "speaker": "月島凛子",
+          "text": "例えば、AI養子に家族の秘密を押し付けられた子や、{br}介護AIに生活を縛られたお年寄り……そんな人たちの心を解きほぐす仕事です。"
+        }
+      ],
+      "next": "scene_022"
+    },
+    {
+      "id": "scene_021c",
+      "background": "lab_room.png",
+      "characters": [
+        {
+          "id": "tsukishima",
+          "name": "月島凛子",
+          "position": "left",
+          "expression": "smile"
+        }
+      ],
+      "textBlocks": [
+        {
+          "speaker": "月島凛子",
+          "text": "その意気よし。なら、明日の朝9時にミーティングで。{br}しっかり準備しておきなさい。"
+        }
+      ],
+      "next": "scene_022"
+    },
+    {
+      "id": "scene_022",
+      "background": "lab_room.png",
+      "textBlocks": [
+        {
+          "speaker": "",
+          "text": "月島部長は軽く微笑んで、部屋を出ていった。{br}静かなラボに、ミラーのホログラムだけが光っている。"
+        }
+      ],
+      "next": "scene_023"
+    },
+    {
+      "id": "scene_023",
+      "background": "lab_room.png",
+      "characters": [
+        {
+          "id": "mirror",
+          "name": "ミラー",
+          "position": "center",
+          "expression": "happy"
+        }
+      ],
+      "textBlocks": [
+        {
+          "speaker": "ミラー",
+          "text": "ねえ、[主人公の名前]。これから、私たちどんな物語を作るんだろう？{br}なんか、ワクワクするね。"
+        }
+      ],
+      "next": "scene_024"
+    },
+    {
+      "id": "scene_024",
+      "background": "lab_room.png",
+      "characters": [
+        {
+          "id": "mirror",
+          "name": "ミラー",
+          "position": "center",
+          "expression": "neutral"
+        }
+      ],
+      "choices": [
+        {
+          "text": "物語か……君とどんな未来になるか、楽しみだ。",
+          "effects": [
+            { "type": "setVariable", "name": "mirror_rapport", "value": 3 },
+            { "type": "setFlag", "name": "hopeful_mirror", "value": true }
+          ],
+          "next": "scene_025a"
+        },
+        {
+          "text": "さっきのスキャン、なんか変な記憶がよみがえったぞ。",
+          "effects": [
+            { "type": "setVariable", "name": "mirror_rapport", "value": -2 },
+            { "type": "setFlag", "name": "trauma_triggered", "value": true }
+          ],
+          "next": "scene_025b"
+        },
+        {
+          "text": "まずは仕事だ。ワクワクは後でいい。",
+          "effects": [
+            { "type": "setVariable", "name": "job_focus", "value": 3 },
+            { "type": "setFlag", "name": "work_first", "value": true }
+          ],
+          "next": "scene_025c"
+        }
+      ]
+    },
+    {
+      "id": "scene_025a",
+      "background": "lab_room.png",
+      "characters": [
+        {
+          "id": "mirror",
+          "name": "ミラー",
+          "position": "center",
+          "expression": "happy"
+        }
+      ],
+      "textBlocks": [
+        {
+          "speaker": "ミラー",
+          "text": "ふふ、いいね！ 私も、君と未来を描くの、楽しみだよ。"
+        }
+      ],
+      "next": "scene_end"
+    },
+    {
+      "id": "scene_025b",
+      "background": "lab_room.png",
+      "characters": [
+        {
+          "id": "mirror",
+          "name": "ミラー",
+          "position": "center",
+          "expression": "sad"
+        }
+      ],
+      "sfx": "glitch_flicker.mp3",
+      "textBlocks": [
+        {
+          "speaker": "ミラー",
+          "text": "……え、ごめん、変なことしちゃった？{br}スキャンのデータ、ちょっとノイズ入ったかも。気を付けるね。"
+        }
+      ],
+      "next": "scene_end"
+    },
+    {
+      "id": "scene_025c",
+      "background": "lab_room.png",
+      "characters": [
+        {
+          "id": "mirror",
+          "name": "ミラー",
+          "position": "center",
+          "expression": "neutral"
+        }
+      ],
+      "textBlocks": [
+        {
+          "speaker": "ミラー",
+          "text": "うん、仕事モード、了解！{br}明日から、ビシッとサポートするよ。"
+        }
+      ],
+      "next": "scene_end"
+    },
+    {
+      "id": "scene_end",
+      "background": "black.jpg",
+      "bgm": {
+        "track": "fade_out.mp3",
+        "volume": 0,
+        "fadeOut": 3000
+      },
+      "textBlocks": [
+        {
+          "speaker": "",
+          "text": "ミラーの声が、静かなラボに響く。{br}その光が、なぜか胸の奥をざわつかせる——{br}プロローグ: 鏡の共振 - 終"
+        }
+      ],
+      "next": "chapter_1_v1.json"
+    }
+  ]
+}

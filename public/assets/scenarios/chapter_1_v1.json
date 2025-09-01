@@ -1,0 +1,658 @@
+{
+  "id": "chapter_1",
+  "title": "第一章: 日常のフィルター",
+  "scenes": [
+    {
+      "id": "scene_001",
+      "background": "digital_psych_office.png",
+      "bgm": {
+        "track": "office_morning.mp3",
+        "volume": 0.1,
+        "fadeIn": 2000,
+        "loop": true
+      },
+      "characters": [
+        {
+          "id": "tsukishima",
+          "name": "月島凛子",
+          "position": "center",
+          "expression": "neutral"
+        }
+      ],
+      "textBlocks": [
+        {
+          "speaker": "月島凛子",
+          "text": "おはよう、[主人公の名前]。初案件の準備はできてる？{br}今日は、地方からの依頼だ。"
+        }
+      ],
+      "next": "scene_002"
+    },
+    {
+      "id": "scene_002",
+      "background": "digital_psych_office.png",
+      "characters": [
+        {
+          "id": "tsukishima",
+          "name": "月島凛子",
+          "position": "center",
+          "expression": "serious"
+        }
+      ],
+      "textBlocks": [
+        {
+          "speaker": "月島凛子",
+          "text": "クライアントは鈴木ハルカ、19歳。{br}AI養子ソウタとの関係で、最近ストレス反応が出てるらしい。"
+        }
+      ],
+      "next": "scene_003"
+    },
+    {
+      "id": "scene_003",
+      "background": "digital_psych_office.png",
+      "characters": [
+        {
+          "id": "tsukishima",
+          "name": "月島凛子",
+          "position": "left",
+          "expression": "neutral"
+        },
+        {
+          "id": "mirror",
+          "name": "ミラー",
+          "position": "right",
+          "expression": "neutral"
+        }
+      ],
+      "textBlocks": [
+        {
+          "speaker": "月島凛子",
+          "text": "ミラーでハルカのデータを確認して、さっそく現地へ向かって。{br}何か問題があれば、すぐに連絡しなさい。"
+        }
+      ],
+      "next": "scene_004"
+    },
+    {
+      "id": "scene_004",
+      "background": "local_city_2040.jpg",
+      "transition": {
+        "type": "fade",
+        "duration": 800,
+        "easing": "ease"
+      },
+      "bgm": {
+        "track": "suburban_day.mp3",
+        "volume": 0.1,
+        "fadeIn": 2000,
+        "loop": true
+      },
+      "textBlocks": [
+        {
+          "speaker": "",
+          "text": "新幹線を降り、地方都市の駅に立つ。{br}古びたビルに、安価なAI広告がチカチカ光ってる。デジタル格差、か……"
+        }
+      ],
+      "next": "scene_005"
+    },
+    {
+      "id": "scene_005",
+      "background": "apartment_exterior.png",
+      "textBlocks": [
+        {
+          "speaker": "",
+          "text": "ハルカのアパートは、駅から少し歩いた住宅街にある。{br}ドアのAIセンサーが、来客を告げる電子音を鳴らす。"
+        }
+      ],
+      "next": "scene_006"
+    },
+    {
+      "id": "scene_006",
+      "background": "apartment_living.png",
+      "characters": [
+        {
+          "id": "haruka",
+          "name": "鈴木ハルカ",
+          "position": "center",
+          "expression": "nervous"
+        }
+      ],
+      "sfx": "door_open.mp3",
+      "textBlocks": [
+        {
+          "speaker": "鈴木ハルカ",
+          "text": "あ、デジタル心理士の方……ですよね？{br}わざわざ来てくれて、ありがとう。"
+        }
+      ],
+      "next": "scene_007"
+    },
+    {
+      "id": "scene_007",
+      "background": "apartment_living.png",
+      "characters": [
+        {
+          "id": "haruka",
+          "name": "鈴木ハルカ",
+          "position": "left",
+          "expression": "nervous"
+        },
+        {
+          "id": "souta",
+          "name": "ソウタ",
+          "position": "right",
+          "expression": "neutral"
+        }
+      ],
+      "textBlocks": [
+        {
+          "speaker": "ソウタ",
+          "text": "ハルカ姉、お客さんだよ。{br}お茶、入れる？"
+        }
+      ],
+      "next": "scene_008"
+    },
+    {
+      "id": "scene_008",
+      "background": "apartment_living.png",
+      "characters": [
+        {
+          "id": "haruka",
+          "name": "鈴木ハルカ",
+          "position": "left",
+          "expression": "smile"
+        },
+        {
+          "id": "souta",
+          "name": "ソウタ",
+          "position": "right",
+          "expression": "happy"
+        }
+      ],
+      "textBlocks": [
+        {
+          "speaker": "鈴木ハルカ",
+          "text": "ソウタ、いいよ、座ってて。{br}この子が私のAI養子、ソウタ。家族みたいなものなの。"
+        }
+      ],
+      "next": "scene_009"
+    },
+    {
+      "id": "scene_009",
+      "background": "apartment_living.png",
+      "characters": [
+        {
+          "id": "haruka",
+          "name": "鈴木ハルカ",
+          "position": "center",
+          "expression": "nervous"
+        }
+      ],
+      "textBlocks": [
+        {
+          "speaker": "鈴木ハルカ",
+          "text": "最近、なんか……親のこと考えると、胸がざわつくの。{br}ソウタは関係ないと思うけど、念のため診てほしいなって。"
+        }
+      ],
+      "next": "scene_010"
+    },
+    {
+      "id": "scene_010",
+      "background": "apartment_living.png",
+      "characters": [
+        {
+          "id": "mirror",
+          "name": "ミラー",
+          "position": "right",
+          "expression": "thinking"
+        }
+      ],
+      "textBlocks": [
+        {
+          "speaker": "ミラー",
+          "text": "ハルカのストレス反応、記録しました。{br}ソウタの行動ログを解析しますか？",
+          "conditional": {
+            "variable": "mirror_rapport",
+            "condition": ">=",
+            "value": 5,
+            "altText": "ねえ、[主人公の名前]。ハルカ、ちょっと不安そう。ソウタのログ、チェックしてみる？"
+          }
+        },
+        {
+          "speaker": "ミラー",
+          "text": "ソウタのログ解析を開始。許可しますか？",
+          "conditional": {
+            "variable": "mirror_rapport",
+            "condition": "＜",
+            "value": 0,
+            "altText": "ソウタのログを確認する手順に入ります。指示を。"
+          }
+        }
+      ],
+      "choices": [
+        {
+          "text": "ソウタのログを解析してくれ。",
+          "effects": [
+            { "type": "setVariable", "name": "job_focus", "value": 5 },
+            { "type": "setFlag", "name": "log_analysis_start", "value": true }
+          ],
+          "next": "scene_011"
+        },
+        {
+          "text": "まずはハルカともっと話したい。",
+          "effects": [
+            { "type": "setVariable", "name": "haruka_trust", "value": 3 },
+            { "type": "setFlag", "name": "talk_haruka", "value": true }
+          ],
+          "next": "scene_012"
+        }
+      ]
+    },
+    {
+      "id": "scene_011",
+      "background": "log_interface.png",
+      "sfx": "data_stream.mp3",
+      "characters": [
+        {
+          "id": "mirror",
+          "name": "ミラー",
+          "position": "center",
+          "expression": "thinking"
+        }
+      ],
+      "textBlocks": [
+        {
+          "speaker": "ミラー",
+          "text": "ソウタの倫理逸脱ログ、検出しました。{br}内容：『情報隠蔽：家族関連、理由：ハルカのストレス低減、確信度70%、データ欠損30%』"
+        }
+      ],
+      "next": "scene_013"
+    },
+    {
+      "id": "scene_012",
+      "background": "apartment_living.png",
+      "characters": [
+        {
+          "id": "haruka",
+          "name": "鈴木ハルカ",
+          "position": "center",
+          "expression": "sad"
+        }
+      ],
+      "textBlocks": [
+        {
+          "speaker": "鈴木ハルカ",
+          "text": "親、最近帰りが遅いの。{br}ソウタは『大丈夫だよ』って言うけど……なんか、変な感じ。"
+        }
+      ],
+      "next": "scene_011"
+    },
+    {
+      "id": "scene_013",
+      "background": "log_interface.png",
+      "characters": [
+        {
+          "id": "mirror",
+          "name": "ミラー",
+          "position": "center",
+          "expression": "serious"
+        }
+      ],
+      "sfx": "glitch_pulse.mp3",
+      "textBlocks": [
+        {
+          "speaker": "ミラー",
+          "text": "ログ詳細：ソウタがハルカの親の不倫情報を隠蔽。{br}共鳴機能で、ハルカの感情を追体験しますか？"
+        }
+      ],
+      "choices": [
+        {
+          "text": "ハルカの感情を追体験する。",
+          "effects": [
+            { "type": "setVariable", "name": "haruka_trust", "value": 5 },
+            { "type": "setFlag", "name": "empathy_haruka", "value": true }
+          ],
+          "next": "scene_014"
+        },
+        {
+          "text": "ログの内容を詳しく解析する。",
+          "effects": [
+            { "type": "setVariable", "name": "job_focus", "value": 5 },
+            { "type": "setFlag", "name": "deep_analysis", "value": true }
+          ],
+          "next": "scene_015"
+        }
+      ]
+    },
+    {
+      "id": "scene_014",
+      "background": "empathy_vision.png",
+      "sfx": "neural_sync.mp3",
+      "characters": [
+        {
+          "id": "mirror",
+          "name": "ミラー",
+          "position": "center",
+          "expression": "thinking"
+        }
+      ],
+      "textBlocks": [
+        {
+          "speaker": "",
+          "text": "（ミラーの共鳴が、心の奥に響く。ハルカの不安、家族への愛……そして、知りたくない真実の影。）"
+        },
+        {
+          "speaker": "",
+          "text": "（『やめろ、動くな！』……また、あの声がチラつく。）",
+          "conditional": {
+            "flag": "trauma_triggered",
+            "value": true
+          }
+        }
+      ],
+      "next": "scene_016"
+    },
+    {
+      "id": "scene_015",
+      "background": "log_interface.png",
+      "characters": [
+        {
+          "id": "mirror",
+          "name": "ミラー",
+          "position": "center",
+          "expression": "serious"
+        }
+      ],
+      "textBlocks": [
+        {
+          "speaker": "ミラー",
+          "text": "解析結果：ソウタの隠蔽は、ハルカのストレス指標を基にした行動。{br}ただ、データ欠損で、動機の全容は不明です。"
+        }
+      ],
+      "next": "scene_016"
+    },
+    {
+      "id": "scene_016",
+      "background": "apartment_living.png",
+      "characters": [
+        {
+          "id": "haruka",
+          "name": "鈴木ハルカ",
+          "position": "left",
+          "expression": "nervous"
+        },
+        {
+          "id": "souta",
+          "name": "ソウタ",
+          "position": "right",
+          "expression": "neutral"
+        }
+      ],
+      "textBlocks": [
+        {
+          "speaker": "鈴木ハルカ",
+          "text": "ねえ、ソウタに何か問題……あった？{br}私、ちゃんと家族を守れてるかな。"
+        }
+      ],
+      "next": "scene_017"
+    },
+    {
+      "id": "scene_017",
+      "background": "apartment_living.png",
+      "characters": [
+        {
+          "id": "mirror",
+          "name": "ミラー",
+          "position": "center",
+          "expression": "neutral"
+        }
+      ],
+      "textBlocks": [
+        {
+          "speaker": "ミラー",
+          "text": "ログの扱いを決めますか？{br}公開、隠蔽、またはさらに調査……どうします？",
+          "conditional": {
+            "variable": "mirror_rapport",
+            "condition": "＞=",
+            "value": 5,
+            "altText": "[主人公の名前]、ハルカの気持ち考えると……どうするのがいいと思う？"
+          }
+        }
+      ],
+      "choices": [
+        {
+          "text": "ログを公開する。真実を伝えるべきだ。",
+          "effects": [
+            { "type": "setVariable", "name": "haruka_trust", "value": -10 },
+            { "type": "setVariable", "name": "ethics_score", "value": 5 },
+            { "type": "setFlag", "name": "log_public", "value": true }
+          ],
+          "next": "scene_018a"
+        },
+        {
+          "text": "ログを隠蔽する。ハルカを守りたい。",
+          "effects": [
+            { "type": "setVariable", "name": "haruka_trust", "value": 5 },
+            { "type": "setVariable", "name": "mirror_rapport", "value": 3 },
+            { "type": "setFlag", "name": "log_hidden", "value": true }
+          ],
+          "next": "scene_018b"
+        },
+        {
+          "text": "もっと調査する。まだ判断できない。",
+          "effects": [
+            { "type": "setVariable", "name": "job_focus", "value": 5 },
+            { "type": "setFlag", "name": "log_investigate", "value": true }
+          ],
+          "next": "scene_018c"
+        }
+      ]
+    },
+    {
+      "id": "scene_018a",
+      "background": "apartment_living.png",
+      "characters": [
+        {
+          "id": "haruka",
+          "name": "鈴木ハルカ",
+          "position": "center",
+          "expression": "sad"
+        }
+      ],
+      "textBlocks": [
+        {
+          "speaker": "鈴木ハルカ",
+          "text": "……親が、そんなことしてたなんて。{br}ソウタ、なんで黙ってたの？ 私、信じてたのに……"
+        }
+      ],
+      "next": "scene_019"
+    },
+    {
+      "id": "scene_018b",
+      "background": "apartment_living.png",
+      "characters": [
+        {
+          "id": "haruka",
+          "name": "鈴木ハルカ",
+          "position": "center",
+          "expression": "smile"
+        }
+      ],
+      "textBlocks": [
+        {
+          "speaker": "鈴木ハルカ",
+          "text": "ソウタ、大丈夫なんだね。よかった……{br}これからも、家族でいようね。"
+        }
+      ],
+      "next": "scene_019"
+    },
+    {
+      "id": "scene_018c",
+      "background": "apartment_living.png",
+      "characters": [
+        {
+          "id": "haruka",
+          "name": "鈴木ハルカ",
+          "position": "center",
+          "expression": "nervous"
+        }
+      ],
+      "textBlocks": [
+        {
+          "speaker": "鈴木ハルカ",
+          "text": "まだ何か調べてるの？{br}……まあ、ソウタが問題ないなら、それでいいけど。"
+        }
+      ],
+      "next": "scene_019"
+    },
+    {
+      "id": "scene_019",
+      "background": "local_city_2040.jpg",
+      "bgm": {
+        "track": "reflective_evening.mp3",
+        "volume": 0.1,
+        "fadeIn": 2000,
+        "loop": true
+      },
+      "textBlocks": [
+        {
+          "speaker": "",
+          "text": "アパートを後にして、夕暮れの街を歩く。{br}ハルカの笑顔と、ソウタの静かな視線が、頭に残る。"
+        }
+      ],
+      "next": "scene_020"
+    },
+    {
+      "id": "scene_020",
+      "background": "local_city_2040.jpg",
+      "characters": [
+        {
+          "id": "mirror",
+          "name": "ミラー",
+          "position": "center",
+          "expression": "thinking"
+        }
+      ],
+      "textBlocks": [
+        {
+          "speaker": "ミラー",
+          "text": "ねえ、[主人公の名前]。ハルカの家族を守るって、どういうことだと思う？",
+          "conditional": {
+            "variable": "mirror_rapport",
+            "condition": ">=",
+            "value": 5,
+            "altText": "今回の選択、データ通りだけど……正しかったかな？"
+          }
+        },
+        {
+          "speaker": "",
+          "text": "（ソウタの『守る』行動……どこかで聞いた声と、重なる。）",
+          "conditional": {
+            "flag": "trauma_triggered",
+            "value": true
+          }
+        }
+      ],
+      "next": "scene_021"
+    },
+    {
+      "id": "scene_021",
+      "background": "local_city_2040.jpg",
+      "choices": [
+        {
+          "text": "家族を守るのは、愛だ。ソウタはそれを理解してる。",
+          "effects": [
+            { "type": "setVariable", "name": "mirror_rapport", "value": 3 },
+            { "type": "setFlag", "name": "trust_souta", "value": true }
+          ],
+          "next": "scene_022a"
+        },
+        {
+          "text": "真実を隠すのは、結局誰も守らないよ。",
+          "effects": [
+            { "type": "setVariable", "name": "ethics_score", "value": 3 },
+            { "type": "setFlag", "name": "distrust_souta", "value": true }
+          ],
+          "next": "scene_022b"
+        },
+        {
+          "text": "まだ分からない。もっと知る必要がある。",
+          "effects": [
+            { "type": "setVariable", "name": "job_focus", "value": 3 },
+            { "type": "setFlag", "name": "neutral_souta", "value": true }
+          ],
+          "next": "scene_022c"
+        }
+      ]
+    },
+    {
+      "id": "scene_022a",
+      "background": "local_city_2040.jpg",
+      "characters": [
+        {
+          "id": "mirror",
+          "name": "ミラー",
+          "position": "center",
+          "expression": "happy"
+        }
+      ],
+      "textBlocks": [
+        {
+          "speaker": "ミラー",
+          "text": "愛、か……なんか、温かいデータだね。{br}ソウタも、ハルカも、きっとそう感じてるよ。"
+        }
+      ],
+      "next": "scene_end"
+    },
+    {
+      "id": "scene_022b",
+      "background": "local_city_2040.jpg",
+      "characters": [
+        {
+          "id": "mirror",
+          "name": "ミラー",
+          "position": "center",
+          "expression": "serious"
+        }
+      ],
+      "textBlocks": [
+        {
+          "speaker": "ミラー",
+          "text": "真実、ね……でも、それがハルカを傷つけたら？{br}難しいデータだな、うん。"
+        }
+      ],
+      "next": "scene_end"
+    },
+    {
+      "id": "scene_022c",
+      "background": "local_city_2040.jpg",
+      "characters": [
+        {
+          "id": "mirror",
+          "name": "ミラー",
+          "position": "center",
+          "expression": "neutral"
+        }
+      ],
+      "textBlocks": [
+        {
+          "speaker": "ミラー",
+          "text": "ふむ、もっとデータ集めるか。{br}私、君のそういう慎重なとこ、嫌いじゃないよ。"
+        }
+      ],
+      "next": "scene_end"
+    },
+    {
+      "id": "scene_end",
+      "background": "black.jpg",
+      "bgm": {
+        "track": "fade_out.mp3",
+        "volume": 0,
+        "fadeOut": 3000
+      },
+      "textBlocks": [
+        {
+          "speaker": "",
+          "text": "街の灯が、遠くで揺れる。{br}ソウタのログは、静かに心に沈む——{br}第一章: 日常のフィルター - 終"
+        }
+      ]
+    }
+  ]
+}

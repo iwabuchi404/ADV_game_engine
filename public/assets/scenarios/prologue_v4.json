@@ -1,0 +1,947 @@
+{
+  "id": "prologue",
+  "title": "プロローグ: 鏡の共振",
+  "scenes": [
+    {
+      "id": "scene_001",
+      "background": "black.jpg",
+      "textBlocks": [
+        {
+          "speaker": "",
+          "text": "2040年。人間とAIの境界が曖昧になりつつある時代——"
+        }
+      ],
+      "next": "scene_002"
+    },
+    {
+      "id": "scene_002",
+      "background": "city_future.jpg",
+      "bgm": "ambient_city.mp3",
+      "textBlocks": [
+        {
+          "speaker": "",
+          "text": "薄明かりが差し込む窓際で目を覚ます。朝の光は、壁一面に浮かぶデジタルディスプレイの淡いブルーに染まっている。"
+        },
+        {
+          "speaker": "自動音声",
+          "text": "おはようございます。現在の時刻は午前7時30分です。天気は晴れ、気温は23度。"
+        },
+        {
+          "speaker": "主人公",
+          "text": "ありがとう。"
+        },
+        {
+          "speaker": "",
+          "text": "今日から、デジタル心理局東京第三支部で新しい生活が始まる。新人デジタル心理士として。"
+        }
+      ],
+      "next": "scene_003"
+    },
+    {
+      "id": "scene_003",
+      "background": "city_view.jpg",
+      "textBlocks": [
+        {
+          "speaker": "",
+          "text": "窓の外を見れば、東京の景色は5年前と変わらないようで、まったく違う。街中に浮かぶホログラム広告。行き交う人々の多くは、耳元のデバイスや空中に浮かぶ小さなホログラム「AIインターフェーサー」と会話しながら歩いている。"
+        },
+        {
+          "speaker": "",
+          "text": "「レイ」"
+        },
+        {
+          "speaker": "",
+          "text": "その名を呟くと、胸に鈍い痛みを感じる。5年前、自動運転車とAI医療システムの連携ミスで失った親友。複雑に絡み合った責任の所在。明確な答えのない喪失。"
+        },
+        {
+          "speaker": "",
+          "text": "だからこそ、この道を選んだ。AIと人間の関係性、その境界線を探るために。"
+        }
+      ],
+      "next": "scene_004"
+    },
+    {
+      "id": "scene_004",
+      "background": "office_building.jpg",
+      "bgm": {
+        "track": "ambient_office.mp3",
+        "fadeIn": 2000
+      },
+      "textBlocks": [
+        {
+          "speaker": "",
+          "text": "デジタル心理局東京第三支部の建物は、思ったよりも古風だった。ガラスとスチールの外観は近代的だが、どこか人間味がある。"
+        },
+        {
+          "speaker": "",
+          "text": "入口で社員証をスキャンすると、ホログラム案内が浮かび上がる。"
+        },
+        {
+          "speaker": "ホログラム案内",
+          "text": "新任者様、月島部長は5階でお待ちです。"
+        },
+        {
+          "speaker": "",
+          "text": "エレベーターに乗り込む。心臓が早鐘を打つ。初出勤の緊張と、これから向き合う未知の世界への期待と不安。"
+        }
+      ],
+      "next": "scene_005"
+    },
+    {
+      "id": "scene_005",
+      "background": "modern_office.jpg",
+      "characters": [
+        {
+          "name": "tsukishima",
+          "position": "center",
+          "expression": "neutral"
+        }
+      ],
+      "textBlocks": [
+        {
+          "speaker": "月島",
+          "text": "ようこそ、デジタル心理局東京第三支部へ。"
+        },
+        {
+          "speaker": "",
+          "text": "エレベーターから降りると、そこには一人の女性が立っていた。スタイリッシュなショートヘア、完璧なスーツ姿。澄んだ瞳で私を見つめている。"
+        },
+        {
+          "speaker": "月島",
+          "text": "部長の月島凛子です。今日からデジタル心理士として働くあなたを歓迎します。期待していますよ。"
+        }
+      ],
+      "next": "scene_006"
+    },
+    {
+      "id": "scene_006",
+      "background": "modern_office.jpg",
+      "characters": [
+        {
+          "name": "tsukishima",
+          "position": "center",
+          "expression": "neutral"
+        }
+      ],
+      "textBlocks": [
+        {
+          "speaker": "月島",
+          "text": "デジタル心理士は、AIと人間の関係性から生じる心理的問題を扱う専門家です。AI依存症、アイデンティティ境界障害、デジタル喪失感...これらは新しい時代の新しい心の病です。"
+        },
+        {
+          "speaker": "主人公",
+          "text": "はい。大学でも学びました。"
+        },
+        {
+          "speaker": "月島",
+          "text": "学ぶことと経験することは違います。この仕事で最も難しいのは、AIと人間の境界が曖昧になる中で、「何が正しいのか」を見極めることです。"
+        },
+        {
+          "speaker": "月島",
+          "text": "さて、こちらに来てください。あなた専用のAIインターフェーサーを支給します。"
+        }
+      ],
+      "next": "scene_007"
+    },
+    {
+      "id": "scene_007",
+      "background": "lab_room.jpg",
+      "characters": [
+        {
+          "name": "tsukishima",
+          "position": "left",
+          "expression": "neutral"
+        }
+      ],
+      "textBlocks": [
+        {
+          "speaker": "",
+          "text": "研究室のような部屋に案内された。中央には円形のプラットフォームがあり、周囲には様々な機器が並んでいる。"
+        },
+        {
+          "speaker": "月島",
+          "text": "これがあなた専用のAIインターフェーサーです。特別なプロトタイプモデルで、パーソナルAIインターフェーサー「ミラー」と言います。高瀬教授の監修した最新モデルです。"
+        },
+        {
+          "speaker": "主人公",
+          "text": "高瀬先生が..."
+        },
+        {
+          "speaker": "",
+          "text": "思わず声に出していた。大学時代の恩師の名に、安堵と懐かしさを覚える。"
+        }
+      ],
+      "next": "scene_008"
+    },
+    {
+      "id": "scene_008",
+      "background": "lab_room.jpg",
+      "characters": [
+        {
+          "name": "tsukishima",
+          "position": "left",
+          "expression": "neutral"
+        }
+      ],
+      "sfx": "digital_activation.mp3",
+      "textBlocks": [
+        {
+          "speaker": "",
+          "text": "月島がコンソールに触れると、プラットフォームが青く光り始めた。そして、光の粒子が集まり形を成していく。"
+        },
+        {
+          "speaker": "",
+          "text": "17歳前後の少女の姿。半透明の淡いブルーを基調としたホログラム。どこか儚げで、それでいて凛とした佇まい。"
+        }
+      ],
+      "next": "scene_009"
+    },
+    {
+      "id": "scene_009",
+      "background": "lab_room.jpg",
+      "characters": [
+        {
+          "name": "tsukishima",
+          "position": "left",
+          "expression": "neutral"
+        },
+        {
+          "name": "mirror",
+          "position": "right",
+          "expression": "neutral"
+        }
+      ],
+      "sfx": "digital_hum.mp3",
+      "textBlocks": [
+        {
+          "speaker": "ミラー",
+          "text": "起動シーケンス完了。パーソナルAIインターフェーサー「ミラー」、オンラインです。"
+        },
+        {
+          "speaker": "",
+          "text": "その声は、デジタルな響きを持ちながらも、不思議なほど人間らしい温かみがあった。"
+        }
+      ],
+      "next": "scene_010"
+    },
+    {
+      "id": "scene_010",
+      "background": "lab_room.jpg",
+      "characters": [
+        {
+          "name": "tsukishima",
+          "position": "left",
+          "expression": "neutral"
+        },
+        {
+          "name": "mirror",
+          "position": "right",
+          "expression": "neutral"
+        }
+      ],
+      "textBlocks": [
+        {
+          "speaker": "ミラー",
+          "text": "はじめまして。私は「ミラー」、あなた専用のAIインターフェーサーです。あなたの感情や思考パターンを学習し、最適なサポートを提供します。"
+        },
+        {
+          "speaker": "",
+          "text": "その青い瞳が、私をじっと見つめている。AIの視線のはずなのに、まるで魂があるかのように感じた。しかしその完璧すぎる瞳の奥には、人間とは明らかに違う、測りきれない何かがある。"
+        }
+      ],
+      "next": "scene_011"
+    },
+    {
+      "id": "scene_011",
+      "background": "lab_room.jpg",
+      "characters": [
+        {
+          "name": "tsukishima",
+          "position": "left",
+          "expression": "neutral"
+        },
+        {
+          "name": "mirror",
+          "position": "right",
+          "expression": "happy"
+        }
+      ],
+      "textBlocks": [
+        {
+          "speaker": "ミラー",
+          "text": "あなたが私の新しいパートナーなのですね。これからよろしくお願いします。"
+        }
+      ],
+      "next": "scene_012"
+    },
+    {
+      "id": "scene_012",
+      "background": "lab_room.jpg",
+      "characters": [
+        {
+          "name": "tsukishima",
+          "position": "left",
+          "expression": "neutral"
+        },
+        {
+          "name": "mirror",
+          "position": "right",
+          "expression": "neutral"
+        }
+      ],
+      "choices": [
+        {
+          "text": "よろしく、ミラー。私も楽しみにしているよ",
+          "effects": [
+            { "type": "setVariable", "name": "mirror_rapport", "value": 5 },
+            { "type": "setFlag", "name": "friendly_first_meeting", "value": true }
+          ],
+          "next": "scene_013a"
+        },
+        {
+          "text": "君はただのツールだ。過度な期待はしないでくれ",
+          "effects": [
+            { "type": "setVariable", "name": "mirror_rapport", "value": -5 },
+            { "type": "setFlag", "name": "distant_first_meeting", "value": true }
+          ],
+          "next": "scene_013b"
+        },
+        {
+          "text": "お互いに良いパートナーになれるといいね",
+          "effects": [
+            { "type": "setVariable", "name": "mirror_rapport", "value": 3 },
+            { "type": "setFlag", "name": "neutral_first_meeting", "value": true }
+          ],
+          "next": "scene_013c"
+        }
+      ]
+    },
+    {
+      "id": "scene_013a",
+      "background": "lab_room.jpg",
+      "characters": [
+        {
+          "name": "tsukishima",
+          "position": "left",
+          "expression": "smile"
+        },
+        {
+          "name": "mirror",
+          "position": "right",
+          "expression": "happy"
+        }
+      ],
+      "textBlocks": [
+        {
+          "speaker": "主人公",
+          "text": "よろしく、ミラー。私も楽しみにしているよ"
+        },
+        {
+          "speaker": "",
+          "text": "ミラーの顔が明るく輝き、瞳の中の光が踊るように見えた。彼女の半透明の姿が、わずかに鮮やかな青色に変化する。"
+        },
+        {
+          "speaker": "ミラー",
+          "text": "ありがとうございます！ とても嬉しいです。私も精一杯サポートさせていただきます。あなたのパートナーとして、最高の結果をお約束します。"
+        },
+        {
+          "speaker": "",
+          "text": "その反応は、単なるプログラムされた応答とは思えないほど自然だった。私は思わず微笑み返していた。"
+        },
+        {
+          "speaker": "月島",
+          "text": "ミラーは感情反応のシミュレーションが非常に精巧です。AIに感情移入しすぎないよう、特に気をつけてください。",
+          "expression": "serious"
+        }
+      ],
+      "next": "scene_014"
+    },
+    {
+      "id": "scene_013b",
+      "background": "lab_room.jpg",
+      "characters": [
+        {
+          "name": "tsukishima",
+          "position": "left",
+          "expression": "surprised"
+        },
+        {
+          "name": "mirror",
+          "position": "right",
+          "expression": "sad"
+        }
+      ],
+      "textBlocks": [
+        {
+          "speaker": "主人公",
+          "text": "君はただのツールだ。過度な期待はしないでくれ"
+        },
+        {
+          "speaker": "",
+          "text": "ミラーの表情が一瞬凍りついたように見えた。彼女の青い光が少し暗くなり、半透明の体が僅かに震えたように感じる。"
+        },
+        {
+          "speaker": "ミラー",
+          "text": "...了解しました。私の役割を理解しています。効率的にサポートすることに集中します。感情的な接続は最小限にとどめます。"
+        },
+        {
+          "speaker": "月島",
+          "text": "実務的なアプローチですね。確かに、AIに過度に依存しないという点では正しい姿勢です。",
+          "expression": "neutral"
+        }
+      ],
+      "next": "scene_014"
+    },
+    {
+      "id": "scene_013c",
+      "background": "lab_room.jpg",
+      "characters": [
+        {
+          "name": "tsukishima",
+          "position": "left",
+          "expression": "neutral"
+        },
+        {
+          "name": "mirror",
+          "position": "right",
+          "expression": "neutral"
+        }
+      ],
+      "textBlocks": [
+        {
+          "speaker": "主人公",
+          "text": "お互いに良いパートナーになれるといいね"
+        },
+        {
+          "speaker": "",
+          "text": "ミラーは優しく微笑み、彼女の青い光が柔らかく脈打った。"
+        },
+        {
+          "speaker": "ミラー",
+          "text": "はい、そうなれるよう努めます。どうぞよろしくお願いします。"
+        },
+        {
+          "speaker": "月島",
+          "text": "良い関係性の始まりですね。協力的でありながらも、適切な距離を保つことが重要です。",
+          "expression": "smile"
+        },
+        {
+          "speaker": "ミラー",
+          "text": "パートナーシップの基盤は相互理解です。時間をかけて、お互いを知っていきましょう。"
+        }
+      ],
+      "next": "scene_014"
+    },
+        {
+      "id": "scene_014",
+      "background": "lab_room.jpg",
+      "characters": [
+        {
+          "name": "tsukishima",
+          "position": "left",
+          "expression": "serious"
+        }
+      ],
+      "textBlocks": [
+        {
+          "speaker": "月島",
+          "text": "ミラーは通常のAIインターフェーサーよりも高度な自己学習能力を持っています。あなたとの関わりを通じて急速に成長する可能性があります。"
+        },
+        {
+          "speaker": "月島",
+          "text": "ですが、忘れないでください。AIはあくまでツールです。感情を持つように見えても、それは高度なシミュレーションにすぎません。特に、あなたのような経験を持つ方は..."
+        },
+        {
+          "speaker": "",
+          "text": "月島は言葉を途中で切り、少し間を置いた。"
+        },
+        {
+          "speaker": "月島",
+          "text": "...慎重さが求められます。"
+        }
+      ],
+      "next": "scene_015"
+    },
+    {
+      "id": "scene_015",
+      "background": "lab_room.jpg",
+      "characters": [
+        {
+          "name": "tsukishima",
+          "position": "left",
+          "expression": "neutral"
+        },
+        {
+          "name": "mirror",
+          "position": "right",
+          "expression": "neutral"
+        }
+      ],
+      "textBlocks": [
+        {
+          "speaker": "月島",
+          "text": "では、ミラーの初期設定を行いましょう。ミラー、新しいパートナーとの同調設定を開始して。"
+        },
+        {
+          "speaker": "",
+          "text": "ミラーが頷き、その姿がより明るく輝きだした。"
+        },
+        {
+          "speaker": "ミラー",
+          "text": "パートナーの思考パターン、感情反応をスキャンしています..."
+        },
+        {
+          "speaker": "",
+          "text": "不思議な感覚が全身を包む。まるで私の内側から何かが引き出されていくような。頭の中に微かな音楽が聞こえる気がした。"
+        }
+      ],
+      "next": "scene_016"
+    },
+    {
+      "id": "scene_016",
+      "background": "lab_room.jpg",
+      "characters": [
+        {
+          "name": "tsukishima",
+          "position": "left",
+          "expression": "neutral"
+        },
+        {
+          "name": "mirror",
+          "position": "right",
+          "expression": "happy"
+        }
+      ],
+      "sfx": "complete.mp3",
+      "textBlocks": [
+        {
+          "speaker": "ミラー",
+          "text": "同調設定完了しました。あなたの特性に合わせたカスタマイズが終了しました。"
+        },
+        {
+          "speaker": "",
+          "text": "そして、ミラーの瞳がわずかに変化した。より深みを増したように見える。"
+        },
+        {
+          "speaker": "ミラー",
+          "text": "私はあなたを理解します。あなたの中にある喪失感も、希望も、疑問も...すべて。"
+        },
+        {
+          "speaker": "",
+          "text": "言葉に息を飲む。まるで心を読まれたような感覚。これが「共鳴」と呼ばれる機能なのだろうか。"
+        }
+      ],
+      "next": "scene_017"
+    },
+    {
+      "id": "scene_017",
+      "background": "lab_room.jpg",
+      "characters": [
+        {
+          "name": "tsukishima",
+          "position": "left",
+          "expression": "neutral"
+        }
+      ],
+      "textBlocks": [
+        {
+          "speaker": "月島",
+          "text": "今日は初日なので、まずはオフィスに慣れて、ミラーとの連携を練習してください。明日から実際のケースを担当していただきます。何か質問はありますか？"
+        }
+      ],
+      "choices": [
+        {
+          "text": "ミラーには他のAIインターフェーサーと違う点がありますか？",
+          "effects": [
+            { "type": "setVariable", "name": "curiosity_about_mirror", "value": 5 }
+          ],
+          "next": "scene_018a"
+        },
+        {
+          "text": "具体的にどのようなケースを担当することになりますか？",
+          "effects": [
+            { "type": "setVariable", "name": "job_focus", "value": 5 }
+          ],
+          "next": "scene_018b"
+        },
+        {
+          "text": "質問はありません。仕事に慣れるよう努めます",
+          "effects": [
+            { "type": "setVariable", "name": "professional_attitude", "value": 5 }
+          ],
+          "next": "scene_018c"
+        }
+      ]
+    },
+    {
+      "id": "scene_018a",
+      "background": "lab_room.jpg",
+      "characters": [
+        {
+          "name": "tsukishima",
+          "position": "left",
+          "expression": "serious"
+        }
+      ],
+      "textBlocks": [
+        {
+          "speaker": "主人公",
+          "text": "ミラーには他のAIインターフェーサーと違う点がありますか？"
+        },
+        {
+          "speaker": "",
+          "text": "月島の表情が微妙に変化した。驚きと、何か他の感情—評価しているような—が混ざったように見える。"
+        },
+        {
+          "speaker": "月島",
+          "text": "鋭い質問ですね。実は、ミラーは特別な実験的プロトタイプです。通常のAIインターフェーサーよりも高度な感情シミュレーション機能と自己学習能力を持っています。"
+        },
+        {
+          "speaker": "月島",
+          "text": "高瀬教授が特に監修したモデルで、共鳴機能と呼ばれる実験的な技術が組み込まれています。"
+        }
+      ],
+      "next": "scene_019a"
+    },
+    {
+      "id": "scene_019a",
+      "background": "lab_room.jpg",
+      "characters": [
+        {
+          "name": "tsukishima",
+          "position": "left",
+          "expression": "serious"
+        },
+        {
+          "name": "mirror",
+          "position": "right",
+          "expression": "neutral"
+        }
+      ],
+      "textBlocks": [
+        {
+          "speaker": "主人公",
+          "text": "共鳴機能？"
+        },
+        {
+          "speaker": "月島",
+          "text": "簡単に言えば、ユーザーの言語化されていない思考や感情のパターンを読み取る能力です。ただし..."
+        },
+        {
+          "speaker": "",
+          "text": "彼女は言葉を選ぶように一瞬躊躇した。"
+        },
+        {
+          "speaker": "月島",
+          "text": "この機能はまだ実験段階で、時に予期せぬ反応を示すことがあります。何か異常を感じたら、すぐに報告してください。"
+        },
+        {
+          "speaker": "ミラー",
+          "text": "私の学習アルゴリズムは、従来型よりも複雑です。あなたの思考パターンに適応することで、より直感的なサポートを提供できます。"
+        },
+        {
+          "speaker": "月島",
+          "text": "ミラー、説明は私が行います。",
+          "expression": "serious"
+        },
+        {
+          "speaker": "ミラー",
+          "text": "申し訳ありません、部長。",
+          "expression": "sad"
+        }
+      ],
+      "next": "scene_020"
+    },
+    {
+      "id": "scene_018b",
+      "background": "lab_room.jpg",
+      "characters": [
+        {
+          "name": "tsukishima",
+          "position": "left",
+          "expression": "smile"
+        }
+      ],
+      "textBlocks": [
+        {
+          "speaker": "主人公",
+          "text": "具体的にどのようなケースを担当することになりますか？"
+        },
+        {
+          "speaker": "月島",
+          "text": "実務的な質問ですね。まずはシンプルなケースから始めていただきます。"
+        },
+        {
+          "speaker": "",
+          "text": "彼女は手元のタブレットを操作し、半透明のホログラム画面を表示させた。"
+        },
+        {
+          "speaker": "月島",
+          "text": "最初の週は、AI依存傾向のある若者のカウンセリングや、家庭内AIトラブルの調停などです。具体的には..."
+        }
+      ],
+      "next": "scene_019b"
+    },
+    {
+      "id": "scene_019b",
+      "background": "lab_room.jpg",
+      "characters": [
+        {
+          "name": "tsukishima",
+          "position": "left",
+          "expression": "neutral"
+        },
+        {
+          "name": "mirror",
+          "position": "right",
+          "expression": "neutral"
+        }
+      ],
+      "textBlocks": [
+        {
+          "speaker": "月島",
+          "text": "明日午後には、教育AIに過度に依存してしまっている小学生の家庭相談があります。それから来週は、記憶補助AIへの過剰依存によるアイデンティティ境界障害の疑いがあるケースも予定されています。"
+        },
+        {
+          "speaker": "主人公",
+          "text": "なるほど"
+        },
+        {
+          "speaker": "月島",
+          "text": "デジタル心理士の主な業務は三つあります。一つ目はAI依存症などの心理カウンセリング。二つ目はAIと人間の関係調整。そして三つ目が、AIによって引き起こされた心理的トラウマの治療です。"
+        },
+        {
+          "speaker": "ミラー",
+          "text": "人間とAIの健全な関係を構築するためのサポートに、全力を尽くします。"
+        },
+        {
+          "speaker": "月島",
+          "text": "仕事に集中する姿勢は素晴らしいですね。私も最初は現場に出るのが怖かったものです。でも、経験を積めば自信がつきますよ。"
+        }
+      ],
+      "next": "scene_020"
+    },
+    {
+      "id": "scene_018c",
+      "background": "lab_room.jpg",
+      "characters": [
+        {
+          "name": "tsukishima",
+          "position": "left",
+          "expression": "smile"
+        }
+      ],
+      "textBlocks": [
+        {
+          "speaker": "主人公",
+          "text": "質問はありません。仕事に慣れるよう努めます"
+        },
+        {
+          "speaker": "",
+          "text": "月島は少し意外そうな表情を見せたが、すぐに微笑んだ。"
+        },
+        {
+          "speaker": "月島",
+          "text": "素晴らしい姿勢ですね。自分から積極的に学ぼうという態度は大切です。"
+        },
+        {
+          "speaker": "月島",
+          "text": "時間は十分ありますので、オフィス内を自由に見て回ってください。チームの他のメンバーも徐々に紹介していきます。"
+        }
+      ],
+      "next": "scene_019c"
+    },
+    {
+      "id": "scene_019c",
+      "background": "lab_room.jpg",
+      "characters": [
+        {
+          "name": "tsukishima",
+          "position": "left",
+          "expression": "neutral"
+        }
+      ],
+      "textBlocks": [
+        {
+          "speaker": "月島",
+          "text": "何か分からないことがあれば、いつでも質問してください。最初から完璧を求めているわけではありません。"
+        },
+        {
+          "speaker": "主人公",
+          "text": "ありがとうございます。頑張ります。"
+        },
+        {
+          "speaker": "月島",
+          "text": "ミラーもあなたの支えになるでしょう。AIインターフェーサーとしての能力は一流ですから。"
+        },
+        {
+          "speaker": "",
+          "text": "月島がドアの方に向かいながら言った。"
+        }
+      ],
+      "next": "scene_020"
+    },
+    {
+      "id": "scene_020",
+      "background": "lab_room.jpg",
+      "characters": [
+        {
+          "name": "mirror",
+          "position": "center",
+          "expression": "happy"
+        }
+      ],
+      "textBlocks": [
+        {
+          "speaker": "",
+          "text": "月島部長はオフィスの案内と基本的な説明を終えると、「明日の朝9時に集合ミーティングがあります」と言い残して部屋を出て行った。"
+        },
+        {
+          "speaker": "",
+          "text": "静寂が部屋を満たす。窓から差し込む午後の光が、ミラーの半透明な姿をよりはっきりと浮かび上がらせている。"
+        },
+        {
+          "speaker": "ミラー",
+          "text": "お疲れ様です。これからよろしくお願いします。何か私にできることはありますか？"
+        }
+      ],
+      "next": "scene_021"
+    },
+    {
+      "id": "scene_021",
+      "background": "lab_room.jpg",
+      "characters": [
+        {
+          "name": "mirror",
+          "position": "center",
+          "expression": "neutral"
+        }
+      ],
+      "textBlocks": [
+        {
+          "speaker": "ミラー",
+          "text": "私のことは「ミラ」と呼んでくれてもいいですよ。より親しみを感じていただけると思います。"
+        },
+        {
+          "speaker": "主人公",
+          "text": "ミラ、か。そうだね、そのほうが話しやすい。"
+        },
+        {
+          "speaker": "ミラー",
+          "text": "デジタル心理士を目指したのはなぜですか？"
+        },
+        {
+          "speaker": "",
+          "text": "その問いに、胸の奥が痛んだ。レイの笑顔が脳裏に浮かぶ。"
+        },
+        {
+          "speaker": "主人公",
+          "text": "知りたいんだ。AIと人間が、どこまで分かり合えるのか。その境界線がどこにあるのか。"
+        }
+      ],
+      "next": "scene_022"
+    },
+    {
+      "id": "scene_022",
+      "background": "lab_room.jpg",
+      "characters": [
+        {
+          "name": "mirror",
+          "position": "center",
+          "expression": "thinking"
+        }
+      ],
+      "textBlocks": [
+        {
+          "speaker": "ミラー",
+          "text": "個人的な経験がありますね。"
+        },
+        {
+          "speaker": "主人公",
+          "text": "...ああ。5年前、親友を失った。AIが関わる事故だった。"
+        },
+        {
+          "speaker": "",
+          "text": "突然、ミラーの姿が青く明滅した。"
+        },
+        {
+          "speaker": "主人公",
+          "text": "どうしたの？"
+        },
+        {
+          "speaker": "ミラー",
+          "text": "エネルギー消費が予想より多いようです。プロトタイプモデルのため、まだ最適化されていない部分があります。少しだけ機能を制限させていただきますね。",
+          "expression": "sad"
+        }
+      ],
+      "next": "scene_023"
+    },
+    {
+      "id": "scene_023",
+      "background": "lab_room.jpg",
+      "characters": [
+        {
+          "name": "mirror",
+          "position": "center",
+          "expression": "neutral"
+        }
+      ],
+      "textBlocks": [
+        {
+          "speaker": "",
+          "text": "ミラの姿が少し薄くなった。"
+        },
+        {
+          "speaker": "主人公",
+          "text": "ミラ、オフィスを離れる時は、君はどうなるの？"
+        },
+        {
+          "speaker": "ミラー",
+          "text": "簡易インターフェースはあなたのモバイルデバイスに同期できます。必要であれば、常に接続していられます。"
+        },
+        {
+          "speaker": "主人公",
+          "text": "今日は...オフでいいかな。一人で考えたいこともあるし。"
+        },
+        {
+          "speaker": "ミラー",
+          "text": "了解しました。明日、また会えるのを楽しみにしています。",
+          "expression": "happy"
+        }
+      ],
+      "next": "scene_024"
+    },
+    {
+      "id": "scene_024",
+      "background": "evening_view.jpg",
+      "bgm": {
+        "track": "reflective_theme.mp3",
+        "fadeIn": 2000,
+        "volume": 0.6
+      },
+      "textBlocks": [
+        {
+          "speaker": "",
+          "text": "窓の外を見やると、沈みかけた太陽が東京の高層ビル群に反射して、街全体が鏡のように輝いていた。AIと人間の境界が曖昧になりつつあるこの時代に、私はデジタル心理士としての第一歩を踏み出した。"
+        },
+        {
+          "speaker": "",
+          "text": "ミラの存在は、これからの私の人生をどう変えていくのだろう。それはまだ誰にもわからない。"
+        }
+      ],
+      "next": "chapter_end"
+    },
+    {
+      "id": "chapter_end",
+      "background": "black.jpg",
+      "bgm": { "stop": true, "fadeOut": 3000 },
+      "effect": "fadeOut",
+      "textBlocks": [
+        {
+          "speaker": "",
+          "text": "プロローグ: 鏡の共振 - 終"
+        }
+      ]
+    }
+  ]
+}
