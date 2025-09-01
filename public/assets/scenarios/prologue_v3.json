@@ -5,6 +5,12 @@
       {
         "id": "scene_001",
         "background": "black.jpg",
+        "bgm": {
+          "track": "朝の近未来都市.mp3",
+          "volume": 0.1,
+          "fadeIn": 2000,
+          "loop": true
+        },
         "textBlocks": [
           {
             "speaker": "",
@@ -16,12 +22,6 @@
       {
         "id": "scene_002",
         "background": "city_future.jpg",
-        "bgm": {
-          "track": "ambient_city.mp3",
-          "volume": 0.8,
-          "fadeIn": 2000,
-          "loop": true
-        },
         "textBlocks": [
           {
             "speaker": "",
@@ -32,11 +32,17 @@
       },
       {
         "id": "scene_003",
-        "background": "digital_ministry.png",
+        "background": "digital_psych_office.png",
         "transition": {
           "type": "fade",
           "duration": 800,
           "easing": "ease"
+        },
+        "bgm": {
+          "track": "デジタル心理局.mp3",
+          "volume": 0.1,
+          "fadeIn": 2000,
+          "loop": true
         },
         "characters": [
           {
