@@ -1,4 +1,5 @@
 import { CharacterContainer, CharacterImage } from './Character.css';
+import { SCENARIO_CONFIG } from '../../data/config';
 
 interface CharacterProps {
   id: string;
@@ -37,8 +38,8 @@ const getPositionStyle = (position: 'left' | 'center' | 'right') => {
 const Character = ({ id, name, image, position = 'center', expression = 'neutral' }: CharacterProps) => {
   // 画像パスの生成
   const imagePath = image
-    ? `/assets/images/characters/${image}`
-    : `/assets/images/characters/${id}_${expression}.png`;
+    ? `${SCENARIO_CONFIG.CHARACTERS_PATH}${image}`
+    : `${SCENARIO_CONFIG.CHARACTERS_PATH}${id}_${expression}.png`;
 
   return (
     <div className={CharacterContainer} style={getPositionStyle(position)}>

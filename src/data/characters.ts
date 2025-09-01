@@ -1,3 +1,5 @@
+import { SCENARIO_CONFIG } from './config';
+
 /**
  * characters.js
  * ゲーム内に登場するキャラクターの定義
@@ -208,7 +210,7 @@ export const getCharacterImagePath = (characterId: string, expression = 'neutral
   if (!character) return null;
 
   const imageName = character.expressions[expression] || character.expressions.neutral;
-  return `/assets/images/characters/${imageName}`;
+  return `${SCENARIO_CONFIG.CHARACTERS_PATH}${imageName}`;
 };
 
 /**
@@ -220,8 +222,8 @@ export const getAllExpressionPaths = (characterId: string) => {
   const character = getCharacter(characterId);
   if (!character) return [];
 
-  return Object.values(character.expressions).map(imageName =>
-    `/assets/images/characters/${imageName}`
+    return Object.values(character.expressions).map(imageName => 
+    `${SCENARIO_CONFIG.CHARACTERS_PATH}${imageName}`
   );
 };
 

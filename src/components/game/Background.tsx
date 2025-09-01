@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { assignInlineVars } from '@vanilla-extract/dynamic';
 import * as styles from './Background.css';
+import { SCENARIO_CONFIG } from '../../data/config';
 
 interface TransitionEffect {
   type?: 'fade' | 'crossFade' | 'fadeToBlack' | 'none';
@@ -28,7 +29,7 @@ const Background: React.FC<BackgroundProps> = ({
     if (imageUrl.startsWith('http') || imageUrl.startsWith('data:')) {
       return imageUrl;
     }
-    return `/assets/images/backgrounds/${imageUrl}`; // 環境に合わせて調整
+    return `${SCENARIO_CONFIG.BACKGROUNDS_PATH}${imageUrl}`;
   };
 
   useEffect(() => {

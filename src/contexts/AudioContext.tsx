@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, useRef, useCallback } from 'react';
+import { SCENARIO_CONFIG } from '../data/config';
 
 // 音量設定の型定義
 interface VolumeSettings {
@@ -145,7 +146,7 @@ export const AudioProvider: React.FC<AudioProviderProps> = ({ children }) => {
 
         // 新しいオーディオ要素を作成
         const audio = new Audio();
-        audio.src = `/assets/audio/bgm/${trackName}`;
+        audio.src = `${SCENARIO_CONFIG.AUDIO_BGM_PATH}${trackName}`;
         audio.loop = loop;
         const calculatedVolume = customVolume || volume.master * volume.bgm;
         audio.volume = fadeIn ? 0 : isMuted ? 0 : calculatedVolume;
@@ -221,7 +222,7 @@ export const AudioProvider: React.FC<AudioProviderProps> = ({ children }) => {
 
       try {
         // 新しいオーディオ要素を作成
-        const audio = new Audio(`/assets/audio/sfx/${sfxName}`);
+        const audio = new Audio(`${SCENARIO_CONFIG.AUDIO_SFX_PATH}${sfxName}`);
         const calculatedVolume = customVolume || volume.master * volume.sfx;
         audio.volume = isMuted ? 0 : calculatedVolume;
         audio.loop = loop;
@@ -283,7 +284,7 @@ export const AudioProvider: React.FC<AudioProviderProps> = ({ children }) => {
 
       try {
         // オーディオ要素を作成
-        const audio = new Audio(`/assets/audio/voice/${character}/${voiceId}.mp3`);
+        const audio = new Audio(`${SCENARIO_CONFIG.AUDIO_SFX_PATH}${character}/${voiceId}.mp3`);
         const calculatedVolume = customVolume || volume.master * volume.voice;
         audio.volume = isMuted ? 0 : calculatedVolume;
 

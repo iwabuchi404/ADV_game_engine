@@ -16,26 +16,52 @@ export const GAME_CONFIG = {
 
 // ベースパスを動的に設定
 const getBasePath = () => {
+  // 本番環境（GitHub Pages）かどうかを判定
   if (typeof window !== 'undefined') {
-    // ブラウザ環境では現在のURLからベースパスを取得
     const pathname = window.location.pathname;
+    console.log('Current pathname:', pathname);
     if (pathname.includes('/ADV_game_engine')) {
+      console.log('Detected GitHub Pages environment');
       return '/ADV_game_engine';
     }
   }
+  console.log('Using local development environment');
   return '';
 };
-
-const BASE_PATH = getBasePath();
 
 // シナリオ関連の設定
 export const SCENARIO_CONFIG = {
   DEFAULT_SCENARIO: 'prologue',
-  SCENARIO_PATH: `${BASE_PATH}/assets/scenarios/`,
-  BACKGROUNDS_PATH: `${BASE_PATH}/assets/images/backgrounds/`,
-  CHARACTERS_PATH: `${BASE_PATH}/assets/images/characters/`,
-  AUDIO_BGM_PATH: `${BASE_PATH}/assets/audio/bgm/`,
-  AUDIO_SFX_PATH: `${BASE_PATH}/assets/audio/sfx/`
+  get SCENARIO_PATH() {
+    const base = getBasePath();
+    const path = `${base}/assets/scenarios/`;
+    console.log('SCENARIO_PATH:', path);
+    return path;
+  },
+  get BACKGROUNDS_PATH() {
+    const base = getBasePath();
+    const path = `${base}/assets/images/backgrounds/`;
+    console.log('BACKGROUNDS_PATH:', path);
+    return path;
+  },
+  get CHARACTERS_PATH() {
+    const base = getBasePath();
+    const path = `${base}/assets/images/characters/`;
+    console.log('CHARACTERS_PATH:', path);
+    return path;
+  },
+  get AUDIO_BGM_PATH() {
+    const base = getBasePath();
+    const path = `${base}/assets/audio/bgm/`;
+    console.log('AUDIO_BGM_PATH:', path);
+    return path;
+  },
+  get AUDIO_SFX_PATH() {
+    const base = getBasePath();
+    const path = `${base}/assets/audio/sfx/`;
+    console.log('AUDIO_SFX_PATH:', path);
+    return path;
+  }
 };
 
 // 画面サイズのブレイクポイント

@@ -21,7 +21,7 @@ export const titleContainer = style({
       width: '100%',
       height: '100%',
       background: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)),
-          url('/assets/images/backgrounds/title_bg.jpg')`,
+          url('${process.env.NODE_ENV === 'production' ? '/ADV_game_engine/assets/images/backgrounds/title_bg.jpg' : '/assets/images/backgrounds/title_bg.jpg'}')`,
       backgroundSize: 'cover',
       backgroundPosition: 'center',
       opacity: 0.6,
