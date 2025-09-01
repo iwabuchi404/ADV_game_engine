@@ -3,11 +3,7 @@ import * as styles from './saveScreen.css';
 import { useGame } from '../../contexts/GameContext.tsx';
 import { GameState } from '../../types/game.ts';
 
-interface SaveScreenProps {
-  onBackToTitle: () => void;
-}
-
-const SaveScreen = ({ onBackToTitle }: SaveScreenProps) => {
+const SaveScreen = () => {
   const { saveGame, loadGame, updateGameState } = useGame();
   const [saveData, setSaveData] = useState<(GameState | null)[]>(Array(10).fill(null)); // セーブデータの状態を管理するためのuseStateフック
 
@@ -40,12 +36,12 @@ const SaveScreen = ({ onBackToTitle }: SaveScreenProps) => {
     return text.replace('{br}', '');
   };
 
-  const onSaveBtn = (slotId: number) => {
+  const onSaveBtn = (slotId: string) => {
     saveGame(slotId);
     updateGameState({ scrennState: 'game' }); // ゲーム画面に戻る
   };
 
-  const onLoadBtn = (slotId: number) => {
+  const onLoadBtn = (slotId: string) => {
     loadGame(slotId);
     updateGameState({ scrennState: 'game' }); // ゲーム画面に戻る
   };
@@ -80,7 +76,7 @@ const SaveScreen = ({ onBackToTitle }: SaveScreenProps) => {
                     className="game-button"
                     onClick={(e) => {
                       e.stopPropagation();
-                      onSaveBtn(index);
+                      onSaveBtn(String(index));
                     }}
                   >
                     セーブ
@@ -89,7 +85,7 @@ const SaveScreen = ({ onBackToTitle }: SaveScreenProps) => {
                     className="game-button"
                     onClick={(e) => {
                       e.stopPropagation();
-                      onLoadBtn(index);
+                      onLoadBtn(String(index));
                     }}
                   >
                     ロード

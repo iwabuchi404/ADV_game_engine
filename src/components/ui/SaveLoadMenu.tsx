@@ -55,7 +55,7 @@ const formatDate = (dateString?: string): string => {
  */
 const SaveSlotItem: React.FC<SaveSlotItemProps> = ({
   slot,
-  isSelected,
+
   onSelect,
   onSave,
   onLoad,
@@ -66,14 +66,11 @@ const SaveSlotItem: React.FC<SaveSlotItemProps> = ({
 
   return (
     <div
-      className={styles.saveSlot({
-        isEmpty,
-        isSelected,
-      })}
+      className={styles.saveSlot}
       onClick={() => onSelect(slot.id)}
     >
       <div className={styles.slotHeader}>
-        <h3 className={styles.slotTitle({ isEmpty })}>{`スロット ${slot.id}`}</h3>
+        <h3 className={styles.slotTitle}>{`スロット ${slot.id}`}</h3>
         {!isEmpty && <span className={styles.slotDate}>{formatDate(slot.date)}</span>}
       </div>
 
@@ -81,13 +78,13 @@ const SaveSlotItem: React.FC<SaveSlotItemProps> = ({
         {isEmpty ? (
           <div className={styles.emptySlotText}>空のスロット</div>
         ) : (
-          <div className={styles.slotInfo({ isEmpty })}>シーン: {slot.sceneName || '不明'}</div>
+          <div className={styles.slotInfo}>シーン: {slot.sceneName || '不明'}</div>
         )}
 
         <div className={styles.slotButtons}>
           {mode === 'save' && (
             <button
-              className={styles.slotButton({})}
+              className={styles.slotButton}
               onClick={(e) => {
                 e.stopPropagation();
                 onSave(slot.id);
@@ -99,7 +96,7 @@ const SaveSlotItem: React.FC<SaveSlotItemProps> = ({
 
           {mode === 'load' && (
             <button
-              className={styles.slotButton({ isDisabled: isEmpty })}
+              className={styles.slotButton}
               onClick={(e) => {
                 e.stopPropagation();
                 onLoad(slot.id);
@@ -112,7 +109,7 @@ const SaveSlotItem: React.FC<SaveSlotItemProps> = ({
 
           {!isEmpty && (
             <button
-              className={styles.slotButton({ isDelete: true })}
+              className={styles.slotButton}
               onClick={(e) => {
                 e.stopPropagation();
                 onDelete(slot.id);
@@ -141,8 +138,8 @@ const SaveLoadMenu: React.FC<SaveLoadMenuProps> = ({ mode = 'save', onClose }) =
 
     // スロットIDを数値に変換してソート
     const sortedSlots = slots
-      .filter((slot) => slot.id !== 'auto' && slot.id !== 'quick')
-      .sort((a, b) => {
+      .filter((slot: any) => slot.id !== 'auto' && slot.id !== 'quick')
+      .sort((a: any, b: any) => {
         const aNum = parseInt(a.id, 10);
         const bNum = parseInt(b.id, 10);
 
@@ -157,14 +154,14 @@ const SaveLoadMenu: React.FC<SaveLoadMenuProps> = ({ mode = 'save', onClose }) =
     // デフォルトのスロットを追加
     const maxSlotNum =
       sortedSlots.length > 0
-        ? Math.max(...sortedSlots.map((slot) => parseInt(slot.id, 10) || 0))
+        ? Math.max(...sortedSlots.map((slot: any) => parseInt(slot.id, 10) || 0))
         : 0;
 
     const totalSlots = Math.max(maxSlotNum, DEFAULT_EMPTY_SLOTS);
 
     const allSlots: SaveSlot[] = [];
     for (let i = 1; i <= totalSlots; i++) {
-      const existingSlot = sortedSlots.find((slot) => parseInt(slot.id, 10) === i);
+      const existingSlot = sortedSlots.find((slot: any) => parseInt(slot.id, 10) === i);
 
       if (existingSlot) {
         allSlots.push(existingSlot);
@@ -195,7 +192,7 @@ const SaveLoadMenu: React.FC<SaveLoadMenuProps> = ({ mode = 'save', onClose }) =
       const slots = gameStateManager.getSaveSlots();
       const updatedSlots = saveSlots.map((slot) => {
         if (slot.id === slotId) {
-          const updatedSlot = slots.find((s) => s.id === slotId);
+          const updatedSlot = slots.find((s: any) => s.id === slotId);
           return updatedSlot || slot;
         }
         return slot;

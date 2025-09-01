@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useGame } from '../../contexts/GameContext';
 import { useAudio } from '../../contexts/AudioContext';
 import * as styles from './ConfigMenu.css';
@@ -65,7 +65,7 @@ const ConfigMenu: React.FC<ConfigMenuProps> = ({ onClose }) => {
     }));
 
     if (['textSpeed', 'autoSpeed', 'isAutoMode', 'isSkipMode', 'showAlreadyRead'].includes(key)) {
-      updateSettings({ [key]: value });
+      updateSettings({ [key]: value } as any);
     }
 
     if (key === 'bgmVolume') {
@@ -124,9 +124,7 @@ const ConfigMenu: React.FC<ConfigMenuProps> = ({ onClose }) => {
             {textSpeedPresets.map((preset) => (
               <button
                 key={preset.label}
-                className={styles.selectButton({
-                  selected: settings.textSpeed === preset.value,
-                })}
+                className={styles.selectButton}
                 onClick={() => selectTextSpeedPreset(preset.value)}
               >
                 {preset.label}
@@ -157,9 +155,7 @@ const ConfigMenu: React.FC<ConfigMenuProps> = ({ onClose }) => {
             {autoSpeedPresets.map((preset) => (
               <button
                 key={preset.label}
-                className={styles.selectButton({
-                  selected: settings.autoSpeed === preset.value,
-                })}
+                className={styles.selectButton}
                 onClick={() => selectAutoSpeedPreset(preset.value)}
               >
                 {preset.label}
@@ -171,9 +167,7 @@ const ConfigMenu: React.FC<ConfigMenuProps> = ({ onClose }) => {
         <div className={styles.settingRow}>
           <div className={styles.settingLabel}>既読テキストの表示</div>
           <button
-            className={styles.toggleButton({
-              active: settings.showAlreadyRead,
-            })}
+            className={styles.toggleButton}
             onClick={() => handleUpdateSettings('showAlreadyRead', !settings.showAlreadyRead)}
           >
             {settings.showAlreadyRead ? 'ON' : 'OFF'}
@@ -219,9 +213,7 @@ const ConfigMenu: React.FC<ConfigMenuProps> = ({ onClose }) => {
         <div className={styles.settingRow}>
           <div className={styles.settingLabel}>ミュート</div>
           <button
-            className={styles.toggleButton({
-              active: settings.isMuted,
-            })}
+            className={styles.toggleButton}
             onClick={() => handleUpdateSettings('isMuted', !settings.isMuted)}
           >
             {settings.isMuted ? 'ON' : 'OFF'}
@@ -235,9 +227,7 @@ const ConfigMenu: React.FC<ConfigMenuProps> = ({ onClose }) => {
         <div className={styles.settingRow}>
           <div className={styles.settingLabel}>オートモード</div>
           <button
-            className={styles.toggleButton({
-              active: settings.isAutoMode,
-            })}
+            className={styles.toggleButton}
             onClick={() => {
               // オートモードとスキップモードは排他的
               if (settings.isSkipMode) {
@@ -253,9 +243,7 @@ const ConfigMenu: React.FC<ConfigMenuProps> = ({ onClose }) => {
         <div className={styles.settingRow}>
           <div className={styles.settingLabel}>スキップモード</div>
           <button
-            className={styles.toggleButton({
-              active: settings.isSkipMode,
-            })}
+            className={styles.toggleButton}
             onClick={() => {
               // オートモードとスキップモードは排他的
               if (settings.isAutoMode) {

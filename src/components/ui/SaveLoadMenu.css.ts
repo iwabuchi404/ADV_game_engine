@@ -1,5 +1,4 @@
 import { style } from '@vanilla-extract/css';
-import { recipe } from '@vanilla-extract/recipes';
 
 // コンテナ
 export const saveLoadContainer = style({
@@ -60,46 +59,17 @@ export const slotsContainer = style({
 });
 
 // セーブスロット
-export const saveSlot = recipe({
-  base: {
-    borderRadius: '5px',
-    padding: '1rem',
-    cursor: 'pointer',
-    transition: 'all 0.2s ease',
-  },
-  variants: {
-    isEmpty: {
-      true: {
-        borderStyle: 'dashed',
-        borderColor: 'rgba(100, 180, 255, 0.3)',
-        backgroundColor: 'rgba(30, 30, 40, 0.6)',
-        ':hover': {
-          backgroundColor: 'rgba(40, 40, 60, 0.6)',
-        },
-      },
-      false: {
-        borderStyle: 'solid',
-        borderColor: 'rgba(100, 180, 255, 0.3)',
-        backgroundColor: 'rgba(0, 30, 60, 0.6)',
-        ':hover': {
-          backgroundColor: 'rgba(0, 50, 100, 0.6)',
-          borderColor: 'rgba(100, 180, 255, 0.6)',
-        },
-      },
-    },
-    isSelected: {
-      true: {
-        borderColor: '#a0e0ff',
-        backgroundColor: 'rgba(0, 50, 100, 0.6)',
-      },
-      false: {
-        // デフォルトスタイルはbaseで定義済み
-      },
-    },
-  },
-  defaultVariants: {
-    isEmpty: false,
-    isSelected: false,
+export const saveSlot = style({
+  borderRadius: '5px',
+  padding: '1rem',
+  cursor: 'pointer',
+  transition: 'all 0.2s ease',
+  borderStyle: 'solid',
+  borderColor: 'rgba(100, 180, 255, 0.3)',
+  backgroundColor: 'rgba(0, 30, 60, 0.6)',
+  ':hover': {
+    backgroundColor: 'rgba(0, 50, 100, 0.6)',
+    borderColor: 'rgba(100, 180, 255, 0.6)',
   },
 });
 
@@ -111,20 +81,10 @@ export const slotHeader = style({
 });
 
 // スロットタイトル
-export const slotTitle = recipe({
-  base: {
-    margin: 0,
-    fontSize: '1.2rem',
-  },
-  variants: {
-    isEmpty: {
-      true: { color: '#888' },
-      false: { color: 'white' },
-    },
-  },
-  defaultVariants: {
-    isEmpty: false,
-  },
+export const slotTitle = style({
+  margin: 0,
+  fontSize: '1.2rem',
+  color: 'white',
 });
 
 // スロット日付
@@ -141,19 +101,9 @@ export const slotContent = style({
 });
 
 // スロット情報
-export const slotInfo = recipe({
-  base: {
-    fontSize: '0.9rem',
-  },
-  variants: {
-    isEmpty: {
-      true: { color: '#888' },
-      false: { color: '#ddd' },
-    },
-  },
-  defaultVariants: {
-    isEmpty: false,
-  },
+export const slotInfo = style({
+  fontSize: '0.9rem',
+  color: '#ddd',
 });
 
 // スロットボタンコンテナ
@@ -164,45 +114,18 @@ export const slotButtons = style({
 });
 
 // スロットボタン
-export const slotButton = recipe({
-  base: {
-    flex: 1,
-    backgroundColor: 'rgba(0, 80, 150, 0.7)',
-    color: 'white',
-    border: 'none',
-    padding: '0.5rem',
-    borderRadius: '4px',
-    fontSize: '0.9rem',
-    cursor: 'pointer',
-    transition: 'all 0.2s ease',
-    ':hover': {
-      backgroundColor: 'rgba(0, 120, 200, 0.9)',
-    },
-  },
-  variants: {
-    isDisabled: {
-      true: {
-        backgroundColor: 'rgba(70, 70, 70, 0.5)',
-        cursor: 'not-allowed',
-        ':hover': {
-          backgroundColor: 'rgba(70, 70, 70, 0.5)',
-        },
-      },
-      false: {},
-    },
-    isDelete: {
-      true: {
-        backgroundColor: 'rgba(150, 50, 50, 0.7)',
-        ':hover': {
-          backgroundColor: 'rgba(200, 70, 70, 0.9)',
-        },
-      },
-      false: {},
-    },
-  },
-  defaultVariants: {
-    isDisabled: false,
-    isDelete: false,
+export const slotButton = style({
+  flex: 1,
+  backgroundColor: 'rgba(0, 80, 150, 0.7)',
+  color: 'white',
+  border: 'none',
+  padding: '0.5rem',
+  borderRadius: '4px',
+  fontSize: '0.9rem',
+  cursor: 'pointer',
+  transition: 'all 0.2s ease',
+  ':hover': {
+    backgroundColor: 'rgba(0, 120, 200, 0.9)',
   },
 });
 

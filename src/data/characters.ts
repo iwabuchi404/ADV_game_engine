@@ -4,7 +4,7 @@
  */
 
 // キャラクターの基本情報と表情の定義
-const characters = {
+const characters: Record<string, any> = {
   // 主人公（特別扱い - 名前はゲーム内で設定）
   protagonist: {
     id: 'protagonist',
@@ -24,7 +24,7 @@ const characters = {
       nameEditable: true // 名前編集可能フラグ
     }
   },
-  
+
   // ミラー - AIインターフェーサー
   mirror: {
     id: 'mirror',
@@ -47,7 +47,7 @@ const characters = {
       transparencyLevel: 0.8 // 透明度（1が不透明）
     }
   },
-  
+
   // 月島 凛子 - 女性上司
   tsukishima: {
     id: 'tsukishima',
@@ -62,7 +62,7 @@ const characters = {
       concerned: 'tsukishima_concerned.png'
     }
   },
-  
+
   // 高瀬 文彦 - 大学の恩師
   takase: {
     id: 'takase',
@@ -76,7 +76,7 @@ const characters = {
       surprised: 'takase_surprised.png'
     }
   },
-  
+
   // 星野 レイ - 主人公の故人の親友
   hoshino: {
     id: 'hoshino',
@@ -95,7 +95,7 @@ const characters = {
       memoryEffect: true // 記憶演出エフェクト
     }
   },
-  
+
   // 篠原 誠治 - 同僚デジタル心理士
   shinohara: {
     id: 'shinohara',
@@ -109,7 +109,7 @@ const characters = {
       surprised: 'shinohara_surprised.png'
     }
   },
-  
+
   // 鈴木 ハルカ - AI共生世代の依頼者
   suzuki: {
     id: 'suzuki',
@@ -123,7 +123,7 @@ const characters = {
       happy: 'suzuki_happy.png'
     }
   },
-  
+
   // 藤堂 ミサキ - 月島凛子の娘
   todo: {
     id: 'todo',
@@ -138,7 +138,7 @@ const characters = {
       happy: 'todo_happy.png'
     }
   },
-  
+
   // 北条 信介 - デジタル省高官
   hojo: {
     id: 'hojo',
@@ -151,7 +151,7 @@ const characters = {
       angry: 'hojo_angry.png'
     }
   },
-  
+
   // 岸本 哲也 - 脳神経外科医、デジタル心理局の医療顧問
   kishimoto: {
     id: 'kishimoto',
@@ -164,7 +164,7 @@ const characters = {
       thinking: 'kishimoto_thinking.png'
     }
   },
-  
+
   // 桜井 ユウキ - レイの親友だった芸術家
   sakurai: {
     id: 'sakurai',
@@ -185,7 +185,7 @@ const characters = {
  * @param {string} characterId - キャラクターID
  * @returns {Object} キャラクター情報
  */
-export const getCharacter = (characterId) => {
+export const getCharacter = (characterId: string) => {
   return characters[characterId] || null;
 };
 
@@ -203,10 +203,10 @@ export const getAllCharacterIds = () => {
  * @param {string} expression - 表情
  * @returns {string} 画像パス
  */
-export const getCharacterImagePath = (characterId, expression = 'neutral') => {
+export const getCharacterImagePath = (characterId: string, expression = 'neutral') => {
   const character = getCharacter(characterId);
   if (!character) return null;
-  
+
   const imageName = character.expressions[expression] || character.expressions.neutral;
   return `/assets/images/characters/${imageName}`;
 };
@@ -216,11 +216,11 @@ export const getCharacterImagePath = (characterId, expression = 'neutral') => {
  * @param {string} characterId - キャラクターID
  * @returns {Array} 画像パスの配列
  */
-export const getAllExpressionPaths = (characterId) => {
+export const getAllExpressionPaths = (characterId: string) => {
   const character = getCharacter(characterId);
   if (!character) return [];
-  
-  return Object.values(character.expressions).map(imageName => 
+
+  return Object.values(character.expressions).map(imageName =>
     `/assets/images/characters/${imageName}`
   );
 };

@@ -13,16 +13,16 @@ interface GameContextType {
   gameStateManager: any;
   assetLoader: AssetLoader;
   loadScenario: (scenarioId: string) => Promise<boolean>;
-  nextScene: () => boolean;
-  nextTextBlock: () => TextBlock;
+  nextScene: () => boolean | Promise<boolean> | undefined;
+  nextTextBlock: () => TextBlock | boolean | undefined;
   selectChoice: (choiceIndex: number) => boolean;
-  saveGame: (slotId: number | string) => boolean;
-  loadGame: (slotId: number | string) => Promise<boolean>;
+  saveGame: (slotId: string) => boolean;
+  loadGame: (slotId: string) => Promise<boolean>;
   updateGameState: (updates: Partial<GameState>) => void;
   updateProperty: <K extends keyof GameState>(property: K, value: any) => void;
   updateSettings: (newSettings: GameSettings) => void;
   setPlayerName: (name: string) => void;
-  startNewGame: (scenarioId?: string, options?: { playerName: string }) => Promise<boolean>;
+  startNewGame: (scenarioId: string, options?: { playerName: string }) => Promise<boolean>;
 }
 
 /**
@@ -170,7 +170,7 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
     // 次のシーンを取得
     const nextState = scenarioEngine.getScene(
-      gameState.scenario,
+      gameState.scenario!,
       gameState.currentScene?.next || ''
     );
     if (!nextState) {
@@ -200,7 +200,10 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setGameState((prev) => ({
         ...prev,
         isTransition: true,
-        transition: transition,
+        transition: {
+          ...transition,
+          easing: transition.easing === 'ease-in-out' ? 'easeInOut' : transition.easing
+        },
       }));
 
       // トランジションの所要時間後に完了処理
@@ -284,7 +287,7 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setGameState((prev) => ({
         ...prev,
         currentTextBlockIndex: nextIndex,
-        currentTextBlocks: gameState.currentScene.textBlocks || [],
+        currentTextBlocks: gameState.currentScene?.textBlocks || [],
       }));
 
       return true;
@@ -306,7 +309,7 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const selectChoice = useCallback(
     (choiceIndex: number) => {
       const nextSceneId = gameState.currentScene?.choices?.[choiceIndex]?.next;
-      const nextScene = scenarioEngine.getScene(gameState.scenario, nextSceneId || '');
+      const nextScene = scenarioEngine.getScene(gameState.scenario!, nextSceneId || '');
 
       if (!nextScene || !gameState.currentScene) {
         console.error('No next state found after choice selection');
@@ -314,7 +317,7 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
       }
 
       // プレイヤーの選択を記録
-      const choiceText = gameState.currentScene.choices?.[choiceIndex]?.text;
+
       const sceneId = gameState.currentSceneId;
 
       if (!sceneId) {

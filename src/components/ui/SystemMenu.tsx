@@ -1,15 +1,21 @@
-import React from 'react';
 import {
   menuOverlay,
   menuContainer,
   menuTitle,
   menuButtonsContainer,
   menuButton,
-  warningButton,
   closeButton,
 } from './SystemMenu.css';
 
-const SystemMenu = ({ onSave, onLoad, onConfig, onBackToTitle, onClose }) => {
+interface SystemMenuProps {
+  onSave: () => void;
+  onLoad: () => void;
+  onConfig: () => void;
+  onBackToTitle: () => void;
+  onClose: () => void;
+}
+
+const SystemMenu = ({ onSave, onLoad, onConfig, onBackToTitle, onClose }: SystemMenuProps) => {
   return (
     <div className={`${menuOverlay} 'fade-in'`}>
       <div className={`${menuContainer} 'lide-up'`}>

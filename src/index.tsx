@@ -5,7 +5,9 @@ import './styles/global.css';
 import App from './App';
 import AppProvider from './components/common/AppProvider.js';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const rootElement = document.getElementById('root');
+if (!rootElement) throw new Error('Failed to find the root element');
+const root = ReactDOM.createRoot(rootElement);
 
 root.render(
   <React.StrictMode>

@@ -97,7 +97,7 @@ export const CHARACTER_POSITIONS = {
  * @param {number} ms - 待機時間（ミリ秒）
  * @returns {Promise} 指定時間後に解決するPromise
  */
-export const sleep = (ms) => {
+export const sleep = (ms: number) => {
   return new Promise(resolve => setTimeout(resolve, ms));
 };
 
@@ -107,7 +107,7 @@ export const sleep = (ms) => {
  * @param {string} path - 追加するパス
  * @returns {string} 結合されたパス
  */
-export const joinPaths = (base, path) => {
+export const joinPaths = (base: string, path: string) => {
   return `${base.replace(/\/$/, '')}/${path.replace(/^\//, '')}`;
 };
 
@@ -117,7 +117,7 @@ export const joinPaths = (base, path) => {
  * @param {Object} options - フォーマットオプション
  * @returns {string} フォーマットされた日付文字列
  */
-export const formatDate = (date, options = {}) => {
+export const formatDate = (date: Date, options: any = {}) => {
   try {
     const dateObj = typeof date === 'string' ? new Date(date) : date;
     return new Intl.DateTimeFormat('ja-JP', {
@@ -140,6 +140,6 @@ export const formatDate = (date, options = {}) => {
  * @param {Object} source - ソースオブジェクト
  * @returns {Object} マージされたオブジェクト
  */
-export const mergeObjects = (target, source) => {
+export const mergeObjects = (target: any, source: any) => {
   return { ...target, ...source };
 };

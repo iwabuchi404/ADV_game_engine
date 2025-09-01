@@ -8,7 +8,7 @@ class AssetLoader {
     audio: Record<string, HTMLAudioElement>;
   };
   private basePath: string;
-  private loadingPromises: Record<string, Promise<any>>;
+  private loadingPromises: Record<string, Promise<any> | undefined>;
 
   /**
    * コンストラクタ

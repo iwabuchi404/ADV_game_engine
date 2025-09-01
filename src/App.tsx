@@ -44,7 +44,7 @@ const MainContent = () => {
     }
     if (gameState.scrennState == 'save') {
       console.log('Save Screen');
-      return <SaveScreen onBackToTitle={handleBackToTitle} />;
+      return <SaveScreen />;
     }
     return <GameScreen onBackToTitle={handleBackToTitle} />;
     // return <TestScreen />;

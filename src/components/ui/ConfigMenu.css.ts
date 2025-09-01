@@ -1,6 +1,5 @@
 import { style } from '@vanilla-extract/css';
-import { recipe } from '@vanilla-extract/recipes';
-import { THEME_COLORS, BREAKPOINTS } from '../../data/config';
+import { BREAKPOINTS } from '../../data/config';
 
 // コンテナ
 export const configContainer = style({
@@ -122,80 +121,35 @@ export const slider = style({
 });
 
 // トグルボタン
-export const toggleButton = recipe({
-  base: {
-    color: 'white',
-    border: 'none',
-    padding: '0.5rem 1rem',
-    borderRadius: '4px',
-    fontSize: '0.9rem',
-    cursor: 'pointer',
-    minWidth: '80px',
-    transition: 'background-color 0.2s',
-  },
-  variants: {
-    active: {
-      true: {
-        backgroundColor: 'rgba(0, 150, 255, 0.7)',
-        ':hover': {
-          backgroundColor: 'rgba(0, 180, 255, 0.9)',
-        },
-      },
-      false: {
-        backgroundColor: 'rgba(70, 70, 70, 0.7)',
-        ':hover': {
-          backgroundColor: 'rgba(100, 100, 100, 0.9)',
-        },
-      },
-    },
-    disabled: {
-      true: {
-        opacity: 0.5,
-        cursor: 'not-allowed',
-        ':hover': {
-          backgroundColor: 'rgba(70, 70, 70, 0.7)',
-        },
-      },
-    },
-  },
-  defaultVariants: {
-    active: false,
-    disabled: false,
+export const toggleButton = style({
+  color: 'white',
+  border: 'none',
+  padding: '0.5rem 1rem',
+  borderRadius: '4px',
+  fontSize: '0.9rem',
+  cursor: 'pointer',
+  minWidth: '80px',
+  transition: 'background-color 0.2s',
+  backgroundColor: 'rgba(70, 70, 70, 0.7)',
+  ':hover': {
+    backgroundColor: 'rgba(100, 100, 100, 0.9)',
   },
 });
 
 // 選択ボタン
-export const selectButton = recipe({
-  base: {
-    color: 'white',
-    padding: '0.5rem 1rem',
-    borderRadius: '4px',
-    fontSize: '0.9rem',
-    cursor: 'pointer',
-    minWidth: '80px',
-    transition: 'all 0.2s',
-  },
-  variants: {
-    selected: {
-      true: {
-        backgroundColor: 'rgba(0, 150, 255, 0.7)',
-        border: '1px solid rgba(100, 180, 255, 0.8)',
-        ':hover': {
-          backgroundColor: 'rgba(0, 180, 255, 0.9)',
-        },
-      },
-      false: {
-        backgroundColor: 'rgba(30, 30, 50, 0.7)',
-        border: '1px solid rgba(100, 100, 100, 0.3)',
-        ':hover': {
-          backgroundColor: 'rgba(50, 50, 80, 0.9)',
-          borderColor: 'rgba(100, 180, 255, 0.5)',
-        },
-      },
-    },
-  },
-  defaultVariants: {
-    selected: false,
+export const selectButton = style({
+  color: 'white',
+  padding: '0.5rem 1rem',
+  borderRadius: '4px',
+  fontSize: '0.9rem',
+  cursor: 'pointer',
+  minWidth: '80px',
+  transition: 'all 0.2s',
+  backgroundColor: 'rgba(30, 30, 50, 0.7)',
+  border: '1px solid rgba(100, 100, 100, 0.3)',
+  ':hover': {
+    backgroundColor: 'rgba(50, 50, 80, 0.9)',
+    borderColor: 'rgba(100, 180, 255, 0.5)',
   },
 });
 

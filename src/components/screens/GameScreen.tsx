@@ -224,7 +224,7 @@ const GameScreen = ({ onBackToTitle }: GameScreenProps) => {
           onLoad={onLoad}
           onConfig={() => console.log('設定')}
           onBackToTitle={onBackToTitle}
-          onClose={toggleMenu}
+          onClose={() => toggleMenu({} as React.MouseEvent)}
         />
       )}
     </div>

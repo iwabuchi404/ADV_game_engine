@@ -1,9 +1,6 @@
 import {
   TransitionEffect,
   Scene,
-  Character,
-  Choice,
-  BgmInstruction,
   Scenario,
   TextBlock,
 } from './scenario';
