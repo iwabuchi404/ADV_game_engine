@@ -222,7 +222,7 @@ export const getAllExpressionPaths = (characterId: string) => {
   const character = getCharacter(characterId);
   if (!character) return [];
 
-    return Object.values(character.expressions).map(imageName => 
+    return Object.values(character.expressions).map(imageName =>
     `${SCENARIO_CONFIG.CHARACTERS_PATH}${imageName}`
   );
 };

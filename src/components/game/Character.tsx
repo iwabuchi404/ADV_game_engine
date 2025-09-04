@@ -1,4 +1,4 @@
-import { CharacterContainer, CharacterImage } from './Character.css';
+import { CharacterContainer, CharacterImage, CharacterFadeIn } from './Character.css';
 import { SCENARIO_CONFIG } from '../../data/config';
 
 interface CharacterProps {
@@ -43,7 +43,7 @@ const Character = ({ id, name, image, position = 'center', expression = 'neutral
 
   return (
     <div className={CharacterContainer} style={getPositionStyle(position)}>
-      <img className={CharacterImage} src={imagePath} alt={name} />
+      <img className={`${CharacterImage} ${CharacterFadeIn}`} src={imagePath} alt={name} />
     </div>
   );
 };

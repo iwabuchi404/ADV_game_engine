@@ -1,5 +1,6 @@
 import { ChoiceMenuContainer, ChoiceButton } from './ChoiceMenu.css';
 import { Choice } from '../../types/scenario';
+import processText from '../../utils/TextProcessor';
 
 interface ChoiceMenuProps {
   choices: Choice[];
@@ -15,7 +16,7 @@ const ChoiceMenu = ({ choices, onChoiceSelected }: ChoiceMenuProps) => {
           key={index}
           onClick={() => onChoiceSelected(choice, index)} // インデックスも渡す
         >
-          {choice.text}
+          <span style={{ whiteSpace: 'pre-line' }}>{processText(choice.text)}</span>
         </button>
       ))}
     </div>
